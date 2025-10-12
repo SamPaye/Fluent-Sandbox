@@ -1,0 +1,28 @@
+{
+  "name": "fluent-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fluent UI React v9 Sandbox",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "^9.54.20",
+    "@fluentui/react-icons": "^2.0.258",
+    "@fluentui/react-nav": "^9.3.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.8"
+  }
+}
+
