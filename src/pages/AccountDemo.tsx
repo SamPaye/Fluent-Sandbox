@@ -29,7 +29,6 @@ import {
   Key24Regular,
   Payment24Regular,
   ShieldCheckmark24Regular,
-  Lock24Regular,
   Eye24Regular,
   Cart24Regular,
   Book24Regular,
@@ -77,7 +76,6 @@ const useStyles = makeStyles({
   },
   userSection: {
     padding: '16px 24px',
-    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
   },
   userInfo: {
     display: 'flex',
@@ -255,21 +253,21 @@ export default function AccountDemo() {
         </div>
       </div>
 
-      <div className={styles.mainLayout}>
+      <div className={styles.mainLayout} style={{ padding: '0px 10px', background: 'rgb(242, 242, 242)' }}>
         {/* Sidebar Navigation */}
-        <div className={styles.sidebar}>
+        <div className={styles.sidebar} style={{ background: 'transparent', border: 'none' }}>
           <div className={styles.userSection}>
             <div className={styles.userInfo}>
               <Avatar name="Sam D" color="colorful" />
               <div>
-                <div className={styles.userName}>Sam D</div>
-                <div className={styles.userEmail}>sambra@hotmail.com</div>
+                <div className={styles.userName}>Sam P</div>
+                <div className={styles.userEmail}>samp@hotmail.com</div>
                 <Link href="#">View my benefits</Link>
               </div>
             </div>
           </div>
-          <Nav>
-            <NavItem icon={<Person24Regular />} value="account" selected>
+          <Nav selectedValue="account">
+            <NavItem icon={<Person24Regular />} value="account">
               Account
             </NavItem>
             <NavItem icon={<Person24Regular />} value="info">

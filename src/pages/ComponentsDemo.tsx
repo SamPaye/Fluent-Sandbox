@@ -68,6 +68,13 @@ import {
   Settings24Regular,
   Star24Regular,
 } from '@fluentui/react-icons'
+import { useState } from 'react'
+import {
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerHeaderTitle,
+} from '@fluentui/react-drawer'
 
 const useStyles = makeStyles({
   container: {
@@ -98,6 +105,7 @@ const useStyles = makeStyles({
 
 export default function ComponentsDemo() {
   const styles = useStyles()
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   return (
     <div className={styles.container}>
@@ -470,6 +478,40 @@ export default function ComponentsDemo() {
                     <AccordionPanel>Content for section 2</AccordionPanel>
                   </AccordionItem>
                 </Accordion>
+              </TableCell>
+            </TableRow>
+
+            {/* Drawer */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Drawer</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <Button onClick={() => setDrawerOpen(true)}>Open Drawer</Button>
+                  <Drawer open={drawerOpen} onOpenChange={(_, data) => setDrawerOpen(data.open)}>
+                    <DrawerHeader>
+                      <DrawerHeaderTitle
+                        action={
+                          <Button
+                            appearance="subtle"
+                            aria-label="Close"
+                            icon={<Dismiss24Regular />}
+                            onClick={() => setDrawerOpen(false)}
+                          />
+                        }
+                      >
+                        Drawer Title
+                      </DrawerHeaderTitle>
+                    </DrawerHeader>
+                    <DrawerBody>
+                      <Text>This is drawer content.</Text>
+                      <Text style={{ display: 'block', marginTop: '8px' }}>
+                        You can add any content here.
+                      </Text>
+                    </DrawerBody>
+                  </Drawer>
+                </div>
               </TableCell>
             </TableRow>
 
