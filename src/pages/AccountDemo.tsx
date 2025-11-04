@@ -36,6 +36,7 @@ import {
   Trophy24Regular,
   Mail24Regular,
   Storage24Regular,
+  Home24Regular,
 } from '@fluentui/react-icons'
 import { useNavigate } from 'react-router-dom'
 
@@ -76,7 +77,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
   },
   userSection: {
-    padding: '16px 24px',
+    padding: '32px 16px 24px',
   },
   userInfo: {
     display: 'flex',
@@ -206,6 +207,15 @@ const useStyles = makeStyles({
     color: tokens.colorNeutralForeground3,
     marginBottom: '16px',
   },
+  navItem: {
+    backgroundColor: 'transparent !important',
+    ':hover': {
+      backgroundColor: 'transparent !important',
+    },
+    ':focus': {
+      backgroundColor: 'transparent !important',
+    },
+  },
 })
 
 export default function AccountDemo() {
@@ -277,31 +287,31 @@ export default function AccountDemo() {
             </div>
           </div>
           <Nav selectedValue="account" onNavItemSelect={handleNavSelect}>
-            <NavItem icon={<Person24Regular />} value="account">
+            <NavItem icon={<Home24Regular />} value="account" className={styles.navItem}>
               Account
             </NavItem>
-            <NavItem icon={<Person24Regular />} value="info">
+            <NavItem icon={<Person24Regular />} value="info" className={styles.navItem}>
               Your info
             </NavItem>
-            <NavItem icon={<PersonCircle24Regular />} value="subscriptions">
+            <NavItem icon={<PersonCircle24Regular />} value="subscriptions" className={styles.navItem}>
               Subscriptions
             </NavItem>
-            <NavItem icon={<Desktop24Regular />} value="devices">
+            <NavItem icon={<Desktop24Regular />} value="devices" className={styles.navItem}>
               Devices
             </NavItem>
-            <NavItem icon={<ShieldCheckmark24Regular />} value="security">
+            <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={styles.navItem}>
               Security
             </NavItem>
-            <NavItem icon={<Eye24Regular />} value="privacy">
+            <NavItem icon={<Eye24Regular />} value="privacy" className={styles.navItem}>
               Privacy
             </NavItem>
-            <NavItem icon={<Payment24Regular />} value="payment">
+            <NavItem icon={<Payment24Regular />} value="payment" className={styles.navItem}>
               Payment options
             </NavItem>
-            <NavItem icon={<Cart24Regular />} value="orders">
+            <NavItem icon={<Cart24Regular />} value="orders" className={styles.navItem}>
               Order history
             </NavItem>
-            <NavItem icon={<Book24Regular />} value="address">
+            <NavItem icon={<Book24Regular />} value="address" className={styles.navItem}>
               Address book
             </NavItem>
           </Nav>

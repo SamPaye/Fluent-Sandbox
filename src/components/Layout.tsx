@@ -38,9 +38,9 @@ export default function Layout() {
       <div className={styles.header}>
         <div className={styles.title}>Fluent UI React Sandbox (v8 & v9)</div>
         <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
-          <Tab value="components">v9 Components</Tab>
           <Tab value="v8-demo">v8 Components</Tab>
-          <Tab value="account">Account Demo</Tab>
+          <Tab value="components">v9 Components</Tab>
+          <Tab value="account">Accounts Demo</Tab>
         </TabList>
       </div>
       <div className={styles.content}>

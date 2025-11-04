@@ -13,6 +13,10 @@ import {
   MenuPopover,
   TabList,
   Tab,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbButton,
+  BreadcrumbDivider,
 } from '@fluentui/react-components'
 import {
   Nav,
@@ -31,9 +35,13 @@ import {
   Storage24Regular,
   ChevronUp16Regular,
   ChevronDown16Regular,
+  ArrowDownload24Regular,
+  Calendar24Regular,
+  Home24Regular,
 } from '@fluentui/react-icons'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
+import msLogo from '../images/ms.png'
 
 const useStyles = makeStyles({
   root: {
@@ -72,7 +80,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
   },
   userSection: {
-    padding: '16px 24px',
+    padding: '32px 16px 24px',
   },
   userInfo: {
     display: 'flex',
@@ -93,9 +101,10 @@ const useStyles = makeStyles({
   },
   content: {
     flex: 1,
-    padding: '32px',
-    maxWidth: '900px',
+    padding: '24px 0px',
+    maxWidth: '1200px',
     margin: '0 auto',
+    fontSize: '14px',
   },
   pageTitle: {
     fontSize: tokens.fontSizeBase600,
@@ -205,7 +214,7 @@ const useStyles = makeStyles({
   manageHeader: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '16px',
     marginBottom: '4px',
   },
   manageHeaderIcon: {
@@ -214,8 +223,8 @@ const useStyles = makeStyles({
   },
   annualBillingText: {
     marginBottom: '4px',
-    paddingLeft: '32px',
-    fontSize: tokens.fontSizeBase400,
+    paddingLeft: '40px',
+    fontSize: '12px',
   },
   tabsContainer: {
     display: 'flex',
@@ -299,6 +308,83 @@ const useStyles = makeStyles({
     textAlign: 'center',
     color: tokens.colorNeutralForeground3,
     fontSize: tokens.fontSizeBase300,
+  },
+  breadcrumbContainer: {
+    marginBottom: '24px',
+  },
+  headerSection: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '42px',
+  },
+  headerTitleSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  logoImage: {
+    width: '32px',
+    height: '32px',
+    objectFit: 'contain',
+  },
+  headerTitle: {
+    fontSize: tokens.fontSizeBase600,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  headerInfoColumns: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '24px',
+    alignItems: 'center',
+  },
+  infoColumn: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  iconCircle: {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    backgroundColor: tokens.colorBrandBackground2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  iconImage: {
+    width: '24px',
+    height: '24px',
+    objectFit: 'contain',
+  },
+  iconSvg: {
+    width: '24px',
+    height: '24px',
+    color: tokens.colorBrandForeground1,
+  },
+  infoText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0px',
+  },
+  infoPrimary: {
+    fontSize: '12px',
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
+  infoSecondary: {
+    fontSize: '12px',
+    color: tokens.colorNeutralForeground3,
+  },
+  navItem: {
+    backgroundColor: 'transparent !important',
+    ':hover': {
+      backgroundColor: 'transparent !important',
+    },
+    ':focus': {
+      backgroundColor: 'transparent !important',
+    },
   },
 })
 
@@ -391,31 +477,31 @@ export default function SubscriptionDemo() {
             </div>
           </div>
           <Nav selectedValue="subscriptions" onNavItemSelect={handleNavSelect}>
-            <NavItem icon={<Person24Regular />} value="account">
+            <NavItem icon={<Home24Regular />} value="account" className={styles.navItem}>
               Account
             </NavItem>
-            <NavItem icon={<Person24Regular />} value="info">
+            <NavItem icon={<Person24Regular />} value="info" className={styles.navItem}>
               Your info
             </NavItem>
-            <NavItem icon={<PersonCircle24Regular />} value="subscriptions">
+            <NavItem icon={<PersonCircle24Regular />} value="subscriptions" className={styles.navItem}>
               Subscriptions
             </NavItem>
-            <NavItem icon={<Desktop24Regular />} value="devices">
+            <NavItem icon={<Desktop24Regular />} value="devices" className={styles.navItem}>
               Devices
             </NavItem>
-            <NavItem icon={<ShieldCheckmark24Regular />} value="security">
+            <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={styles.navItem}>
               Security
             </NavItem>
-            <NavItem icon={<Eye24Regular />} value="privacy">
+            <NavItem icon={<Eye24Regular />} value="privacy" className={styles.navItem}>
               Privacy
             </NavItem>
-            <NavItem icon={<Payment24Regular />} value="payment">
+            <NavItem icon={<Payment24Regular />} value="payment" className={styles.navItem}>
               Payment options
             </NavItem>
-            <NavItem icon={<Cart24Regular />} value="orders">
+            <NavItem icon={<Cart24Regular />} value="orders" className={styles.navItem}>
               Order history
             </NavItem>
-            <NavItem icon={<Book24Regular />} value="address">
+            <NavItem icon={<Book24Regular />} value="address" className={styles.navItem}>
               Address book
             </NavItem>
           </Nav>
@@ -423,13 +509,56 @@ export default function SubscriptionDemo() {
 
         {/* Main Content */}
         <div className={styles.content}>
-          <h1 className={styles.pageTitle}>Subscriptions</h1>
+          {/* Breadcrumb */}
+          <div className={styles.breadcrumbContainer}>
+            <Breadcrumb>
+              <BreadcrumbItem>
+                <BreadcrumbButton onClick={() => navigate('/account/subscriptions')}>
+                  Subscriptions
+                </BreadcrumbButton>
+              </BreadcrumbItem>
+              <BreadcrumbDivider />
+              <BreadcrumbItem>
+                <BreadcrumbButton current>Details</BreadcrumbButton>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </div>
+
+          {/* Header Section with Logo and Info Columns */}
+          <div className={styles.headerSection}>
+            <div className={styles.headerTitleSection}>
+              <img src={msLogo} alt="Microsoft" className={styles.logoImage} />
+              <Text className={styles.headerTitle}>Microsoft 365 Personal</Text>
+            </div>
+            <div className={styles.headerInfoColumns}>
+              {/* Renew Column */}
+              <div className={styles.infoColumn}>
+                <div className={styles.iconCircle}>
+                  <Calendar24Regular className={styles.iconSvg} />
+                </div>
+                <div className={styles.infoText}>
+                  <Text className={styles.infoPrimary}>Renews on October 1, 2022</Text>
+                  <Text className={styles.infoSecondary}>Annual subscription</Text>
+                </div>
+              </div>
+              {/* Install Column */}
+              <div className={styles.infoColumn}>
+                <div className={styles.iconCircle}>
+                  <ArrowDownload24Regular className={styles.iconSvg} />
+                </div>
+                <div className={styles.infoText}>
+                  <Text className={styles.infoPrimary}>Install Office apps</Text>
+                  <Text className={styles.infoSecondary}>Install on PC and mobile</Text>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Manage Subscription Header and Annual Billing Offer */}
           <div className={styles.cardWrapper}>
             <div className={styles.manageHeader}>
               <Storage24Regular className={styles.manageHeaderIcon} />
-              <Text weight="semibold" style={{ fontSize: tokens.fontSizeBase500 }}>
+              <Text weight="semibold" style={{ fontSize: '14px' }}>
                 Manage subscription
               </Text>
             </div>
@@ -441,7 +570,7 @@ export default function SubscriptionDemo() {
           </div>
 
           {/* Billing Period Tabs */}
-          <div className={styles.cardWrapper}>
+          <div className={styles.cardWrapper} style={{ backgroundColor: 'transparent' }}>
             <div className={styles.tabsContainer}>
               <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
                 <Tab value="monthly">Monthly</Tab>
@@ -529,7 +658,7 @@ export default function SubscriptionDemo() {
           </Card>
 
           {/* Microsoft 365 Basic Card */}
-          <Card className={styles.subscriptionCard} style={{ backgroundColor: tokens.colorNeutralBackground3 }}>
+          <Card className={styles.subscriptionCard}>
             <div className={styles.subscriptionCardContent}>
               <div className={styles.subscriptionCardTop}>
                 <div className={styles.subscriptionCardDetails}>
