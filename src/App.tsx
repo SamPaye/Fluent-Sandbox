@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import { type FC, type ReactNode } from 'react'
 import { FluentProvider, webLightTheme } from '@fluentui/react-components'
 import { ThemeProvider, createTheme } from '@fluentui/react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -37,7 +37,7 @@ const v8Theme = createTheme({
 })
 
 // Type-safe wrapper for ThemeProvider to fix React 18 type compatibility
-const V8ThemeProvider = ThemeProvider as FC<{ theme: typeof v8Theme; children: React.ReactNode }>
+const V8ThemeProvider = ThemeProvider as FC<{ theme: typeof v8Theme; children: ReactNode }>
 
 function App() {
   return (

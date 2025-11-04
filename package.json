@@ -12,6 +12,7 @@
   "dependencies": {
     "@fluentui/react": "^8.115.0",
     "@fluentui/react-components": "^9.54.20",
+    "@fluentui/react-drawer": "^9.54.20",
     "@fluentui/react-icons": "^2.0.258",
     "@fluentui/react-nav": "^9.3.9",
     "react": "^18.3.1",
