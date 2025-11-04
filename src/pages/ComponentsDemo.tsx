@@ -49,7 +49,6 @@ import {
   BreadcrumbDivider,
   InfoLabel,
   Field,
-  Label,
   Persona,
   Rating,
   CounterBadge,
