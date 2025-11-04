@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import ComponentsDemo from './pages/ComponentsDemo'
 import AccountDemo from './pages/AccountDemo'
+import SubscriptionDemo from './pages/SubscriptionDemo'
 import V8Demo from './pages/V8Demo'
 
 // Create a v8 theme that matches v9's light theme colors
@@ -48,6 +49,7 @@ function App() {
               <Route index element={<Navigate to="/components" replace />} />
               <Route path="components" element={<ComponentsDemo />} />
               <Route path="account" element={<AccountDemo />} />
+              <Route path="account/subscriptions" element={<SubscriptionDemo />} />
               <Route path="v8-demo" element={<V8Demo />} />
             </Route>
           </Routes>

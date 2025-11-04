@@ -37,6 +37,7 @@ import {
   Mail24Regular,
   Storage24Regular,
 } from '@fluentui/react-icons'
+import { useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
@@ -209,6 +210,15 @@ const useStyles = makeStyles({
 
 export default function AccountDemo() {
   const styles = useStyles()
+  const navigate = useNavigate()
+
+  const handleNavSelect = (event: any, data: any) => {
+    if (data.value === 'account') {
+      navigate('/account')
+    } else if (data.value === 'subscriptions') {
+      navigate('/account/subscriptions')
+    }
+  }
 
   return (
     <div className={styles.root}>
@@ -266,7 +276,7 @@ export default function AccountDemo() {
               </div>
             </div>
           </div>
-          <Nav selectedValue="account">
+          <Nav selectedValue="account" onNavItemSelect={handleNavSelect}>
             <NavItem icon={<Person24Regular />} value="account">
               Account
             </NavItem>
