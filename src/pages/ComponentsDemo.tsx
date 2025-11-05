@@ -1,6 +1,7 @@
 import {
   makeStyles,
   tokens,
+  // Core & inputs
   Button,
   Checkbox,
   Input,
@@ -10,18 +11,31 @@ import {
   RadioGroup,
   Dropdown,
   Option,
+  Combobox,
+  Select,
+  SearchBox,
   Slider,
   SpinButton,
+  // Content & display
   Badge,
+  CounterBadge,
+  PresenceBadge,
   Avatar,
+  AvatarGroup,
+  AvatarGroupItem,
+  AvatarGroupPopover,
   Divider,
   Link,
   Text,
+  Image,
   Card,
   CardHeader,
   Spinner,
   ProgressBar,
   Tooltip,
+  Popover,
+  PopoverTrigger,
+  PopoverSurface,
   MessageBar,
   MessageBarBody,
   MessageBarTitle,
@@ -49,16 +63,35 @@ import {
   BreadcrumbDivider,
   InfoLabel,
   Field,
+  Label,
+  FluentProvider,
   Persona,
   Rating,
-  CounterBadge,
-  PresenceBadge,
+  // Layout & lists
   Table,
   TableHeader,
   TableRow,
   TableHeaderCell,
   TableBody,
   TableCell,
+  // Data grid
+  DataGrid,
+  DataGridHeader,
+  DataGridHeaderCell,
+  DataGridBody,
+  DataGridRow,
+  DataGridCell,
+  createTableColumn,
+  List,
+  ListItem,
+  // Navigation & structure
+  TabList,
+  Tab,
+  Toolbar,
+  ToolbarButton,
+  // Skeletons
+  Skeleton,
+  SkeletonItem,
 } from '@fluentui/react-components'
 import {
   Add24Regular,
@@ -66,14 +99,19 @@ import {
   Home24Regular,
   Settings24Regular,
   Star24Regular,
+  Person24Regular,
+  Image24Regular,
 } from '@fluentui/react-icons'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Drawer,
   DrawerBody,
   DrawerHeader,
   DrawerHeaderTitle,
 } from '@fluentui/react-drawer'
+import { Nav, NavItem } from '@fluentui/react-nav'
+import { Tree, TreeItem, TreeItemLayout } from '@fluentui/react-tree'
+import { Toaster, useToastController, Toast, ToastTitle, ToastBody } from '@fluentui/react-toast'
 
 const useStyles = makeStyles({
   container: {
@@ -105,10 +143,36 @@ const useStyles = makeStyles({
 export default function ComponentsDemo() {
   const styles = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { dispatchToast } = useToastController()
+  // Carousel is preview-only; linking to docs instead of custom UI
+  const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
+
+  useEffect(() => {
+    const tbody = tableBodyRef.current
+    if (!tbody) return
+    const rows = Array.from(tbody.querySelectorAll('tr'))
+    rows.sort((a, b) => {
+      const aText = (a.querySelector('td')?.textContent || '').trim().toLowerCase()
+      const bText = (b.querySelector('td')?.textContent || '').trim().toLowerCase()
+      return aText.localeCompare(bText)
+    })
+    rows.forEach((row) => tbody.appendChild(row))
+  }, [])
+
+  // no autoplay; avoid custom behavior to keep default appearance
+
+  const notify = () =>
+    dispatchToast(
+      <Toast>
+        <ToastTitle>Saved</ToastTitle>
+        <ToastBody>Changes saved successfully.</ToastBody>
+      </Toast>
+    )
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Fluent UI Components Showcase</h1>
+      <Toaster />
       <div className={styles.tableWrapper}>
         <Table>
           <TableHeader>
@@ -117,7 +181,73 @@ export default function ComponentsDemo() {
               <TableHeaderCell>Examples</TableHeaderCell>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody ref={tableBodyRef as unknown as React.Ref<any>}>
+            {/* DataGrid */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>DataGrid</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                {(() => {
+                  type Person = { id: number; name: string; age: number; role: string }
+                  const items: Person[] = [
+                    { id: 1, name: 'Ada Lovelace', age: 36, role: 'Engineer' },
+                    { id: 2, name: 'Alan Turing', age: 41, role: 'Scientist' },
+                    { id: 3, name: 'Grace Hopper', age: 85, role: 'Rear Admiral' },
+                  ]
+                  const columns = [
+                    createTableColumn<Person>({
+                      columnId: 'name',
+                      compare: (a, b) => a.name.localeCompare(b.name),
+                      renderHeaderCell: () => 'Name',
+                      renderCell: (item) => item.name,
+                    }),
+                    createTableColumn<Person>({
+                      columnId: 'age',
+                      compare: (a, b) => a.age - b.age,
+                      renderHeaderCell: () => 'Age',
+                      renderCell: (item) => item.age,
+                    }),
+                    createTableColumn<Person>({
+                      columnId: 'role',
+                      renderHeaderCell: () => 'Role',
+                      renderCell: (item) => item.role,
+                    }),
+                  ]
+                  return (
+                    <div style={{ minWidth: 420 }}>
+                      <DataGrid items={items} columns={columns} sortable selectionMode="multiselect">
+                        <DataGridHeader>
+                          <DataGridRow>
+                            {({ renderHeaderCell }) => (
+                              <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
+                            )}
+                          </DataGridRow>
+                        </DataGridHeader>
+                        <DataGridBody<Person>>
+                          {({ item }) => (
+                            <DataGridRow<Person> key={item.id}>
+                              {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
+                            </DataGridRow>
+                          )}
+                        </DataGridBody>
+                      </DataGrid>
+                    </div>
+                  )
+                })()}
+              </TableCell>
+            </TableRow>
+            {/* Fluent provider */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Fluent provider</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <FluentProvider theme={{}}>
+                  <Text>Inside provider</Text>
+                </FluentProvider>
+              </TableCell>
+            </TableRow>
             {/* Buttons */}
             <TableRow>
               <TableCell className={styles.componentCell}>
@@ -164,13 +294,51 @@ export default function ComponentsDemo() {
               </TableCell>
             </TableRow>
 
+            {/* Searchbox */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Searchbox</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <SearchBox placeholder="Search" />
+              </TableCell>
+            </TableRow>
+
+            {/* Combobox */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Combobox</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Combobox placeholder="Pick one">
+                  <Option>Apple</Option>
+                  <Option>Orange</Option>
+                  <Option>Banana</Option>
+                </Combobox>
+              </TableCell>
+            </TableRow>
+
+            {/* Select */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Select</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Select>
+                  <option>Red</option>
+                  <option>Green</option>
+                  <option>Blue</option>
+                </Select>
+              </TableCell>
+            </TableRow>
+
             {/* Textarea */}
             <TableRow>
               <TableCell className={styles.componentCell}>
                 <strong>Textarea</strong>
               </TableCell>
               <TableCell className={styles.componentCell}>
-                <Textarea placeholder="Enter multiple lines" style={{ width: '300px' }} />
+                <Textarea placeholder="Enter multiple lines" />
               </TableCell>
             </TableRow>
 
@@ -223,7 +391,7 @@ export default function ComponentsDemo() {
                 <strong>Slider</strong>
               </TableCell>
               <TableCell className={styles.componentCell}>
-                <Slider defaultValue={50} style={{ width: '300px' }} />
+                <Slider defaultValue={50} />
               </TableCell>
             </TableRow>
 
@@ -296,6 +464,24 @@ export default function ComponentsDemo() {
               </TableCell>
             </TableRow>
 
+            {/* Avatar group */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Avatar group</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <AvatarGroup>
+                  <AvatarGroupItem name="Ana" />
+                  <AvatarGroupItem name="Ben" />
+                  <AvatarGroupItem name="Chen" />
+                  <AvatarGroupPopover>
+                    <AvatarGroupItem name="Dana" />
+                    <AvatarGroupItem name="Emil" />
+                  </AvatarGroupPopover>
+                </AvatarGroup>
+              </TableCell>
+            </TableRow>
+
             {/* Persona */}
             <TableRow>
               <TableCell className={styles.componentCell}>
@@ -323,13 +509,38 @@ export default function ComponentsDemo() {
               </TableCell>
             </TableRow>
 
+            {/* Label */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Label</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <Label required>Name</Label>
+                  <Input placeholder="Your name" />
+                </div>
+              </TableCell>
+            </TableRow>
+
             {/* Divider */}
             <TableRow>
               <TableCell className={styles.componentCell}>
                 <strong>Divider</strong>
               </TableCell>
               <TableCell className={styles.componentCell}>
-                <Divider style={{ width: '100%' }}>With Text</Divider>
+                <Divider>With Text</Divider>
+              </TableCell>
+            </TableRow>
+
+            {/* Image */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Image</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <Image src="https://via.placeholder.com/80" alt="placeholder" />
+                </div>
               </TableCell>
             </TableRow>
 
@@ -355,7 +566,7 @@ export default function ComponentsDemo() {
                 <strong>ProgressBar</strong>
               </TableCell>
               <TableCell className={styles.componentCell}>
-                <ProgressBar value={0.5} style={{ width: '300px' }} />
+                <ProgressBar value={0.5} />
               </TableCell>
             </TableRow>
 
@@ -409,6 +620,21 @@ export default function ComponentsDemo() {
                 <Tooltip content="This is a tooltip" relationship="description">
                   <Button>Hover me</Button>
                 </Tooltip>
+              </TableCell>
+            </TableRow>
+
+            {/* Popover */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Popover</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Popover>
+                  <PopoverTrigger disableButtonEnhancement>
+                    <Button>Open Popover</Button>
+                  </PopoverTrigger>
+                  <PopoverSurface>Popover content</PopoverSurface>
+                </Popover>
               </TableCell>
             </TableRow>
 
@@ -514,6 +740,46 @@ export default function ComponentsDemo() {
               </TableCell>
             </TableRow>
 
+            {/* Nav (@fluentui/react-nav) */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Nav</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Nav selectedValue="home">
+                  <NavItem value="home">Home</NavItem>
+                  <NavItem value="settings">Settings</NavItem>
+                  <NavItem value="profile">Profile</NavItem>
+                </Nav>
+              </TableCell>
+            </TableRow>
+
+            {/* Tablist */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Tablist</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <TabList defaultSelectedValue="t1">
+                  <Tab value="t1">Tab 1</Tab>
+                  <Tab value="t2">Tab 2</Tab>
+                </TabList>
+              </TableCell>
+            </TableRow>
+
+            {/* Toolbar */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Toolbar</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Toolbar>
+                  <ToolbarButton icon={<Home24Regular />} aria-label="Home" />
+                  <ToolbarButton icon={<Settings24Regular />} aria-label="Settings" />
+                </Toolbar>
+              </TableCell>
+            </TableRow>
+
             {/* Breadcrumb */}
             <TableRow>
               <TableCell className={styles.componentCell}>
@@ -542,13 +808,37 @@ export default function ComponentsDemo() {
                 <strong>Card</strong>
               </TableCell>
               <TableCell className={styles.componentCell}>
-                <Card style={{ maxWidth: '400px' }}>
+                <Card>
                   <CardHeader
                     header={<Text weight="semibold">Card Title</Text>}
                     description={<Text>Card description</Text>}
                   />
                   This is card content
                 </Card>
+              </TableCell>
+            </TableRow>
+
+            {/* Carousel (Preview) */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Carousel</strong> <span style={{ color: tokens.colorPaletteMarigoldForeground1 }}>(Preview)</span>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Link href="https://fluent2.microsoft.design/components/web/react/core/carousel/usage" target="_blank">View Carousel docs</Link>
+              </TableCell>
+            </TableRow>
+
+            {/* List */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>List</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <List>
+                  <ListItem>Item 1</ListItem>
+                  <ListItem>Item 2</ListItem>
+                  <ListItem>Item 3</ListItem>
+                </List>
               </TableCell>
             </TableRow>
 
@@ -573,6 +863,86 @@ export default function ComponentsDemo() {
                 <InfoLabel info="Additional information">
                   Label with info
                 </InfoLabel>
+              </TableCell>
+            </TableRow>
+
+            {/* Icon */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Icon</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <Home24Regular />
+                  <Person24Regular />
+                  <Image24Regular />
+                </div>
+              </TableCell>
+            </TableRow>
+
+            {/* Skeleton */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Skeleton</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Skeleton>
+                  <SkeletonItem size={16} shape="circle" />
+                  <SkeletonItem size={120} />
+                </Skeleton>
+              </TableCell>
+            </TableRow>
+
+            {/* Tree (@fluentui/react-tree) */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Tree</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <Tree aria-label="Nested tree">
+                  <TreeItem itemType="branch">
+                    <TreeItemLayout>level 1, item 1</TreeItemLayout>
+                    <Tree>
+                      <TreeItem itemType="leaf">
+                        <TreeItemLayout>level 2, item 1</TreeItemLayout>
+                      </TreeItem>
+                      <TreeItem itemType="leaf">
+                        <TreeItemLayout>level 2, item 2</TreeItemLayout>
+                      </TreeItem>
+                      <TreeItem itemType="leaf">
+                        <TreeItemLayout>level 2, item 3</TreeItemLayout>
+                      </TreeItem>
+                    </Tree>
+                  </TreeItem>
+                  <TreeItem itemType="branch">
+                    <TreeItemLayout>level 1, item 2</TreeItemLayout>
+                    <Tree>
+                      <TreeItem itemType="branch">
+                        <TreeItemLayout>level 2, item 1</TreeItemLayout>
+                        <Tree>
+                          <TreeItem itemType="leaf">
+                            <TreeItemLayout>level 3, item 1</TreeItemLayout>
+                          </TreeItem>
+                        </Tree>
+                      </TreeItem>
+                    </Tree>
+                  </TreeItem>
+                  <TreeItem itemType="leaf">
+                    <TreeItemLayout>level 1, item 3</TreeItemLayout>
+                  </TreeItem>
+                </Tree>
+              </TableCell>
+            </TableRow>
+
+            {/* Toast (@fluentui/react-toast) */}
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Toast</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <Button appearance="primary" onClick={notify}>Show Toast</Button>
+                </div>
               </TableCell>
             </TableRow>
           </TableBody>

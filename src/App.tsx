@@ -46,7 +46,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/components" replace />} />
+              <Route index element={<Navigate to="/account" replace />} />
               <Route path="components" element={<ComponentsDemo />} />
               <Route path="account" element={<AccountDemo />} />
               <Route path="account/subscriptions" element={<SubscriptionDemo />} />

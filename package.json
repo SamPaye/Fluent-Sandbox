@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.115.0",
-    "@fluentui/react-components": "^9.54.20",
-    "@fluentui/react-drawer": "^9.54.20",
+    "@fluentui/react-components": "^9.72.4",
+    "@fluentui/react-drawer": "^9.10.6",
     "@fluentui/react-icons": "^2.0.258",
-    "@fluentui/react-nav": "^9.3.9",
+    "@fluentui/react-nav": "^9.3.11",
+    "@fluentui/react-tree": "^9.15.3",
+    "@fluentui/react-toast": "^9.7.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"

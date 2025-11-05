@@ -1,11 +1,9 @@
+import React from 'react'
 import {
   makeStyles,
   tokens,
   Text,
-  Button,
   Card,
-  CardHeader,
-  Divider,
   Avatar,
   Link,
   Menu,
@@ -13,7 +11,13 @@ import {
   MenuList,
   MenuItem,
   MenuPopover,
-  Image,
+  Button,
+  TabList,
+  Tab,
+  Accordion,
+  AccordionHeader,
+  AccordionItem,
+  AccordionPanel,
 } from '@fluentui/react-components'
 import {
   Nav,
@@ -22,23 +26,37 @@ import {
 import {
   Grid24Regular,
   Person24Regular,
-  ChevronDown24Regular,
-  ChevronRight24Regular,
   Desktop24Regular,
-  Games24Regular,
-  Key24Regular,
   Payment24Regular,
   ShieldCheckmark24Regular,
   Eye24Regular,
   Cart24Regular,
   Book24Regular,
-  PersonCircle24Regular,
-  Trophy24Regular,
-  Mail24Regular,
   Storage24Regular,
   Home24Regular,
+  ChevronDown16Regular,
+  ChevronUp16Regular,
+  Key24Regular,
 } from '@fluentui/react-icons'
 import { useNavigate } from 'react-router-dom'
+import { toggleHeaderCollapsed } from '../utils/layoutEvents'
+// Custom Windows logo icon (monochrome, matches other icons)
+const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
+    <rect x="3" y="3" width="8" height="8" rx="1" />
+    <rect x="13" y="3" width="8" height="8" rx="1" />
+    <rect x="3" y="13" width="8" height="8" rx="1" />
+    <rect x="13" y="13" width="8" height="8" rx="1" />
+  </svg>
+)
+
+const SubscriptionsIcon: React.FC = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M8 9h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+)
 
 const useStyles = makeStyles({
   root: {
@@ -54,6 +72,12 @@ const useStyles = makeStyles({
     padding: '12px 24px',
     backgroundColor: tokens.colorBrandBackground,
     color: tokens.colorNeutralForegroundOnBrand,
+  },
+  headerCenter: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerLeft: {
     display: 'flex',
@@ -98,9 +122,10 @@ const useStyles = makeStyles({
   },
   content: {
     flex: 1,
-    padding: '32px',
-    maxWidth: '900px',
+    padding: '48px 0px',
+    maxWidth: '1200px',
     margin: '0 auto',
+    fontSize: '14px',
   },
   pageTitle: {
     fontSize: tokens.fontSizeBase600,
@@ -216,19 +241,250 @@ const useStyles = makeStyles({
       backgroundColor: 'transparent !important',
     },
   },
+  // Copied styles to support subscription content
+  breadcrumbContainer: {
+    marginBottom: '24px',
+  },
+  headerSection: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '42px',
+  },
+  headerTitleSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  logoImage: {
+    width: '32px',
+    height: '32px',
+    objectFit: 'contain',
+  },
+  headerTitle: {
+    fontSize: tokens.fontSizeBase600,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  headerInfoColumns: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '24px',
+    alignItems: 'center',
+  },
+  infoColumn: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    minWidth: '296px',
+  },
+  iconCircle: {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    backgroundColor: '#cfe5f6',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  iconSvg: {
+    width: '24px',
+    height: '24px',
+    color: tokens.colorBrandForeground1,
+  },
+  iconImage: {
+    width: '24px',
+    height: '24px',
+    objectFit: 'contain',
+  },
+  infoText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0px',
+  },
+  infoPrimary: {
+    fontSize: '12px',
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+  },
+  infoSecondary: {
+    fontSize: '12px',
+    color: tokens.colorNeutralForeground3,
+  },
+  tabsContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  cardWrapper: {
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderRadius: tokens.borderRadiusLarge,
+    padding: '16px',
+    marginBottom: '16px',
+  },
+  accordionWrapper: {
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderRadius: tokens.borderRadiusLarge,
+    padding: '16px',
+    marginBottom: '16px',
+  },
+  accordionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+  },
+  accordionIcon: {
+    color: tokens.colorBrandBackground,
+    fontSize: '20px',
+  },
+  accordionHeaderText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0px',
+  },
+  accordionTitle: {
+    fontSize: '14px',
+    paddingLeft: '16px',
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  accordionBillingText: {
+    fontSize: '12px',
+    paddingLeft: '16px',
+    color: tokens.colorNeutralForeground3,
+  },
+  accordionPanel: {
+    paddingTop: '16px',
+    borderTop: '1px solid #f2f2f2',
+    marginTop: '16px',
+    marginLeft: '-16px',
+    marginRight: '-16px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
+  },
+  subscriptionCard: {
+    marginBottom: '16px',
+    border: `1px solid ${tokens.colorNeutralStroke1}`,
+    borderRadius: tokens.borderRadiusLarge,
+    overflow: 'hidden',
+  },
+  subscriptionCardHeader: {
+    padding: '8px 16px',
+    fontSize: tokens.fontSizeBase300,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  subscriptionCardHeaderRecommended: {
+    backgroundColor: tokens.colorBrandBackground2,
+    color: tokens.colorBrandForeground1,
+  },
+  subscriptionCardHeaderPremium: {
+    backgroundColor: tokens.colorNeutralBackground3,
+    color: tokens.colorNeutralForeground1,
+  },
+  subscriptionCardContent: {
+    padding: '16px',
+    backgroundColor: tokens.colorNeutralBackground1,
+    position: 'relative',
+  },
+  subscriptionCardTop: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: '16px',
+  },
+  subscriptionCardDetails: {
+    flex: 1,
+  },
+  subscriptionPlanName: {
+    fontSize: tokens.fontSizeBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    marginBottom: '4px',
+  },
+  subscriptionPlanDescription: {
+    fontSize: tokens.fontSizeBase300,
+    color: tokens.colorNeutralForeground3,
+    marginBottom: '8px',
+  },
+  subscriptionPlanPrice: {
+    fontSize: tokens.fontSizeBase400,
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  subscriptionCardButton: {
+    marginLeft: '16px',
+  },
+  subscriptionCardFooter: {
+    marginTop: '16px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  seeAllBenefitsLink: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    fontSize: tokens.fontSizeBase300,
+    cursor: 'pointer',
+  },
+  expandedContent: {
+    marginTop: '16px',
+    padding: '16px',
+    backgroundColor: tokens.colorNeutralBackground2,
+    border: `2px dashed ${tokens.colorNeutralStroke2}`,
+    borderRadius: tokens.borderRadiusSmall,
+    textAlign: 'center',
+    color: tokens.colorNeutralForeground3,
+    fontSize: tokens.fontSizeBase300,
+  },
 })
 
 export default function AccountDemo() {
   const styles = useStyles()
   const navigate = useNavigate()
+  const [headerCollapsed, setLocalHeaderCollapsed] = React.useState(true)
+  const [selectedTab, setSelectedTab] = React.useState('monthly')
+  const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
+  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
+  const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
+  const [storageAccordionOpen, setStorageAccordionOpen] = React.useState(false)
+  const [gamePassAccordionOpen, setGamePassAccordionOpen] = React.useState(false)
+  const [devicesAccordionOpen, setDevicesAccordionOpen] = React.useState(false)
+  const [privacyAccordionOpen, setPrivacyAccordionOpen] = React.useState(false)
+  const [securityAccordionOpen, setSecurityAccordionOpen] = React.useState(false)
+  const [paymentAccordionOpen, setPaymentAccordionOpen] = React.useState(false)
+  const [orderHistoryAccordionOpen, setOrderHistoryAccordionOpen] = React.useState(false)
 
-  const handleNavSelect = (event: any, data: any) => {
+  const handleTabSelect = (_: any, data: any) => {
+    setSelectedTab(data.value)
+  }
+
+  const toggleExpanded = (cardId: string) => {
+    setExpandedCards((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(cardId)) {
+        newSet.delete(cardId)
+      } else {
+        newSet.add(cardId)
+      }
+      return newSet
+    })
+  }
+
+  const isExpanded = (cardId: string) => expandedCards.has(cardId)
+
+  const handleNavSelect = (_: any, data: any) => {
     if (data.value === 'account') {
       navigate('/account')
     } else if (data.value === 'subscriptions') {
       navigate('/account/subscriptions')
     }
   }
+
+  React.useEffect(() => {
+    const setHandler = (e: Event) => {
+      const ce = e as CustomEvent<{ collapsed: boolean }>
+      setLocalHeaderCollapsed(!!ce.detail?.collapsed)
+    }
+    window.addEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
+    return () => window.removeEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
+  }, [])
 
   return (
     <div className={styles.root}>
@@ -255,6 +511,40 @@ export default function AccountDemo() {
             Microsoft account
           </Text>
         </div>
+        {/* Center chevron toggle in middle column */}
+        <div className={styles.headerCenter}>
+          <button
+            aria-label={headerCollapsed ? 'Expand header' : 'Collapse header'}
+            onClick={() => {
+              toggleHeaderCollapsed()
+            }}
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.9)',
+              color: 'white',
+              cursor: 'pointer',
+              padding: '4px',
+              lineHeight: 0,
+              width: '24px',
+              height: '24px',
+              borderRadius: '50%',
+              boxSizing: 'border-box',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span
+              style={{
+                display: 'inline-flex',
+                transition: 'transform 120ms ease',
+                transform: headerCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
+              }}
+            >
+              <ChevronDown16Regular style={{ fontSize: '20px' }} />
+            </span>
+          </button>
+        </div>
         <div className={styles.headerRight}>
           <div className={styles.headerButton}>?</div>
           <Menu>
@@ -278,7 +568,7 @@ export default function AccountDemo() {
         <div className={styles.sidebar} style={{ background: 'transparent', border: 'none' }}>
           <div className={styles.userSection}>
             <div className={styles.userInfo}>
-              <Avatar name="Sam D" color="colorful" />
+              <Avatar name="Sam P" color="colorful" size={48} />
               <div>
                 <div className={styles.userName}>Sam P</div>
                 <div className={styles.userEmail}>samp@hotmail.com</div>
@@ -293,7 +583,7 @@ export default function AccountDemo() {
             <NavItem icon={<Person24Regular />} value="info" className={styles.navItem}>
               Your info
             </NavItem>
-            <NavItem icon={<PersonCircle24Regular />} value="subscriptions" className={styles.navItem}>
+            <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={styles.navItem}>
               Subscriptions
             </NavItem>
             <NavItem icon={<Desktop24Regular />} value="devices" className={styles.navItem}>
@@ -317,234 +607,443 @@ export default function AccountDemo() {
           </Nav>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content (replaced with Subscription content) */}
         <div className={styles.content}>
-          <h1 className={styles.pageTitle}>Account</h1>
-
-          {/* Top Info Cards */}
-          <div className={styles.infoCards}>
-            <Card className={styles.infoCard}>
-              <div style={{ padding: '16px' }}>
-                <div className={styles.cardIcon}>
-                  <Storage24Regular style={{ fontSize: '24px' }} />
+          {/* Header Section with Logo and Info Columns */}
+          <div className={styles.headerSection}>
+            <div className={styles.headerTitleSection}>
+              <Text className={styles.headerTitle}>Account</Text>
+            </div>
+            <div className={styles.headerInfoColumns}>
+              {/* Renew Column */}
+              <div className={styles.infoColumn}>
+                <div className={styles.iconCircle}>
+                  <WindowsLogoIcon className={styles.iconSvg} />
                 </div>
-                <div className={styles.cardTitle}>Manage Microsoft 365 Personal</div>
-                <div className={styles.cardDescription}>Subscriptions</div>
-              </div>
-            </Card>
-
-            <Card className={styles.infoCard}>
-              <div style={{ padding: '16px' }}>
-                <div className={styles.cardIcon}>
-                  <Key24Regular style={{ fontSize: '24px' }} />
+                <div className={styles.infoText}>
+                  <Text className={styles.infoPrimary}>Manage Microsoft 365 Personal</Text>
+                  <Text className={styles.infoSecondary}>Annual subscription</Text>
                 </div>
-                <div className={styles.cardTitle}>Change password</div>
-                <div className={styles.cardDescription}>Security</div>
               </div>
-            </Card>
-          </div>
-
-          {/* Subscriptions Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Subscriptions</h2>
-              <Link href="#" className={styles.viewLink}>
-                View and manage your Microsoft products and subscriptions
-              </Link>
-            </div>
-          </div>
-
-          {/* Microsoft Storage Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Microsoft storage</h2>
-              <Link href="#">View and manage storage across your Microsoft account</Link>
-            </div>
-            <Card className={styles.sectionCard}>
-              <div style={{ padding: '16px' }}>
-                <Text weight="semibold">
-                  This includes files, photos, attachments, and more across your Microsoft
-                  account
-                </Text>
-              </div>
-            </Card>
-          </div>
-
-          {/* Devices Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Devices</h2>
-              <Link href="#" className={styles.viewLink}>
-                View all devices (3) <ChevronRight24Regular />
-              </Link>
-            </div>
-            <Text style={{ display: 'block', marginBottom: '16px' }}>
-              Find, repair, and manage your devices
-            </Text>
-
-            <Card className={styles.sectionCard}>
-              <div className={styles.deviceItem}>
-                <div className={styles.deviceIcon}>
-                  <Desktop24Regular style={{ fontSize: '48px' }} />
+              {/* Install Column */}
+              <div className={styles.infoColumn}>
+                <div className={styles.iconCircle}>
+                  <Key24Regular className={styles.iconSvg} />
                 </div>
-                <div className={styles.deviceInfo}>
-                  <div className={styles.deviceName}>Cumulo</div>
-                  <div className={styles.deviceDetails}>Stealth 15M ATI.ENV</div>
+                <div className={styles.infoText}>
+                  <Text className={styles.infoPrimary}>Change Password</Text>
+                  <Text className={styles.infoSecondary}>Security</Text>
                 </div>
-                <Link href="#">View details</Link>
               </div>
-            </Card>
+            </div>
+          </div>
 
-            <Card className={styles.sectionCard}>
-              <div className={styles.deviceItem}>
-                <div className={styles.deviceIcon}>
-                  <Games24Regular style={{ fontSize: '48px' }} />
+          {/* Your current Plan Accordion */}
+          <div className={styles.accordionWrapper}>
+            <Accordion 
+              collapsible
+              openItems={currentPlanAccordionOpen ? ['current-plan'] : []}
+              onToggle={(_, data) => {
+                const isOpen = (data as any).openItems.includes('current-plan')
+                setCurrentPlanAccordionOpen(isOpen)
+              }}
+            >
+              <AccordionItem value="current-plan">
+                <AccordionHeader 
+                  expandIconPosition="end"
+                  className={styles.accordionHeader}
+                >
+                  <Storage24Regular className={styles.accordionIcon} style={{ display: 'none' }} />
+                  <div className={styles.accordionHeaderText}>
+                    <Text weight="semibold" className={styles.accordionTitle} style={{ paddingLeft: '0px' }}>
+                      Your current Plan
+                    </Text>
+                    <Text className={styles.accordionBillingText} style={{ display: 'none' }}>
+                      Save 16% with annual billing ($129.99/year)
+                    </Text>
+                  </div>
+                </AccordionHeader>
+                <AccordionPanel className={styles.accordionPanel}>
+                  <Text style={{ fontSize: '20px', fontWeight: 500 }}>
+                    Microsoft 365 Personal
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        
+        {/* Microsoft storage */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={storageAccordionOpen ? ['ms-storage'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('ms-storage')
+              setStorageAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="ms-storage">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Storage24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Microsoft storage
+                  </Text>
                 </div>
-                <div className={styles.deviceInfo}>
-                  <div className={styles.deviceName}>XBOXONE</div>
-                  <div className={styles.deviceDetails}>Xbox One</div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Microsoft storage.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        {/* Game Pass */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={gamePassAccordionOpen ? ['game-pass'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('game-pass')
+              setGamePassAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="game-pass">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Grid24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Game Pass
+                  </Text>
                 </div>
-                <Link href="#">View details</Link>
-              </div>
-            </Card>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Game Pass.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-            <Divider style={{ margin: '24px 0' }} />
-            <Link href="#">Schedule a repair</Link>
-            <Text style={{ display: 'inline', margin: '0 8px' }}>•</Text>
-            <Link href="#">Find my device</Link>
-            <Text style={{ display: 'inline', margin: '0 8px' }}>•</Text>
-            <Link href="#">Online support</Link>
-          </div>
+        {/* Devices */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={devicesAccordionOpen ? ['devices'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('devices')
+              setDevicesAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="devices">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Desktop24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Devices
+                  </Text>
+                </div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Devices.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-          {/* Privacy Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Privacy</h2>
-            </div>
-            <Text style={{ display: 'block', marginBottom: '16px' }}>
-              Manage your privacy settings for Microsoft products
-            </Text>
-            <Card className={styles.sectionCard}>
-              <div style={{ padding: '16px' }}>
-                <Text weight="semibold">
-                  Control your privacy settings and data preferences
-                </Text>
-              </div>
-            </Card>
-          </div>
+        {/* Privacy */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={privacyAccordionOpen ? ['privacy'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('privacy')
+              setPrivacyAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="privacy">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Eye24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Privacy
+                  </Text>
+                </div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Privacy.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-          {/* Security Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Security</h2>
-            </div>
-            <Text style={{ display: 'block', marginBottom: '16px' }}>
-              Steps to help you keep your account safe online
-            </Text>
-            <Card className={styles.sectionCard}>
-              <div style={{ padding: '16px' }}>
-                <Text weight="semibold">Review your account security and recent activity</Text>
-              </div>
-            </Card>
-          </div>
+        {/* Security */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={securityAccordionOpen ? ['security'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('security')
+              setSecurityAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="security">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <ShieldCheckmark24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Security
+                  </Text>
+                </div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Security.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-          {/* Payment Options Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Payment options</h2>
-            </div>
-            <Text style={{ display: 'block', marginBottom: '16px' }}>
-              Manage how you pay for purchases with your Microsoft account
-            </Text>
-            <Card className={styles.sectionCard}>
-              <div style={{ padding: '16px' }}>
-                <Text weight="semibold">Add or update your payment methods</Text>
-              </div>
-            </Card>
-          </div>
+        {/* Payment options */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={paymentAccordionOpen ? ['payment-options'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('payment-options')
+              setPaymentAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="payment-options">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Payment24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Payment options
+                  </Text>
+                </div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Payment options.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-          {/* Order History Section */}
-          <div className={styles.section}>
-            <div className={styles.sectionCardHeader}>
-              <h2 className={styles.sectionTitle}>Order history</h2>
-            </div>
-            <Text style={{ display: 'block', marginBottom: '16px' }}>
-              View recent purchases made with your Microsoft account
-            </Text>
-            <Card className={styles.sectionCard}>
-              <div style={{ padding: '16px' }}>
-                <Text weight="semibold">View your purchase history and receipts</Text>
-              </div>
-            </Card>
-          </div>
+        {/* Order history */}
+        <div className={styles.accordionWrapper}>
+          <Accordion 
+            collapsible
+            openItems={orderHistoryAccordionOpen ? ['order-history'] : []}
+            onToggle={(_, data) => {
+              const isOpen = (data as any).openItems.includes('order-history')
+              setOrderHistoryAccordionOpen(isOpen)
+            }}
+          >
+            <AccordionItem value="order-history">
+              <AccordionHeader 
+                expandIconPosition="end"
+                className={styles.accordionHeader}
+              >
+                <Cart24Regular className={styles.accordionIcon} />
+                <div className={styles.accordionHeaderText}>
+                  <Text weight="semibold" className={styles.accordionTitle}>
+                    Order history
+                  </Text>
+                </div>
+              </AccordionHeader>
+              <AccordionPanel className={styles.accordionPanel}>
+                <Text>Placeholder content for Order history.</Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
 
-          {/* Promotional Cards */}
-          <Divider style={{ margin: '32px 0' }} />
-          
-          <div className={styles.promoSection}>
-            <Card className={styles.promoCard}>
-              <div className={styles.promoIcon}>
-                <Book24Regular style={{ fontSize: '72px' }} />
-              </div>
-              <div className={styles.promoTitle}>Discover</div>
-              <div className={styles.promoDescription}>
-                Get Spotify Premium for free
-              </div>
-              <Text style={{ fontSize: tokens.fontSizeBase200 }}>
-                Enjoy listening to your favorite artists and audiobooks with Microsoft Rewards
-              </Text>
-              <div style={{ marginTop: '16px' }}>
-                <Link href="#">Learn More</Link>
-              </div>
-            </Card>
+          {/* Manage Subscription Accordion */}
+          <div className={styles.accordionWrapper}>
+            <Accordion 
+              collapsible
+              openItems={manageAccordionOpen ? ['manage-subscription'] : []}
+              onToggle={(_, data) => {
+                const isOpen = (data as any).openItems.includes('manage-subscription')
+                setManageAccordionOpen(isOpen)
+              }}
+            >
+              <AccordionItem value="manage-subscription">
+                <AccordionHeader 
+                  expandIconPosition="end"
+                  className={styles.accordionHeader}
+                  expandIcon={!manageAccordionOpen ? (
+                    <Link 
+                      as="button" 
+                      style={{ 
+                        fontWeight: tokens.fontWeightSemibold,
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setManageAccordionOpen(true)
+                      }}
+                    >
+                      Change
+                    </Link>
+                  ) : (
+                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                  )}
+                >
+                  <Storage24Regular className={styles.accordionIcon} />
+                  <div className={styles.accordionHeaderText}>
+                    <Text weight="semibold" className={styles.accordionTitle}>
+                      Manage subscription
+                    </Text>
+                    <Text className={styles.accordionBillingText}>
+                      Save 16% with annual billing ($129.99/year)
+                    </Text>
+                  </div>
+                </AccordionHeader>
+                <AccordionPanel className={styles.accordionPanel}>
+                  {/* Billing Period Tabs */}
+                  <div className={styles.cardWrapper} style={{ backgroundColor: 'transparent', marginBottom: '16px' }}>
+                    <div className={styles.tabsContainer}>
+                      <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
+                        <Tab value="monthly">Monthly</Tab>
+                        <Tab value="annual">Annual (Save 16%)</Tab>
+                      </TabList>
+                    </div>
+                  </div>
 
-            <Card className={styles.promoCard}>
-              <div className={styles.promoIcon}>
-                <PersonCircle24Regular style={{ fontSize: '72px' }} />
-              </div>
-              <div className={styles.promoTitle}>Family</div>
-              <div className={styles.promoDescription}>
-                One happy connected family
-              </div>
-              <Text style={{ fontSize: tokens.fontSizeBase200 }}>
-                Share stuff, stay organized, and keep kids safer online
-              </Text>
-              <div style={{ marginTop: '16px' }}>
-                <Link href="#">Add a member</Link>
-              </div>
-            </Card>
+                  {/* Microsoft 365 Family Card - Recommended */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderRecommended}`}>
+                      Recommended
+                    </div>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Family</div>
+                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
+                          <div className={styles.subscriptionPlanPrice}>$12.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('family')
+                          }}
+                        >
+                          See all benefits {isExpanded('family') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('family') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Family benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
 
-            <Card className={styles.promoCard}>
-              <div className={styles.promoIcon}>
-                <Trophy24Regular style={{ fontSize: '72px' }} />
-              </div>
-              <div className={styles.promoTitle}>Rewards</div>
-              <div className={styles.promoDescription}>
-                You're being rewarded
-              </div>
-              <Text style={{ fontSize: tokens.fontSizeBase200 }}>
-                As a Microsoft Rewards member, you'll earn points for searching and shopping with Microsoft
-              </Text>
-              <div style={{ marginTop: '16px' }}>
-                <Link href="#">Tell me more</Link>
-              </div>
-            </Card>
+                  {/* Microsoft 365 Premium Card - Highest AI Limits */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderPremium}`}>
+                      Highest AI limits
+                    </div>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Premium</div>
+                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
+                          <div className={styles.subscriptionPlanPrice}>$19.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('premium')
+                          }}
+                        >
+                          See all benefits {isExpanded('premium') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('premium') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Premium benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
 
-            <Card className={styles.promoCard}>
-              <div className={styles.promoIcon}>
-                <Mail24Regular style={{ fontSize: '72px' }} />
-              </div>
-              <div className={styles.promoTitle}>Outlook</div>
-              <div className={styles.promoDescription}>
-                Your life organizer
-              </div>
-              <Text style={{ fontSize: tokens.fontSizeBase200 }}>
-                Save time and focus on what matters most with intelligent, secure email and calendar app
-              </Text>
-              <div style={{ marginTop: '16px' }}>
-                <Link href="#">Open Outlook.com</Link>
-              </div>
-            </Card>
+                  {/* Microsoft 365 Basic Card */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Basic</div>
+                          <div className={styles.subscriptionPlanPrice}>$2.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Downgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('basic')
+                          }}
+                        >
+                          See all benefits {isExpanded('basic') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('basic') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Basic benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>

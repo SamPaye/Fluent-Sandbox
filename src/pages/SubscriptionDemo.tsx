@@ -35,7 +35,6 @@ import {
   Eye24Regular,
   Cart24Regular,
   Book24Regular,
-  PersonCircle24Regular,
   Storage24Regular,
   ChevronUp16Regular,
   ChevronDown16Regular,
@@ -46,6 +45,15 @@ import {
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import msLogo from '../images/ms.png'
+import { toggleHeaderCollapsed } from '../utils/layoutEvents'
+
+const SubscriptionsIcon: React.FC = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M8 9h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M8 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+)
 
 const useStyles = makeStyles({
   root: {
@@ -61,6 +69,12 @@ const useStyles = makeStyles({
     padding: '12px 24px',
     backgroundColor: tokens.colorBrandBackground,
     color: tokens.colorNeutralForegroundOnBrand,
+  },
+  headerCenter: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerLeft: {
     display: 'flex',
@@ -346,6 +360,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
+    minWidth: '296px',
   },
   iconCircle: {
     width: '32px',
@@ -413,7 +428,7 @@ const useStyles = makeStyles({
   accordionHeaderText: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
+    gap: '0px',
   },
   accordionBillingText: {
     fontSize: '12px',
@@ -438,6 +453,7 @@ export default function SubscriptionDemo() {
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
   const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
   const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
+  const [headerCollapsed, setLocalHeaderCollapsed] = React.useState(true)
 
   const handleNavSelect = (_: any, data: any) => {
     if (data.value === 'account') {
@@ -465,6 +481,15 @@ export default function SubscriptionDemo() {
 
   const isExpanded = (cardId: string) => expandedCards.has(cardId)
 
+  React.useEffect(() => {
+    const setHandler = (e: Event) => {
+      const ce = e as CustomEvent<{ collapsed: boolean }>
+      setLocalHeaderCollapsed(!!ce.detail?.collapsed)
+    }
+    window.addEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
+    return () => window.removeEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
+  }, [])
+
   return (
     <div className={styles.root}>
       {/* Header */}
@@ -490,6 +515,40 @@ export default function SubscriptionDemo() {
             Microsoft account
           </Text>
         </div>
+        {/* Center chevron toggle in middle column */}
+        <div className={styles.headerCenter}>
+          <button
+            aria-label={headerCollapsed ? 'Expand header' : 'Collapse header'}
+            onClick={() => {
+              toggleHeaderCollapsed()
+            }}
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255,255,255,0.9)',
+              color: 'white',
+              cursor: 'pointer',
+              padding: '4px',
+              lineHeight: 0,
+              width: '24px',
+              height: '24px',
+              borderRadius: '50%',
+              boxSizing: 'border-box',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <span
+              style={{
+                display: 'inline-flex',
+                transition: 'transform 120ms ease',
+                transform: headerCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
+              }}
+            >
+              <ChevronDown16Regular style={{ fontSize: '20px' }} />
+            </span>
+          </button>
+        </div>
         <div className={styles.headerRight}>
           <div className={styles.headerButton}>?</div>
           <Menu>
@@ -513,7 +572,7 @@ export default function SubscriptionDemo() {
         <div className={styles.sidebar} style={{ background: 'transparent', border: 'none' }}>
           <div className={styles.userSection}>
             <div className={styles.userInfo}>
-              <Avatar name="Sam D" color="colorful" />
+              <Avatar name="Sam P" color="colorful" size={48} />
               <div>
                 <div className={styles.userName}>Sam P</div>
                 <div className={styles.userEmail}>samp@hotmail.com</div>
@@ -528,7 +587,7 @@ export default function SubscriptionDemo() {
             <NavItem icon={<Person24Regular />} value="info" className={styles.navItem}>
               Your info
             </NavItem>
-            <NavItem icon={<PersonCircle24Regular />} value="subscriptions" className={styles.navItem}>
+            <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={styles.navItem}>
               Subscriptions
             </NavItem>
             <NavItem icon={<Desktop24Regular />} value="devices" className={styles.navItem}>
