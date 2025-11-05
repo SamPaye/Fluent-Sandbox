@@ -17,6 +17,10 @@ import {
   BreadcrumbItem,
   BreadcrumbButton,
   BreadcrumbDivider,
+  Accordion,
+  AccordionHeader,
+  AccordionItem,
+  AccordionPanel,
 } from '@fluentui/react-components'
 import {
   Nav,
@@ -347,7 +351,7 @@ const useStyles = makeStyles({
     width: '32px',
     height: '32px',
     borderRadius: '50%',
-    backgroundColor: tokens.colorBrandBackground2,
+    backgroundColor: '#cfe5f6',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -386,6 +390,45 @@ const useStyles = makeStyles({
       backgroundColor: 'transparent !important',
     },
   },
+  accordionWrapper: {
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderRadius: tokens.borderRadiusLarge,
+    padding: '16px',
+    marginBottom: '16px',
+  },
+  accordionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+  },
+  accordionIcon: {
+    color: tokens.colorBrandBackground,
+    fontSize: '20px',
+  },
+  accordionTitle: {
+    fontSize: '14px',
+    paddingLeft: '16px',
+    fontWeight: tokens.fontWeightSemibold,
+  },
+  accordionHeaderText: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+  accordionBillingText: {
+    fontSize: '12px',
+    paddingLeft: '16px',
+    color: tokens.colorNeutralForeground3,
+  },
+  accordionPanel: {
+    paddingTop: '16px',
+    borderTop: '1px solid #f2f2f2',
+    marginTop: '16px',
+    marginLeft: '-16px',
+    marginRight: '-16px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
+  },
 })
 
 export default function SubscriptionDemo() {
@@ -393,6 +436,8 @@ export default function SubscriptionDemo() {
   const navigate = useNavigate()
   const [selectedTab, setSelectedTab] = React.useState('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
+  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
+  const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
 
   const handleNavSelect = (_: any, data: any) => {
     if (data.value === 'account') {
@@ -554,143 +599,210 @@ export default function SubscriptionDemo() {
             </div>
           </div>
 
-          {/* Manage Subscription Header and Annual Billing Offer */}
-          <div className={styles.cardWrapper}>
-            <div className={styles.manageHeader}>
-              <Storage24Regular className={styles.manageHeaderIcon} />
-              <Text weight="semibold" style={{ fontSize: '14px' }}>
-                Manage subscription
-              </Text>
-            </div>
-
-            {/* Annual Billing Offer */}
-            <Text className={styles.annualBillingText}>
-              Save 16% with annual billing ($129.99/year)
-            </Text>
+          {/* Your current Plan Accordion */}
+          <div className={styles.accordionWrapper}>
+            <Accordion 
+              collapsible
+              openItems={currentPlanAccordionOpen ? ['current-plan'] : []}
+              onToggle={(_, data) => {
+                const isOpen = data.openItems.includes('current-plan')
+                setCurrentPlanAccordionOpen(isOpen)
+              }}
+            >
+              <AccordionItem value="current-plan">
+                <AccordionHeader 
+                  expandIconPosition="end"
+                  className={styles.accordionHeader}
+                >
+                  <Storage24Regular className={styles.accordionIcon} style={{ display: 'none' }} />
+                  <div className={styles.accordionHeaderText}>
+                    <Text weight="semibold" className={styles.accordionTitle} style={{ paddingLeft: '0px' }}>
+                      Your current Plan
+                    </Text>
+                    <Text className={styles.accordionBillingText} style={{ display: 'none' }}>
+                      Save 16% with annual billing ($129.99/year)
+                    </Text>
+                  </div>
+                </AccordionHeader>
+                <AccordionPanel className={styles.accordionPanel}>
+                  <Text style={{ fontSize: '20px', fontWeight: 500 }}>
+                    Microsoft 365 Personal
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </div>
 
-          {/* Billing Period Tabs */}
-          <div className={styles.cardWrapper} style={{ backgroundColor: 'transparent' }}>
-            <div className={styles.tabsContainer}>
-              <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
-                <Tab value="monthly">Monthly</Tab>
-                <Tab value="annual">Annual (Save 16%)</Tab>
-              </TabList>
-            </div>
+          {/* Manage Subscription Accordion */}
+          <div className={styles.accordionWrapper}>
+            <Accordion 
+              collapsible
+              openItems={manageAccordionOpen ? ['manage-subscription'] : []}
+              onToggle={(_, data) => {
+                const isOpen = data.openItems.includes('manage-subscription')
+                setManageAccordionOpen(isOpen)
+              }}
+            >
+              <AccordionItem value="manage-subscription">
+                <AccordionHeader 
+                  expandIconPosition="end"
+                  className={styles.accordionHeader}
+                  expandIcon={!manageAccordionOpen ? (
+                    <Link 
+                      as="button" 
+                      style={{ 
+                        fontWeight: tokens.fontWeightSemibold,
+                        textDecoration: 'none',
+                        cursor: 'pointer',
+                      }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setManageAccordionOpen(true)
+                      }}
+                    >
+                      Change
+                    </Link>
+                  ) : (
+                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                  )}
+                >
+                  <Storage24Regular className={styles.accordionIcon} />
+                  <div className={styles.accordionHeaderText}>
+                    <Text weight="semibold" className={styles.accordionTitle}>
+                      Manage subscription
+                    </Text>
+                    <Text className={styles.accordionBillingText}>
+                      Save 16% with annual billing ($129.99/year)
+                    </Text>
+                  </div>
+                </AccordionHeader>
+                <AccordionPanel className={styles.accordionPanel}>
+                  {/* Billing Period Tabs */}
+                  <div className={styles.cardWrapper} style={{ backgroundColor: 'transparent', marginBottom: '16px' }}>
+                    <div className={styles.tabsContainer}>
+                      <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
+                        <Tab value="monthly">Monthly</Tab>
+                        <Tab value="annual">Annual (Save 16%)</Tab>
+                      </TabList>
+                    </div>
+                  </div>
+
+                  {/* Microsoft 365 Family Card - Recommended */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderRecommended}`}>
+                      Recommended
+                    </div>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Family</div>
+                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
+                          <div className={styles.subscriptionPlanPrice}>$12.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('family')
+                          }}
+                        >
+                          See all benefits {isExpanded('family') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('family') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Family benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+
+                  {/* Microsoft 365 Premium Card - Highest AI Limits */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderPremium}`}>
+                      Highest AI limits
+                    </div>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Premium</div>
+                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
+                          <div className={styles.subscriptionPlanPrice}>$19.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('premium')
+                          }}
+                        >
+                          See all benefits {isExpanded('premium') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('premium') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Premium benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+
+                  {/* Microsoft 365 Basic Card */}
+                  <Card className={styles.subscriptionCard}>
+                    <div className={styles.subscriptionCardContent}>
+                      <div className={styles.subscriptionCardTop}>
+                        <div className={styles.subscriptionCardDetails}>
+                          <div className={styles.subscriptionPlanName}>Microsoft 365 Basic</div>
+                          <div className={styles.subscriptionPlanPrice}>$2.99/month</div>
+                        </div>
+                        <Button appearance="primary" className={styles.subscriptionCardButton}>Downgrade</Button>
+                      </div>
+                      <div className={styles.subscriptionCardFooter}>
+                        <Link 
+                          href="#" 
+                          className={styles.seeAllBenefitsLink}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            toggleExpanded('basic')
+                          }}
+                        >
+                          See all benefits {isExpanded('basic') ? (
+                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                          ) : (
+                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                          )}
+                        </Link>
+                      </div>
+                      {isExpanded('basic') && (
+                        <div className={styles.expandedContent}>
+                          <Text>This is placeholder content for Microsoft 365 Basic benefits. </Text>
+                          <Text>Additional features and details will appear here when expanded.</Text>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </div>
-
-          {/* Microsoft 365 Family Card - Recommended */}
-          <Card className={styles.subscriptionCard}>
-            <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderRecommended}`}>
-              Recommended
-            </div>
-            <div className={styles.subscriptionCardContent}>
-              <div className={styles.subscriptionCardTop}>
-                <div className={styles.subscriptionCardDetails}>
-                  <div className={styles.subscriptionPlanName}>Microsoft 365 Family</div>
-                  <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
-                  <div className={styles.subscriptionPlanPrice}>$12.99/month</div>
-                </div>
-                <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
-              </div>
-              <div className={styles.subscriptionCardFooter}>
-                <Link 
-                  href="#" 
-                  className={styles.seeAllBenefitsLink}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    toggleExpanded('family')
-                  }}
-                >
-                  See all benefits {isExpanded('family') ? (
-                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                  ) : (
-                    <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                  )}
-                </Link>
-              </div>
-              {isExpanded('family') && (
-                <div className={styles.expandedContent}>
-                  <Text>This is placeholder content for Microsoft 365 Family benefits. </Text>
-                  <Text>Additional features and details will appear here when expanded.</Text>
-                </div>
-              )}
-            </div>
-          </Card>
-
-          {/* Microsoft 365 Premium Card - Highest AI Limits */}
-          <Card className={styles.subscriptionCard}>
-            <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderPremium}`}>
-              Highest AI limits
-            </div>
-            <div className={styles.subscriptionCardContent}>
-              <div className={styles.subscriptionCardTop}>
-                <div className={styles.subscriptionCardDetails}>
-                  <div className={styles.subscriptionPlanName}>Microsoft 365 Premium</div>
-                  <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
-                  <div className={styles.subscriptionPlanPrice}>$19.99/month</div>
-                </div>
-                <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
-              </div>
-              <div className={styles.subscriptionCardFooter}>
-                <Link 
-                  href="#" 
-                  className={styles.seeAllBenefitsLink}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    toggleExpanded('premium')
-                  }}
-                >
-                  See all benefits {isExpanded('premium') ? (
-                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                  ) : (
-                    <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                  )}
-                </Link>
-              </div>
-              {isExpanded('premium') && (
-                <div className={styles.expandedContent}>
-                  <Text>This is placeholder content for Microsoft 365 Premium benefits. </Text>
-                  <Text>Additional features and details will appear here when expanded.</Text>
-                </div>
-              )}
-            </div>
-          </Card>
-
-          {/* Microsoft 365 Basic Card */}
-          <Card className={styles.subscriptionCard}>
-            <div className={styles.subscriptionCardContent}>
-              <div className={styles.subscriptionCardTop}>
-                <div className={styles.subscriptionCardDetails}>
-                  <div className={styles.subscriptionPlanName}>Microsoft 365 Basic</div>
-                  <div className={styles.subscriptionPlanPrice}>$2.99/month</div>
-                </div>
-                <Button appearance="primary" className={styles.subscriptionCardButton}>Downgrade</Button>
-              </div>
-              <div className={styles.subscriptionCardFooter}>
-                <Link 
-                  href="#" 
-                  className={styles.seeAllBenefitsLink}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    toggleExpanded('basic')
-                  }}
-                >
-                  See all benefits {isExpanded('basic') ? (
-                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                  ) : (
-                    <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                  )}
-                </Link>
-              </div>
-              {isExpanded('basic') && (
-                <div className={styles.expandedContent}>
-                  <Text>This is placeholder content for Microsoft 365 Basic benefits. </Text>
-                  <Text>Additional features and details will appear here when expanded.</Text>
-                </div>
-              )}
-            </div>
-          </Card>
         </div>
       </div>
     </div>

@@ -427,7 +427,7 @@ export default function AccountDemo() {
             <Card className={styles.sectionCard}>
               <div style={{ padding: '16px' }}>
                 <Text weight="semibold">
-                  Steps to help you keep your account safe online
+                  Control your privacy settings and data preferences
                 </Text>
               </div>
             </Card>
@@ -443,7 +443,7 @@ export default function AccountDemo() {
             </Text>
             <Card className={styles.sectionCard}>
               <div style={{ padding: '16px' }}>
-                <Text weight="semibold">Manage how you pay for purchases with your Microsoft account</Text>
+                <Text weight="semibold">Review your account security and recent activity</Text>
               </div>
             </Card>
           </div>
@@ -456,6 +456,11 @@ export default function AccountDemo() {
             <Text style={{ display: 'block', marginBottom: '16px' }}>
               Manage how you pay for purchases with your Microsoft account
             </Text>
+            <Card className={styles.sectionCard}>
+              <div style={{ padding: '16px' }}>
+                <Text weight="semibold">Add or update your payment methods</Text>
+              </div>
+            </Card>
           </div>
 
           {/* Order History Section */}
@@ -466,6 +471,11 @@ export default function AccountDemo() {
             <Text style={{ display: 'block', marginBottom: '16px' }}>
               View recent purchases made with your Microsoft account
             </Text>
+            <Card className={styles.sectionCard}>
+              <div style={{ padding: '16px' }}>
+                <Text weight="semibold">View your purchase history and receipts</Text>
+              </div>
+            </Card>
           </div>
 
           {/* Promotional Cards */}
