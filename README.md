@@ -1,15 +1,16 @@
-# Fluent UI React v9 Sandbox
+# Fluent UI React Sandbox
 
 A sandbox web app demonstrating Fluent UI React v9 components with multiple demo pages showcasing real-world implementations.
 
 ## Features
 
-This sandbox includes four demo pages:
+This sandbox includes five demo pages:
 
-- **Components Demo** (`/components`): Comprehensive showcase of 30+ Fluent UI components displayed in an organized table format
-- **Account Demo** (`/account`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections
-- **Subscriptions Demo** (`/account/subscriptions`): Subscription management interface demonstrating data display and management patterns
-- **V8 Demo** (`/v8-demo`): Fluent UI v8 components demonstration alongside v9 components
+- **v8 Components** (`/v8-page`): Fluent UI v8 components demonstration alongside v9 components
+- **v9 Components** (`/v9-page`): Comprehensive showcase of 30+ Fluent UI v9 components displayed in an organized table format
+- **AMC Custom Components** (`/v8-migrated`): Custom AMC components rebuilt using Fluent UI v9 atomics
+- **Accounts Demo** (`/account-demo`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections (default landing page)
+- **Subscriptions Demo** (`/account-demo/subscription-demo`): Subscription management interface demonstrating data display and management patterns
 
 ## Prerequisites
 
@@ -25,31 +26,31 @@ Before getting started, you'll need:
 Windows 10/11 includes **winget** (Windows Package Manager) which makes installation easy:
 
 1. **Open Windows Terminal** (or PowerShell/Command Prompt)
-
 2. **Install Node.js LTS** (recommended):
+
    ```powershell
    winget install OpenJS.NodeJS.LTS
    ```
 
    Or install the latest version:
+
    ```powershell
    winget install OpenJS.NodeJS
    ```
-
 3. **Verify installation**:
+
    ```powershell
    node --version
    npm --version
    ```
-
 4. **Close and reopen your terminal** after installation to ensure the PATH is updated
-
 5. **Navigate to the project folder**:
+
    ```powershell
    cd "C:\Users\Bomb Studio\Desktop\Fluent Sandbox"
    ```
-
 6. **Install project dependencies**:
+
    ```powershell
    npm install
    ```
@@ -86,6 +87,7 @@ npm install
 ```
 
 This will install:
+
 - React 18 and React DOM
 - Fluent UI React v9 components
 - Fluent UI Icons
@@ -103,6 +105,7 @@ npm run dev
 ```
 
 Or on Windows, you can use the provided batch file:
+
 ```bash
 start.bat
 ```
@@ -113,8 +116,19 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
 
 ## Available Pages
 
-### Components Demo (`/components`)
-- **Route**: `/components` (default landing page)
+### v8 Components (`/v8-page`)
+
+- **Route**: `/v8-page`
+- **File**: `v8_page.tsx`
+- **Tab Label**: "v8 Components"
+- **Description**: Fluent UI v8 components demonstration
+- **Features**: Shows v8 components alongside v9 for comparison
+
+### v9 Components (`/v9-page`)
+
+- **Route**: `/v9-page`
+- **File**: `v9_page.tsx`
+- **Tab Label**: "v9 Components"
 - **Description**: Interactive showcase of all Fluent UI v9 components
 - **Features**:
   - Form controls (Button, Input, Checkbox, Switch, Radio, Dropdown, Slider, SpinButton)
@@ -124,8 +138,11 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
   - Layout (Card, Divider, Accordion, Table, Drawer)
   - All components are live and interactive
 
-### Account Demo (`/account`)
-- **Route**: `/account`
+### Accounts Demo (`/account-demo`)
+
+- **Route**: `/account-demo` (default landing page)
+- **File**: `AccountDemo.tsx`
+- **Tab Label**: "Accounts Demo"
 - **Description**: Recreation of Microsoft Account management page
 - **Features**:
   - Top navigation bar with app launcher and user menu
@@ -137,15 +154,20 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
   - Payment options and order history
   - Promotional cards
 
-### Subscriptions Demo (`/account/subscriptions`)
-- **Route**: `/account/subscriptions`
+### Subscriptions Demo (`/account-demo/subscription-demo`)
+
+- **Route**: `/account-demo/subscription-demo`
+- **File**: `SubscriptionDemo.tsx`
 - **Description**: Subscription management interface
 - **Features**: Data display and management patterns for subscription services
 
-### V8 Demo (`/v8-demo`)
-- **Route**: `/v8-demo`
-- **Description**: Fluent UI v8 components demonstration
-- **Features**: Shows v8 components alongside v9 for comparison
+### AMC Custom Components (`/v8-migrated`)
+
+- **Route**: `/v8-migrated`
+- **File**: `V8Migrated.tsx`
+- **Tab Label**: "AMC Custom Components"
+- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics
+- **Features**: Showcases migrated custom components from v8 to v9
 
 ## Available Scripts
 
@@ -159,6 +181,10 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
 - **Fluent UI React v9** - Component library and design system
 - **Fluent UI Icons** - Icon library
 - **Fluent UI React v8** - Legacy components (for comparison)
+- **Fluent UI React Drawer** - Drawer component
+- **Fluent UI React Nav** - Navigation components
+- **Fluent UI React Tree** - Tree view component
+- **Fluent UI React Toast** - Toast notification component
 - **TypeScript** - Type safety
 - **Vite** - Build tool and development server
 - **React Router** - Client-side routing
@@ -168,6 +194,7 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
 ### Node.js Installation Issues
 
 If `node` or `npm` commands are not recognized after installation:
+
 1. Close and reopen your terminal
 2. Restart your computer if needed
 3. Verify the installation path is in your system PATH
@@ -175,6 +202,7 @@ If `node` or `npm` commands are not recognized after installation:
 ### Dependency Installation Issues
 
 If `npm install` fails:
+
 1. Delete the `node_modules` folder (if it exists)
 2. Delete `package-lock.json`
 3. Run `npm install` again
@@ -183,6 +211,7 @@ If `npm install` fails:
 ### Port Already in Use
 
 If port 5173 is already in use:
+
 - Vite will automatically try the next available port
 - Check the terminal output for the actual URL
 - Or stop the process using port 5173
@@ -190,6 +219,7 @@ If port 5173 is already in use:
 ### Windows Terminal Issues
 
 If winget is not available:
+
 - Ensure you're running Windows 10 (version 1809 or later) or Windows 11
 - Update Windows to the latest version
 - Use manual installation or Chocolatey as alternatives
@@ -202,10 +232,11 @@ Fluent Sandbox/
 │   ├── components/
 │   │   └── Layout.tsx          # Main layout with navigation
 │   ├── pages/
-│   │   ├── ComponentsDemo.tsx  # Components showcase
+│   │   ├── v8_page.tsx         # V8 components demo
+│   │   ├── v9_page.tsx         # V9 components showcase
+│   │   ├── V8Migrated.tsx      # AMC custom components
 │   │   ├── AccountDemo.tsx     # Account page layout
-│   │   ├── SubscriptionDemo.tsx # Subscriptions page
-│   │   └── V8Demo.tsx          # V8 components demo
+│   │   └── SubscriptionDemo.tsx # Subscriptions page
 │   ├── App.tsx                 # Root component with routing
 │   ├── main.tsx                # Entry point
 │   └── index.css               # Global styles
@@ -233,4 +264,3 @@ npm run build
 ```
 
 The optimized files will be in the `dist` folder, ready for deployment to any static hosting service.
-

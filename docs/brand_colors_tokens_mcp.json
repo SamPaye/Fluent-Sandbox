@@ -1,0 +1,106 @@
+{
+  "color": {
+    "brand": {
+      "light": {
+        "background": {
+          "pressed": {
+            "value": "#0C3B5E",
+            "type": "color"
+          },
+          "selected": {
+            "value": "#0F548C",
+            "type": "color"
+          },
+          "hover": {
+            "value": "#115EA3",
+            "type": "color"
+          },
+          "default": {
+            "value": "#0F6CBD",
+            "type": "color"
+          },
+          "secondary": {
+            "value": "#479EF5",
+            "type": "color"
+          },
+          "strokeHover": {
+            "value": "#77B7F7",
+            "type": "color"
+          },
+          "stroke": {
+            "value": "#B4D6FA",
+            "type": "color"
+          },
+          "background2Hover": {
+            "value": "#CFE4FA",
+            "type": "color"
+          },
+          "background2": {
+            "value": "#EBF3FC",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "primary": {
+            "value": "#0F6CBD",
+            "type": "color"
+          },
+          "inverted": {
+            "value": "#479EF5",
+            "type": "color"
+          }
+        }
+      },
+      "dark": {
+        "background": {
+          "pressed": {
+            "value": "#0C3B5E",
+            "type": "color"
+          },
+          "selected": {
+            "value": "#0F548C",
+            "type": "color"
+          },
+          "hover": {
+            "value": "#0F6CBD",
+            "type": "color"
+          },
+          "default": {
+            "value": "#115EA3",
+            "type": "color"
+          },
+          "secondary": {
+            "value": "#0F6CBD",
+            "type": "color"
+          },
+          "strokeHover": {
+            "value": "#0E4775",
+            "type": "color"
+          },
+          "stroke": {
+            "value": "#0E4775",
+            "type": "color"
+          },
+          "background2Hover": {
+            "value": "#0C3B5E",
+            "type": "color"
+          },
+          "background2": {
+            "value": "#082338",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "primary": {
+            "value": "#115EA3",
+            "type": "color"
+          },
+          "inverted": {
+            "value": "#0F6CBD",
+            "type": "color"
+          }
+        }
+      }
+    }
+  }
+}

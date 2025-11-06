@@ -1,48 +1,38 @@
 import React from 'react'
 import {
-  makeStyles,
   tokens,
   Text,
-  Card,
-  Avatar,
   Link,
-  Menu,
-  MenuTrigger,
-  MenuList,
-  MenuItem,
-  MenuPopover,
-  Button,
   TabList,
   Tab,
-  Accordion,
-  AccordionHeader,
-  AccordionItem,
-  AccordionPanel,
 } from '@fluentui/react-components'
 import {
-  Nav,
-  NavItem,
-} from '@fluentui/react-nav'
-import {
   Grid24Regular,
-  Person24Regular,
   Desktop24Regular,
   Payment24Regular,
   ShieldCheckmark24Regular,
   Eye24Regular,
   Cart24Regular,
-  Book24Regular,
   Storage24Regular,
-  Home24Regular,
-  ChevronDown16Regular,
   ChevronUp16Regular,
-  Key24Regular,
+  Key16Regular,
 } from '@fluentui/react-icons'
 import { useNavigate } from 'react-router-dom'
-import { toggleHeaderCollapsed } from '../utils/layoutEvents'
+import { type OnNavItemSelectData } from '@fluentui/react-nav'
+import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
+import { AccountHeader } from '../components/AccountHeader'
+import { LeftNav } from '../components/LeftNav'
+import { PageHeader, InfoColumn } from '../components/PageHeader'
+import { AccountAccordion } from '../components/AccountAccordion'
+import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
+import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
+import { useLayout } from '../contexts/LayoutContext'
+import { ROUTES } from '../constants/routes'
+import { ACCORDION_KEYS } from '../constants/accordionKeys'
+
 // Custom Windows logo icon (monochrome, matches other icons)
 const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
     <rect x="3" y="3" width="8" height="8" rx="1" />
     <rect x="13" y="3" width="8" height="8" rx="1" />
     <rect x="3" y="13" width="8" height="8" rx="1" />
@@ -50,408 +40,26 @@ const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 )
 
-const SubscriptionsIcon: React.FC = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M8 9h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M8 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-)
-
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: 'calc(100vh - 100px)',
-    backgroundColor: tokens.colorNeutralBackground2,
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '12px 24px',
-    backgroundColor: tokens.colorBrandBackground,
-    color: tokens.colorNeutralForegroundOnBrand,
-  },
-  headerCenter: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerLeft: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-  },
-  headerRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-  },
-  headerButton: {
-    color: tokens.colorNeutralForegroundOnBrand,
-    cursor: 'pointer',
-  },
-  sidebar: {
-    width: '260px',
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  userSection: {
-    padding: '32px 16px 24px',
-  },
-  userInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-  userName: {
-    fontSize: tokens.fontSizeBase400,
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  userEmail: {
-    fontSize: tokens.fontSizeBase300,
-    color: tokens.colorNeutralForeground3,
-  },
-  mainLayout: {
-    display: 'flex',
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    padding: '48px 0px',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    fontSize: '14px',
-  },
-  pageTitle: {
-    fontSize: tokens.fontSizeBase600,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '24px',
-  },
-  infoCards: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '16px',
-    marginBottom: '32px',
-  },
-  infoCard: {
-    height: '140px',
-    cursor: 'pointer',
-    ':hover': {
-      boxShadow: tokens.shadow8,
-    },
-  },
-  cardIcon: {
-    color: tokens.colorBrandBackground,
-    marginBottom: '8px',
-  },
-  cardTitle: {
-    fontSize: tokens.fontSizeBase400,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '4px',
-  },
-  cardDescription: {
-    fontSize: tokens.fontSizeBase300,
-    color: tokens.colorNeutralForeground3,
-  },
-  section: {
-    marginBottom: '32px',
-  },
-  sectionTitle: {
-    fontSize: tokens.fontSizeBase500,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '16px',
-  },
-  sectionCard: {
-    marginBottom: '16px',
-    cursor: 'pointer',
-    ':hover': {
-      boxShadow: tokens.shadow8,
-    },
-  },
-  sectionCardHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  deviceItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-    padding: '16px',
-  },
-  deviceIcon: {
-    fontSize: '48px',
-  },
-  deviceInfo: {
-    flex: 1,
-  },
-  deviceName: {
-    fontSize: tokens.fontSizeBase400,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '4px',
-  },
-  deviceDetails: {
-    fontSize: tokens.fontSizeBase300,
-    color: tokens.colorNeutralForeground3,
-  },
-  viewLink: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-  },
-  promoSection: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '16px',
-  },
-  promoCard: {
-    textAlign: 'center',
-    padding: '32px 16px',
-    cursor: 'pointer',
-    ':hover': {
-      boxShadow: tokens.shadow8,
-    },
-  },
-  promoIcon: {
-    fontSize: '72px',
-    marginBottom: '16px',
-    color: tokens.colorBrandBackground,
-  },
-  promoTitle: {
-    fontSize: tokens.fontSizeBase400,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '8px',
-  },
-  promoDescription: {
-    fontSize: tokens.fontSizeBase300,
-    color: tokens.colorNeutralForeground3,
-    marginBottom: '16px',
-  },
-  navItem: {
-    backgroundColor: 'transparent !important',
-    ':hover': {
-      backgroundColor: 'transparent !important',
-    },
-    ':focus': {
-      backgroundColor: 'transparent !important',
-    },
-  },
-  // Copied styles to support subscription content
-  breadcrumbContainer: {
-    marginBottom: '24px',
-  },
-  headerSection: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '42px',
-  },
-  headerTitleSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-  logoImage: {
-    width: '32px',
-    height: '32px',
-    objectFit: 'contain',
-  },
-  headerTitle: {
-    fontSize: tokens.fontSizeBase600,
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  headerInfoColumns: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '24px',
-    alignItems: 'center',
-  },
-  infoColumn: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    minWidth: '296px',
-  },
-  iconCircle: {
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    backgroundColor: '#cfe5f6',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  iconSvg: {
-    width: '24px',
-    height: '24px',
-    color: tokens.colorBrandForeground1,
-  },
-  iconImage: {
-    width: '24px',
-    height: '24px',
-    objectFit: 'contain',
-  },
-  infoText: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0px',
-  },
-  infoPrimary: {
-    fontSize: '12px',
-    fontWeight: tokens.fontWeightSemibold,
-    color: tokens.colorNeutralForeground1,
-  },
-  infoSecondary: {
-    fontSize: '12px',
-    color: tokens.colorNeutralForeground3,
-  },
-  tabsContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  cardWrapper: {
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: tokens.borderRadiusLarge,
-    padding: '16px',
-    marginBottom: '16px',
-  },
-  accordionWrapper: {
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: tokens.borderRadiusLarge,
-    padding: '16px',
-    marginBottom: '16px',
-  },
-  accordionHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '16px',
-  },
-  accordionIcon: {
-    color: tokens.colorBrandBackground,
-    fontSize: '20px',
-  },
-  accordionHeaderText: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0px',
-  },
-  accordionTitle: {
-    fontSize: '14px',
-    paddingLeft: '16px',
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  accordionBillingText: {
-    fontSize: '12px',
-    paddingLeft: '16px',
-    color: tokens.colorNeutralForeground3,
-  },
-  accordionPanel: {
-    paddingTop: '16px',
-    borderTop: '1px solid #f2f2f2',
-    marginTop: '16px',
-    marginLeft: '-16px',
-    marginRight: '-16px',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-  },
-  subscriptionCard: {
-    marginBottom: '16px',
-    border: `1px solid ${tokens.colorNeutralStroke1}`,
-    borderRadius: tokens.borderRadiusLarge,
-    overflow: 'hidden',
-  },
-  subscriptionCardHeader: {
-    padding: '8px 16px',
-    fontSize: tokens.fontSizeBase300,
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  subscriptionCardHeaderRecommended: {
-    backgroundColor: tokens.colorBrandBackground2,
-    color: tokens.colorBrandForeground1,
-  },
-  subscriptionCardHeaderPremium: {
-    backgroundColor: tokens.colorNeutralBackground3,
-    color: tokens.colorNeutralForeground1,
-  },
-  subscriptionCardContent: {
-    padding: '16px',
-    backgroundColor: tokens.colorNeutralBackground1,
-    position: 'relative',
-  },
-  subscriptionCardTop: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '16px',
-  },
-  subscriptionCardDetails: {
-    flex: 1,
-  },
-  subscriptionPlanName: {
-    fontSize: tokens.fontSizeBase500,
-    fontWeight: tokens.fontWeightSemibold,
-    marginBottom: '4px',
-  },
-  subscriptionPlanDescription: {
-    fontSize: tokens.fontSizeBase300,
-    color: tokens.colorNeutralForeground3,
-    marginBottom: '8px',
-  },
-  subscriptionPlanPrice: {
-    fontSize: tokens.fontSizeBase400,
-    fontWeight: tokens.fontWeightSemibold,
-  },
-  subscriptionCardButton: {
-    marginLeft: '16px',
-  },
-  subscriptionCardFooter: {
-    marginTop: '16px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  seeAllBenefitsLink: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    fontSize: tokens.fontSizeBase300,
-    cursor: 'pointer',
-  },
-  expandedContent: {
-    marginTop: '16px',
-    padding: '16px',
-    backgroundColor: tokens.colorNeutralBackground2,
-    border: `2px dashed ${tokens.colorNeutralStroke2}`,
-    borderRadius: tokens.borderRadiusSmall,
-    textAlign: 'center',
-    color: tokens.colorNeutralForeground3,
-    fontSize: tokens.fontSizeBase300,
-  },
-})
-
 export default function AccountDemo() {
-  const styles = useStyles()
+  const layoutStyles = useLayoutStyles()
+  const subscriptionStyles = useSubscriptionCardStyles()
   const navigate = useNavigate()
-  const [headerCollapsed, setLocalHeaderCollapsed] = React.useState(true)
-  const [selectedTab, setSelectedTab] = React.useState('monthly')
+  const { headerCollapsed } = useLayout()
+  const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
-  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
-  const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
-  const [storageAccordionOpen, setStorageAccordionOpen] = React.useState(false)
-  const [gamePassAccordionOpen, setGamePassAccordionOpen] = React.useState(false)
-  const [devicesAccordionOpen, setDevicesAccordionOpen] = React.useState(false)
-  const [privacyAccordionOpen, setPrivacyAccordionOpen] = React.useState(false)
-  const [securityAccordionOpen, setSecurityAccordionOpen] = React.useState(false)
-  const [paymentAccordionOpen, setPaymentAccordionOpen] = React.useState(false)
-  const [orderHistoryAccordionOpen, setOrderHistoryAccordionOpen] = React.useState(false)
+  const [accordionStates, setAccordionStates] = React.useState<Record<string, boolean>>({
+    [ACCORDION_KEYS.CURRENT_PLAN]: true,
+    [ACCORDION_KEYS.MS_STORAGE]: false,
+    [ACCORDION_KEYS.GAME_PASS]: false,
+    [ACCORDION_KEYS.DEVICES]: false,
+    [ACCORDION_KEYS.PRIVACY]: false,
+    [ACCORDION_KEYS.SECURITY]: false,
+    [ACCORDION_KEYS.PAYMENT_OPTIONS]: false,
+    [ACCORDION_KEYS.ORDER_HISTORY]: false,
+    [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: false,
+  })
 
-  const handleTabSelect = (_: any, data: any) => {
+  const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
     setSelectedTab(data.value)
   }
 
@@ -469,585 +77,198 @@ export default function AccountDemo() {
 
   const isExpanded = (cardId: string) => expandedCards.has(cardId)
 
-  const handleNavSelect = (_: any, data: any) => {
+  const handleNavSelect = (_: React.SyntheticEvent | Event, data: OnNavItemSelectData) => {
     if (data.value === 'account') {
-      navigate('/account')
+      navigate(ROUTES.ACCOUNT_DEMO)
     } else if (data.value === 'subscriptions') {
-      navigate('/account/subscriptions')
+      navigate(ROUTES.SUBSCRIPTION_DEMO)
     }
   }
 
-  React.useEffect(() => {
-    const setHandler = (e: Event) => {
-      const ce = e as CustomEvent<{ collapsed: boolean }>
-      setLocalHeaderCollapsed(!!ce.detail?.collapsed)
-    }
-    window.addEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
-    return () => window.removeEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
-  }, [])
+  const infoColumns: InfoColumn[] = [
+    {
+      icon: <WindowsLogoIcon />,
+      primary: 'Manage Microsoft 365 Personal',
+      secondary: 'Annual subscription',
+    },
+    {
+      icon: <Key16Regular />,
+      primary: 'Change Password',
+      secondary: 'Security',
+    },
+  ]
 
   return (
-    <div className={styles.root}>
-      {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <Menu>
-            <MenuTrigger disableButtonEnhancement>
-              <div className={styles.headerButton}>
-                <Grid24Regular />
-              </div>
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem>Outlook</MenuItem>
-                <MenuItem>OneDrive</MenuItem>
-                <MenuItem>Word</MenuItem>
-                <MenuItem>Excel</MenuItem>
-                <MenuItem>PowerPoint</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
-          <Text weight="semibold" style={{ color: 'white' }}>
-            Microsoft account
-          </Text>
-        </div>
-        {/* Center chevron toggle in middle column */}
-        <div className={styles.headerCenter}>
-          <button
-            aria-label={headerCollapsed ? 'Expand header' : 'Collapse header'}
-            onClick={() => {
-              toggleHeaderCollapsed()
-            }}
-            style={{
-              background: 'transparent',
-              border: '1px solid rgba(255,255,255,0.9)',
-              color: 'white',
-              cursor: 'pointer',
-              padding: '4px',
-              lineHeight: 0,
-              width: '24px',
-              height: '24px',
-              borderRadius: '50%',
-              boxSizing: 'border-box',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+    <div className={layoutStyles.root}>
+      <AccountHeader headerCollapsed={headerCollapsed} />
+
+      <div className={layoutStyles.mainLayoutWithPadding}>
+        <LeftNav selectedValue="account" onNavItemSelect={handleNavSelect} />
+
+        <div className={layoutStyles.content}>
+          <PageHeader title="Account" infoColumns={infoColumns} />
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.CURRENT_PLAN}
+            title="Your current Plan"
+            isOpen={accordionStates[ACCORDION_KEYS.CURRENT_PLAN]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.CURRENT_PLAN]: isOpen }))}
           >
-            <span
-              style={{
-                display: 'inline-flex',
-                transition: 'transform 120ms ease',
-                transform: headerCollapsed ? 'rotate(0deg)' : 'rotate(180deg)',
-              }}
-            >
-              <ChevronDown16Regular style={{ fontSize: '20px' }} />
-            </span>
-          </button>
-        </div>
-        <div className={styles.headerRight}>
-          <div className={styles.headerButton}>?</div>
-          <Menu>
-            <MenuTrigger disableButtonEnhancement>
-              <div className={styles.headerButton}>
-                <Person24Regular />
-              </div>
-            </MenuTrigger>
-            <MenuPopover>
-              <MenuList>
-                <MenuItem>Sign out</MenuItem>
-                <MenuItem>View account</MenuItem>
-              </MenuList>
-            </MenuPopover>
-          </Menu>
-        </div>
-      </div>
+            <Text style={{ fontSize: '20px', fontWeight: 500 }}>Microsoft 365 Personal</Text>
+          </AccountAccordion>
 
-      <div className={styles.mainLayout} style={{ padding: '0px 10px', background: 'rgb(242, 242, 242)' }}>
-        {/* Sidebar Navigation */}
-        <div className={styles.sidebar} style={{ background: 'transparent', border: 'none' }}>
-          <div className={styles.userSection}>
-            <div className={styles.userInfo}>
-              <Avatar name="Sam P" color="colorful" size={48} />
-              <div>
-                <div className={styles.userName}>Sam P</div>
-                <div className={styles.userEmail}>samp@hotmail.com</div>
-                <Link href="#">View my benefits</Link>
-              </div>
-            </div>
-          </div>
-          <Nav selectedValue="account" onNavItemSelect={handleNavSelect}>
-            <NavItem icon={<Home24Regular />} value="account" className={styles.navItem}>
-              Account
-            </NavItem>
-            <NavItem icon={<Person24Regular />} value="info" className={styles.navItem}>
-              Your info
-            </NavItem>
-            <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={styles.navItem}>
-              Subscriptions
-            </NavItem>
-            <NavItem icon={<Desktop24Regular />} value="devices" className={styles.navItem}>
-              Devices
-            </NavItem>
-            <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={styles.navItem}>
-              Security
-            </NavItem>
-            <NavItem icon={<Eye24Regular />} value="privacy" className={styles.navItem}>
-              Privacy
-            </NavItem>
-            <NavItem icon={<Payment24Regular />} value="payment" className={styles.navItem}>
-              Payment options
-            </NavItem>
-            <NavItem icon={<Cart24Regular />} value="orders" className={styles.navItem}>
-              Order history
-            </NavItem>
-            <NavItem icon={<Book24Regular />} value="address" className={styles.navItem}>
-              Address book
-            </NavItem>
-          </Nav>
-        </div>
+          <AccountAccordion
+            value={ACCORDION_KEYS.MS_STORAGE}
+            title="Microsoft storage"
+            icon={<Storage24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.MS_STORAGE]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MS_STORAGE]: isOpen }))}
+          >
+            <Text>Placeholder content for Microsoft storage.</Text>
+          </AccountAccordion>
 
-        {/* Main Content (replaced with Subscription content) */}
-        <div className={styles.content}>
-          {/* Header Section with Logo and Info Columns */}
-          <div className={styles.headerSection}>
-            <div className={styles.headerTitleSection}>
-              <Text className={styles.headerTitle}>Account</Text>
-            </div>
-            <div className={styles.headerInfoColumns}>
-              {/* Renew Column */}
-              <div className={styles.infoColumn}>
-                <div className={styles.iconCircle}>
-                  <WindowsLogoIcon className={styles.iconSvg} />
-                </div>
-                <div className={styles.infoText}>
-                  <Text className={styles.infoPrimary}>Manage Microsoft 365 Personal</Text>
-                  <Text className={styles.infoSecondary}>Annual subscription</Text>
-                </div>
-              </div>
-              {/* Install Column */}
-              <div className={styles.infoColumn}>
-                <div className={styles.iconCircle}>
-                  <Key24Regular className={styles.iconSvg} />
-                </div>
-                <div className={styles.infoText}>
-                  <Text className={styles.infoPrimary}>Change Password</Text>
-                  <Text className={styles.infoSecondary}>Security</Text>
-                </div>
+          <AccountAccordion
+            value={ACCORDION_KEYS.GAME_PASS}
+            title="Game Pass"
+            icon={<Grid24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.GAME_PASS]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.GAME_PASS]: isOpen }))}
+          >
+            <Text>Placeholder content for Game Pass.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.DEVICES}
+            title="Devices"
+            icon={<Desktop24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.DEVICES]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.DEVICES]: isOpen }))}
+          >
+            <Text>Placeholder content for Devices.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.PRIVACY}
+            title="Privacy"
+            icon={<Eye24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.PRIVACY]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PRIVACY]: isOpen }))}
+          >
+            <Text>Placeholder content for Privacy.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.SECURITY}
+            title="Security"
+            icon={<ShieldCheckmark24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.SECURITY]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.SECURITY]: isOpen }))}
+          >
+            <Text>Placeholder content for Security.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.PAYMENT_OPTIONS}
+            title="Payment options"
+            icon={<Payment24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.PAYMENT_OPTIONS]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PAYMENT_OPTIONS]: isOpen }))}
+          >
+            <Text>Placeholder content for Payment options.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.ORDER_HISTORY}
+            title="Order history"
+            icon={<Cart24Regular />}
+            isOpen={accordionStates[ACCORDION_KEYS.ORDER_HISTORY]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.ORDER_HISTORY]: isOpen }))}
+          >
+            <Text>Placeholder content for Order history.</Text>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
+            title="Manage subscription"
+            icon={<Storage24Regular />}
+            billingText="Save 16% with annual billing ($129.99/year)"
+            isOpen={accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION]}
+            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: isOpen }))}
+            expandIcon={!accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION] ? (
+              <Link 
+                as="button" 
+                style={{ 
+                  fontWeight: tokens.fontWeightSemibold,
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
+                }}
+              >
+                Change
+              </Link>
+            ) : (
+              <ChevronUp16Regular style={{ fontSize: '16px' }} />
+            )}
+          >
+            {/* Billing Period Tabs */}
+            <div className={subscriptionStyles.cardWrapperTransparent}>
+              <div className={subscriptionStyles.tabsContainer}>
+                <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
+                  <Tab value="monthly">Monthly</Tab>
+                  <Tab value="annual">Annual (Save 16%)</Tab>
+                </TabList>
               </div>
             </div>
-          </div>
 
-          {/* Your current Plan Accordion */}
-          <div className={styles.accordionWrapper}>
-            <Accordion 
-              collapsible
-              openItems={currentPlanAccordionOpen ? ['current-plan'] : []}
-              onToggle={(_, data) => {
-                const isOpen = (data as any).openItems.includes('current-plan')
-                setCurrentPlanAccordionOpen(isOpen)
-              }}
-            >
-              <AccordionItem value="current-plan">
-                <AccordionHeader 
-                  expandIconPosition="end"
-                  className={styles.accordionHeader}
-                >
-                  <Storage24Regular className={styles.accordionIcon} style={{ display: 'none' }} />
-                  <div className={styles.accordionHeaderText}>
-                    <Text weight="semibold" className={styles.accordionTitle} style={{ paddingLeft: '0px' }}>
-                      Your current Plan
-                    </Text>
-                    <Text className={styles.accordionBillingText} style={{ display: 'none' }}>
-                      Save 16% with annual billing ($129.99/year)
-                    </Text>
-                  </div>
-                </AccordionHeader>
-                <AccordionPanel className={styles.accordionPanel}>
-                  <Text style={{ fontSize: '20px', fontWeight: 500 }}>
-                    Microsoft 365 Personal
-                  </Text>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        
-        {/* Microsoft storage */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={storageAccordionOpen ? ['ms-storage'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('ms-storage')
-              setStorageAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="ms-storage">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Storage24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Microsoft storage
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Microsoft storage.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
+            {/* Subscription Plans */}
+            {(() => {
+              const plans: SubscriptionPlan[] = [
+                {
+                  id: 'family',
+                  name: 'Microsoft 365 Family',
+                  description: 'Share with up to 5 others',
+                  price: '$12.99/month',
+                  headerLabel: 'Recommended',
+                  headerType: 'recommended',
+                  buttonLabel: 'Upgrade',
+                  buttonAction: 'upgrade',
+                },
+                {
+                  id: 'premium',
+                  name: 'Microsoft 365 Premium',
+                  description: 'Share with up to 5 others',
+                  price: '$19.99/month',
+                  headerLabel: 'Highest AI limits',
+                  headerType: 'premium',
+                  buttonLabel: 'Upgrade',
+                  buttonAction: 'upgrade',
+                },
+                {
+                  id: 'basic',
+                  name: 'Microsoft 365 Basic',
+                  price: '$2.99/month',
+                  buttonLabel: 'Downgrade',
+                  buttonAction: 'downgrade',
+                },
+              ]
 
-        {/* Game Pass */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={gamePassAccordionOpen ? ['game-pass'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('game-pass')
-              setGamePassAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="game-pass">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Grid24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Game Pass
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Game Pass.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Devices */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={devicesAccordionOpen ? ['devices'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('devices')
-              setDevicesAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="devices">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Desktop24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Devices
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Devices.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Privacy */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={privacyAccordionOpen ? ['privacy'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('privacy')
-              setPrivacyAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="privacy">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Eye24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Privacy
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Privacy.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Security */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={securityAccordionOpen ? ['security'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('security')
-              setSecurityAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="security">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <ShieldCheckmark24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Security
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Security.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Payment options */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={paymentAccordionOpen ? ['payment-options'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('payment-options')
-              setPaymentAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="payment-options">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Payment24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Payment options
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Payment options.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Order history */}
-        <div className={styles.accordionWrapper}>
-          <Accordion 
-            collapsible
-            openItems={orderHistoryAccordionOpen ? ['order-history'] : []}
-            onToggle={(_, data) => {
-              const isOpen = (data as any).openItems.includes('order-history')
-              setOrderHistoryAccordionOpen(isOpen)
-            }}
-          >
-            <AccordionItem value="order-history">
-              <AccordionHeader 
-                expandIconPosition="end"
-                className={styles.accordionHeader}
-              >
-                <Cart24Regular className={styles.accordionIcon} />
-                <div className={styles.accordionHeaderText}>
-                  <Text weight="semibold" className={styles.accordionTitle}>
-                    Order history
-                  </Text>
-                </div>
-              </AccordionHeader>
-              <AccordionPanel className={styles.accordionPanel}>
-                <Text>Placeholder content for Order history.</Text>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-          {/* Manage Subscription Accordion */}
-          <div className={styles.accordionWrapper}>
-            <Accordion 
-              collapsible
-              openItems={manageAccordionOpen ? ['manage-subscription'] : []}
-              onToggle={(_, data) => {
-                const isOpen = (data as any).openItems.includes('manage-subscription')
-                setManageAccordionOpen(isOpen)
-              }}
-            >
-              <AccordionItem value="manage-subscription">
-                <AccordionHeader 
-                  expandIconPosition="end"
-                  className={styles.accordionHeader}
-                  expandIcon={!manageAccordionOpen ? (
-                    <Link 
-                      as="button" 
-                      style={{ 
-                        fontWeight: tokens.fontWeightSemibold,
-                        textDecoration: 'none',
-                        cursor: 'pointer',
-                      }}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        setManageAccordionOpen(true)
-                      }}
-                    >
-                      Change
-                    </Link>
-                  ) : (
-                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                  )}
-                >
-                  <Storage24Regular className={styles.accordionIcon} />
-                  <div className={styles.accordionHeaderText}>
-                    <Text weight="semibold" className={styles.accordionTitle}>
-                      Manage subscription
-                    </Text>
-                    <Text className={styles.accordionBillingText}>
-                      Save 16% with annual billing ($129.99/year)
-                    </Text>
-                  </div>
-                </AccordionHeader>
-                <AccordionPanel className={styles.accordionPanel}>
-                  {/* Billing Period Tabs */}
-                  <div className={styles.cardWrapper} style={{ backgroundColor: 'transparent', marginBottom: '16px' }}>
-                    <div className={styles.tabsContainer}>
-                      <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
-                        <Tab value="monthly">Monthly</Tab>
-                        <Tab value="annual">Annual (Save 16%)</Tab>
-                      </TabList>
-                    </div>
-                  </div>
-
-                  {/* Microsoft 365 Family Card - Recommended */}
-                  <Card className={styles.subscriptionCard}>
-                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderRecommended}`}>
-                      Recommended
-                    </div>
-                    <div className={styles.subscriptionCardContent}>
-                      <div className={styles.subscriptionCardTop}>
-                        <div className={styles.subscriptionCardDetails}>
-                          <div className={styles.subscriptionPlanName}>Microsoft 365 Family</div>
-                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
-                          <div className={styles.subscriptionPlanPrice}>$12.99/month</div>
-                        </div>
-                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
-                      </div>
-                      <div className={styles.subscriptionCardFooter}>
-                        <Link 
-                          href="#" 
-                          className={styles.seeAllBenefitsLink}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            toggleExpanded('family')
-                          }}
-                        >
-                          See all benefits {isExpanded('family') ? (
-                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                          ) : (
-                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                          )}
-                        </Link>
-                      </div>
-                      {isExpanded('family') && (
-                        <div className={styles.expandedContent}>
-                          <Text>This is placeholder content for Microsoft 365 Family benefits. </Text>
-                          <Text>Additional features and details will appear here when expanded.</Text>
-                        </div>
-                      )}
-                    </div>
-                  </Card>
-
-                  {/* Microsoft 365 Premium Card - Highest AI Limits */}
-                  <Card className={styles.subscriptionCard}>
-                    <div className={`${styles.subscriptionCardHeader} ${styles.subscriptionCardHeaderPremium}`}>
-                      Highest AI limits
-                    </div>
-                    <div className={styles.subscriptionCardContent}>
-                      <div className={styles.subscriptionCardTop}>
-                        <div className={styles.subscriptionCardDetails}>
-                          <div className={styles.subscriptionPlanName}>Microsoft 365 Premium</div>
-                          <div className={styles.subscriptionPlanDescription}>Share with up to 5 others</div>
-                          <div className={styles.subscriptionPlanPrice}>$19.99/month</div>
-                        </div>
-                        <Button appearance="primary" className={styles.subscriptionCardButton}>Upgrade</Button>
-                      </div>
-                      <div className={styles.subscriptionCardFooter}>
-                        <Link 
-                          href="#" 
-                          className={styles.seeAllBenefitsLink}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            toggleExpanded('premium')
-                          }}
-                        >
-                          See all benefits {isExpanded('premium') ? (
-                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                          ) : (
-                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                          )}
-                        </Link>
-                      </div>
-                      {isExpanded('premium') && (
-                        <div className={styles.expandedContent}>
-                          <Text>This is placeholder content for Microsoft 365 Premium benefits. </Text>
-                          <Text>Additional features and details will appear here when expanded.</Text>
-                        </div>
-                      )}
-                    </div>
-                  </Card>
-
-                  {/* Microsoft 365 Basic Card */}
-                  <Card className={styles.subscriptionCard}>
-                    <div className={styles.subscriptionCardContent}>
-                      <div className={styles.subscriptionCardTop}>
-                        <div className={styles.subscriptionCardDetails}>
-                          <div className={styles.subscriptionPlanName}>Microsoft 365 Basic</div>
-                          <div className={styles.subscriptionPlanPrice}>$2.99/month</div>
-                        </div>
-                        <Button appearance="primary" className={styles.subscriptionCardButton}>Downgrade</Button>
-                      </div>
-                      <div className={styles.subscriptionCardFooter}>
-                        <Link 
-                          href="#" 
-                          className={styles.seeAllBenefitsLink}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            toggleExpanded('basic')
-                          }}
-                        >
-                          See all benefits {isExpanded('basic') ? (
-                            <ChevronUp16Regular style={{ fontSize: '16px' }} />
-                          ) : (
-                            <ChevronDown16Regular style={{ fontSize: '16px' }} />
-                          )}
-                        </Link>
-                      </div>
-                      {isExpanded('basic') && (
-                        <div className={styles.expandedContent}>
-                          <Text>This is placeholder content for Microsoft 365 Basic benefits. </Text>
-                          <Text>Additional features and details will appear here when expanded.</Text>
-                        </div>
-                      )}
-                    </div>
-                  </Card>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
-          </div>
+              return plans.map((plan) => (
+                <SubscriptionCard
+                  key={plan.id}
+                  plan={plan}
+                  isExpanded={isExpanded(plan.id)}
+                  onToggleExpand={() => toggleExpanded(plan.id)}
+                />
+              ))
+            })()}
+          </AccountAccordion>
         </div>
       </div>
     </div>
   )
 }
+
 

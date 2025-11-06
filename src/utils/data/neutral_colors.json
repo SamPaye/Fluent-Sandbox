@@ -1,0 +1,82 @@
+{
+  "color": {
+    "neutral": {
+      "light": {
+        "background": {
+          "neutralBackground1": {
+            "value": "#FFFFFF",
+            "type": "color"
+          },
+          "neutralBackground2": {
+            "value": "#F3F2F1",
+            "type": "color"
+          },
+          "neutralBackground3": {
+            "value": "#EDEBE9",
+            "type": "color"
+          },
+          "neutralBackground4": {
+            "value": "#D2D0CE",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "neutralForeground1": {
+            "value": "#201F1E",
+            "type": "color"
+          },
+          "neutralForeground2": {
+            "value": "#605E5C",
+            "type": "color"
+          },
+          "neutralForeground3": {
+            "value": "#A19F9D",
+            "type": "color"
+          },
+          "neutralForeground4": {
+            "value": "#C8C6C4",
+            "type": "color"
+          }
+        }
+      },
+      "dark": {
+        "background": {
+          "neutralBackground1": {
+            "value": "#1B1A19",
+            "type": "color"
+          },
+          "neutralBackground2": {
+            "value": "#252423",
+            "type": "color"
+          },
+          "neutralBackground3": {
+            "value": "#2D2C2B",
+            "type": "color"
+          },
+          "neutralBackground4": {
+            "value": "#323130",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "neutralForeground1": {
+            "value": "#F3F2F1",
+            "type": "color"
+          },
+          "neutralForeground2": {
+            "value": "#C8C6C4",
+            "type": "color"
+          },
+          "neutralForeground3": {
+            "value": "#A19F9D",
+            "type": "color"
+          },
+          "neutralForeground4": {
+            "value": "#8A8886",
+            "type": "color"
+          }
+        }
+      }
+    }
+  }
+}

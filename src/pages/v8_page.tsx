@@ -59,14 +59,12 @@ import {
   TableHeaderCell,
   TableBody,
   TableCell,
-  Text,
 } from '@fluentui/react-components'
 
 const useStyles = makeStyles({
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '32px',
   },
   title: {
     fontSize: tokens.fontSizeBase600,
@@ -90,7 +88,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function V8Demo() {
+export default function V8Page() {
   const styles = useStyles()
   const [dialogHidden, setDialogHidden] = useState(true)
   const [panelOpen, setPanelOpen] = useState(false)
@@ -120,10 +118,8 @@ export default function V8Demo() {
 
   return (
     <div className={styles.container}>
-      <Text as="h1" className={styles.title}>
-        Fluent UI v8 Components Showcase
-      </Text>
-      <div className={styles.tableWrapper} style={{ padding: '16px' }}>
+      <h1 className={styles.title}>Fluent UI v8 Components</h1>
+      <div className={styles.tableWrapper}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -565,3 +561,4 @@ export default function V8Demo() {
     </div>
   )
 }
+

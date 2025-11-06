@@ -102,7 +102,7 @@ import {
   Person24Regular,
   Image24Regular,
 } from '@fluentui/react-icons'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Drawer,
   DrawerBody,
@@ -144,6 +144,22 @@ export default function V9Page() {
   const styles = useStyles()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const { dispatchToast } = useToastController()
+  // Carousel is preview-only; linking to docs instead of custom UI
+  const tableBodyRef = useRef<HTMLTableSectionElement | null>(null)
+
+  useEffect(() => {
+    const tbody = tableBodyRef.current
+    if (!tbody) return
+    const rows = Array.from(tbody.querySelectorAll('tr'))
+    rows.sort((a, b) => {
+      const aText = (a.querySelector('td')?.textContent || '').trim().toLowerCase()
+      const bText = (b.querySelector('td')?.textContent || '').trim().toLowerCase()
+      return aText.localeCompare(bText)
+    })
+    rows.forEach((row) => tbody.appendChild(row))
+  }, [])
+
+  // no autoplay; avoid custom behavior to keep default appearance
 
   const notify = () =>
     dispatchToast(
@@ -165,7 +181,7 @@ export default function V9Page() {
               <TableHeaderCell>Examples</TableHeaderCell>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody ref={tableBodyRef}>
             {/* DataGrid */}
             <TableRow>
               <TableCell className={styles.componentCell}>

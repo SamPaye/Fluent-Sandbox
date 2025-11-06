@@ -59,7 +59,7 @@ Fluent Sandbox/
 │   ├── components/
 │   │   └── Layout.tsx          # Main layout with navigation
 │   ├── pages/
-│   │   ├── ComponentsDemo.tsx  # All components showcase
+│   │   ├── v9_page.tsx         # All components showcase
 │   │   └── AccountDemo.tsx     # Microsoft Account layout
 │   ├── App.tsx                 # Root component with routing
 │   ├── main.tsx                # Entry point

@@ -1,6 +1,11 @@
-import { makeStyles, tokens, Tab, TabList } from '@fluentui/react-components'
+import { makeStyles, tokens, Tab, TabList, type SelectTabEvent, type TabValue } from '@fluentui/react-components'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import React from 'react'
+import { ThemeSwitcher } from './ThemeSwitcher'
+import { useLayout } from '../contexts/LayoutContext'
+import { ROUTES } from '../constants/routes'
+
+const DEFAULT_TAB = ROUTES.V9_PAGE.slice(1) as TabValue
 
 const useStyles = makeStyles({
   root: {
@@ -12,6 +17,12 @@ const useStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground3,
     borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
     padding: '12px 24px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center', // Changed from 'flex-start' to 'center' to vertically center items
+  },
+  headerContent: {
+    flex: 1,
   },
   headerCollapsed: {
     display: 'none',
@@ -30,42 +41,27 @@ export default function Layout() {
   const styles = useStyles()
   const navigate = useNavigate()
   const location = useLocation()
-  const [headerCollapsed, setHeaderCollapsed] = React.useState(true)
+  const { headerCollapsed } = useLayout()
 
-  const selectedTab = location.pathname.split('/')[1] || 'components'
+  const selectedTab = (location.pathname.split('/')[1] || DEFAULT_TAB) as TabValue
 
-  const handleTabSelect = (_: any, data: any) => {
+  const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
     navigate(`/${data.value}`)
   }
-
-  React.useEffect(() => {
-    const setHandler = (e: Event) => {
-      const ce = e as CustomEvent<{ collapsed: boolean }>
-      setHeaderCollapsed(!!ce.detail?.collapsed)
-    }
-    const toggleHandler = () => setHeaderCollapsed((v) => !v)
-    window.addEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
-    window.addEventListener('layout:toggleHeaderCollapsed', toggleHandler as EventListener)
-    return () => {
-      window.removeEventListener('layout:setHeaderCollapsed', setHandler as EventListener)
-      window.removeEventListener('layout:toggleHeaderCollapsed', toggleHandler as EventListener)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    const ev = new CustomEvent('layout:setHeaderCollapsed', { detail: { collapsed: headerCollapsed } })
-    window.dispatchEvent(ev)
-  }, [headerCollapsed])
 
   return (
     <div className={styles.root}>
       <div className={headerCollapsed ? styles.headerCollapsed : styles.header}>
-        <div className={styles.title}>Fluent UI React Sandbox (v8 & v9)</div>
-        <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
-          <Tab value="v8-demo">v8 Components</Tab>
-          <Tab value="components">v9 Components</Tab>
-          <Tab value="account">Accounts Demo</Tab>
-        </TabList>
+        <div className={styles.headerContent}>
+          <div className={styles.title}>Fluent UI React Sandbox (v8 & v9)</div>
+          <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
+            <Tab value={ROUTES.V8_PAGE.slice(1)}>v8 Components</Tab>
+            <Tab value={ROUTES.V9_PAGE.slice(1)}>v9 Components</Tab>
+            <Tab value={ROUTES.V8_MIGRATED.slice(1)}>AMC Custom Components</Tab>
+            <Tab value={ROUTES.ACCOUNT_DEMO.slice(1)}>Accounts Demo</Tab>
+          </TabList>
+        </div>
+        <ThemeSwitcher />
       </div>
       <div className={styles.content}>
         <Outlet />

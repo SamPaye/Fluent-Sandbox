@@ -1,0 +1,82 @@
+{
+  "color": {
+    "errorStatus": {
+      "light": {
+        "background": {
+          "error": {
+            "value": "#E43E3E",
+            "type": "color"
+          },
+          "success": {
+            "value": "#107C10",
+            "type": "color"
+          },
+          "warning": {
+            "value": "#FFD335",
+            "type": "color"
+          },
+          "info": {
+            "value": "#005FB8",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "errorText": {
+            "value": "#A4262C",
+            "type": "color"
+          },
+          "successText": {
+            "value": "#054B16",
+            "type": "color"
+          },
+          "warningText": {
+            "value": "#986F0B",
+            "type": "color"
+          },
+          "infoText": {
+            "value": "#003966",
+            "type": "color"
+          }
+        }
+      },
+      "dark": {
+        "background": {
+          "error": {
+            "value": "#D13438",
+            "type": "color"
+          },
+          "success": {
+            "value": "#0B6A0B",
+            "type": "color"
+          },
+          "warning": {
+            "value": "#FFB900",
+            "type": "color"
+          },
+          "info": {
+            "value": "#3B78FF",
+            "type": "color"
+          }
+        },
+        "foreground": {
+          "errorText": {
+            "value": "#F1707B",
+            "type": "color"
+          },
+          "successText": {
+            "value": "#54B948",
+            "type": "color"
+          },
+          "warningText": {
+            "value": "#F8D22A",
+            "type": "color"
+          },
+          "infoText": {
+            "value": "#77B7F7",
+            "type": "color"
+          }
+        }
+      }
+    }
+  }
+}

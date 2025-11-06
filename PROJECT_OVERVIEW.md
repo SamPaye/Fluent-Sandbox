@@ -1,4 +1,4 @@
-# Fluent UI React v9 Sandbox - Project Overview
+# Fluent UI React Sandbox (WIP) - Project Overview
 
 ## 🎯 Project Goals
 
@@ -9,11 +9,24 @@ This project was created to demonstrate the capabilities of **Fluent UI React v9
 
 ## 📊 Demo Pages
 
-### 1. Components Demo (`/components`)
+### 1. v8 Components (`/v8-page`)
 
-This page showcases **30+ Fluent UI components** organized in a clean, centered table format:
+- **Route**: `/v8-page`
+- **File**: `v8_page.tsx`
+- **Tab Label**: "v8 Components"
+- **Description**: Fluent UI v8 components demonstration
+- **Features**: Shows v8 components alongside v9 for comparison
+
+### 2. v9 Components (`/v9-page`)
+
+- **Route**: `/v9-page`
+- **File**: `v9_page.tsx`
+- **Tab Label**: "v9 Components"
+
+This page showcases **30+ Fluent UI v9 components** organized in a clean, centered table format:
 
 #### Form Controls
+
 - Button (7 variants)
 - Checkbox
 - Input
@@ -25,6 +38,7 @@ This page showcases **30+ Fluent UI components** organized in a clean, centered 
 - SpinButton
 
 #### Display Components
+
 - Badge (5 variants)
 - CounterBadge
 - PresenceBadge
@@ -34,12 +48,14 @@ This page showcases **30+ Fluent UI components** organized in a clean, centered 
 - Rating
 
 #### Navigation
+
 - Breadcrumb
 - Menu with MenuTrigger
 - Link
 - TabList (in Layout)
 
 #### Feedback & Status
+
 - Spinner (5 sizes)
 - ProgressBar
 - MessageBar
@@ -47,6 +63,7 @@ This page showcases **30+ Fluent UI components** organized in a clean, centered 
 - Tooltip
 
 #### Layout & Structure
+
 - Card with CardHeader
 - Divider
 - Accordion
@@ -55,14 +72,29 @@ This page showcases **30+ Fluent UI components** organized in a clean, centered 
 - InfoLabel
 
 #### Data Display
+
 - Table with sorting
 - Text components
 
-### 2. Account Demo (`/account`)
+### 3. AMC Custom Components (`/v8-migrated`)
 
-A pixel-perfect recreation of the Microsoft Account management page featuring:
+- **Route**: `/v8-migrated`
+- **File**: `V8Migrated.tsx`
+- **Tab Label**: "AMC Custom Components"
+- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics
+- **Features**: Showcases migrated custom components from v8 to v9
+
+### 4. Accounts Demo (`/account-demo`)
+
+- **Route**: `/account-demo` (default landing page)
+- **File**: `AccountDemo.tsx`
+- **Tab Label**: "Accounts Demo"
+- **Description**: A pixel-perfect recreation of the Microsoft Account management page
+
+**Features:**
 
 #### Header Section
+
 - **Top Navigation Bar**
   - Microsoft branding
   - App launcher menu (Grid icon)
@@ -70,12 +102,14 @@ A pixel-perfect recreation of the Microsoft Account management page featuring:
   - User profile menu with avatar
 
 #### Sidebar Navigation
+
 - **User Profile Section**
+
   - Avatar with colorful background
   - User name and email
   - "View my benefits" link
-  
 - **Navigation Menu Items** (9 sections):
+
   - Account (active state highlighted)
   - Your info
   - Subscriptions
@@ -87,41 +121,43 @@ A pixel-perfect recreation of the Microsoft Account management page featuring:
   - Address book
 
 #### Main Content Area
+
 - **Quick Action Cards**
+
   - Manage Microsoft 365 Personal
   - Change password
-  
 - **Subscriptions Section**
+
   - Section header with view all link
   - Subscription management cards
-
 - **Microsoft Storage Section**
+
   - Storage overview
   - Information card about account storage
-
 - **Devices Section**
+
   - Device list with icons
   - Two sample devices:
     - Cumulo (Desktop PC)
     - XBOXONE (Gaming console)
   - Action links (Schedule repair, Find device, Online support)
   - "View all devices" link
-
 - **Privacy Section**
+
   - Privacy settings overview
   - Management card
-
 - **Security Section**
+
   - Security recommendations
   - Safety tips card
-
 - **Payment Options Section**
+
   - Payment method management
-
 - **Order History Section**
-  - Recent purchases view
 
+  - Recent purchases view
 - **Promotional Cards** (4 cards at bottom):
+
   - Discover (Spotify Premium offer)
   - Family (Family safety features)
   - Rewards (Microsoft Rewards program)
@@ -138,13 +174,17 @@ App (Root)
         └── Layout (Navigation wrapper)
             ├── Header with TabList
             └── Outlet (Page content)
-                ├── ComponentsDemo
-                └── AccountDemo
+                ├── V8Page
+                ├── V9Page
+                ├── V8Migrated
+                ├── AccountDemo
+                └── SubscriptionDemo
 ```
 
 ### Styling Approach
 
 The project uses **Fluent UI's makeStyles** API for styling:
+
 - CSS-in-JS approach
 - Design tokens from Fluent UI
 - Responsive layouts
@@ -164,14 +204,28 @@ The project uses **Fluent UI's makeStyles** API for styling:
 
 ## 🎨 Design Features
 
-### Components Demo
+### v8 Components
+
+- Side-by-side comparison with v9
+- Legacy component examples
+- Migration reference
+
+### v9 Components
+
 - Clean table layout
 - Organized by component type
 - Live, interactive examples
 - Responsive design
 - Easy to scan and explore
 
+### AMC Custom Components
+
+- Custom component showcase
+- Migration examples from v8 to v9
+- Rebuilt using v9 atomics
+
 ### Account Demo
+
 - Faithful recreation of Microsoft's design
 - Fluent design language throughout
 - Proper spacing and alignment
@@ -185,13 +239,20 @@ The project uses **Fluent UI's makeStyles** API for styling:
 ### Dependencies
 
 #### Production
-- `@fluentui/react-components` (v9.54.20) - Core component library
+
+- `@fluentui/react-components` (v9.72.4) - Core component library
 - `@fluentui/react-icons` (v2.0.258) - Icon library
+- `@fluentui/react` (v8.115.0) - Fluent UI v8 components
+- `@fluentui/react-drawer` (v9.10.6) - Drawer component
+- `@fluentui/react-nav` (v9.3.11) - Navigation components
+- `@fluentui/react-tree` (v9.15.3) - Tree view component
+- `@fluentui/react-toast` (v9.7.6) - Toast notification component
 - `react` (v18.3.1) - UI framework
 - `react-dom` (v18.3.1) - React DOM renderer
 - `react-router-dom` (v6.26.2) - Routing
 
 #### Development
+
 - `@types/react` (v18.3.5) - React TypeScript types
 - `@types/react-dom` (v18.3.0) - React DOM TypeScript types
 - `@vitejs/plugin-react` (v4.3.1) - Vite React plugin
@@ -207,6 +268,7 @@ The project uses **Fluent UI's makeStyles** API for styling:
 ## 📱 Responsive Design
 
 The application is responsive and works on:
+
 - Desktop (1920px+)
 - Laptop (1366px+)
 - Tablet (768px+)
@@ -215,11 +277,14 @@ The application is responsive and works on:
 ## 🎯 Use Cases
 
 This sandbox is perfect for:
+
 - **Learning Fluent UI v9** - See all components in action
+- **Migration Reference** - Compare v8 and v9 components side-by-side
 - **Prototyping** - Quick component reference
 - **Design Reference** - Real-world layout example
 - **Development** - Starting point for Fluent UI projects
 - **Demonstrations** - Show Fluent UI capabilities to stakeholders
+- **Custom Components** - Examples of migrated custom components
 
 ## 🚀 Performance
 
@@ -243,6 +308,7 @@ This sandbox is perfect for:
 ## 📝 Future Enhancements
 
 Potential improvements for this sandbox:
+
 - Add dark theme toggle
 - Include form validation examples
 - Add data table with sorting/filtering
@@ -255,6 +321,7 @@ Potential improvements for this sandbox:
 ## 🤝 Contributing
 
 To add new components or pages:
+
 1. Create a new file in `src/pages/` for new pages
 2. Add route in `src/App.tsx`
 3. Add tab in `src/components/Layout.tsx`
@@ -272,5 +339,4 @@ To add new components or pages:
 
 ## 🎉 Conclusion
 
-This Fluent UI React v9 Sandbox provides a comprehensive, interactive way to explore Microsoft's latest design system. Whether you're building a new application or exploring components, this sandbox serves as both a learning tool and a reference implementation.
-
+This Fluent UI React Sandbox provides a comprehensive, interactive way to explore Microsoft's latest design system. Whether you're building a new application or exploring components, this sandbox serves as both a learning tool and a reference implementation.
