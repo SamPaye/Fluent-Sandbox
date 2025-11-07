@@ -17,9 +17,8 @@ import {
   ChevronUp16Regular,
   Key16Regular,
 } from '@fluentui/react-icons'
-import { useNavigate } from 'react-router-dom'
-import { type OnNavItemSelectData } from '@fluentui/react-nav'
 import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
+import { useNavigation } from '../hooks/useNavigation'
 import { AccountHeader } from '../components/AccountHeader'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
@@ -43,7 +42,7 @@ const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 export default function Account() {
   const layoutStyles = useLayoutStyles()
   const subscriptionStyles = useSubscriptionCardStyles()
-  const navigate = useNavigate()
+  const { handleNavSelect, navigate } = useNavigation()
   const { headerCollapsed } = useLayout()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
@@ -76,16 +75,6 @@ export default function Account() {
   }
 
   const isExpanded = (cardId: string) => expandedCards.has(cardId)
-
-  const handleNavSelect = (_: React.SyntheticEvent | Event, data: OnNavItemSelectData) => {
-    if (data.value === 'account') {
-      navigate(ROUTES.ACCOUNT)
-    } else if (data.value === 'subscriptions') {
-      navigate(ROUTES.SUBSCRIPTION)
-    } else if (data.value === 'subscriptions-v2') {
-      navigate(ROUTES.SUBSCRIPTION_V2)
-    }
-  }
 
   const infoColumns: InfoColumn[] = [
     {

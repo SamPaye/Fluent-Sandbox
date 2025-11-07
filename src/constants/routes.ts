@@ -9,5 +9,6 @@ export const ROUTES = {
   ACCOUNT: '/account',
   SUBSCRIPTION: '/account/subscription',
   SUBSCRIPTION_V2: '/account/subscription-v2',
+  SUBSCRIPTION_V3: '/account/subscription-v3',
 } as const
 

@@ -8,7 +8,7 @@ This sandbox includes five demo pages:
 
 - **v8 Components** (`/v8-page`): Fluent UI v8 components demonstration alongside v9 components
 - **v9 Components** (`/v9-page`): Comprehensive showcase of 30+ Fluent UI v9 components displayed in an organized table format
-- **AMC Custom Components** (`/v8-migrated`): Custom AMC components rebuilt using Fluent UI v9 atomics
+- **AMC Custom Components** (`/v8-migrated`): Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
 - **Accounts Demo** (`/account-demo`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections (default landing page)
 - **Subscriptions Demo** (`/account-demo/subscription-demo`): Subscription management interface demonstrating data display and management patterns
 
@@ -166,8 +166,12 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
 - **Route**: `/v8-migrated`
 - **File**: `V8Migrated.tsx`
 - **Tab Label**: "AMC Custom Components"
-- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics
-- **Features**: Showcases migrated custom components from v8 to v9
+- **Page Title**: "AMC Custom Components (wip)"
+- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
+- **Features**: 
+  - Showcases migrated custom components from v8 to v9
+  - Components displayed in an organized table format
+  - **Value Banner**: PageHeader component demonstration with title and info columns featuring 16x16 icons
 
 ## Available Scripts
 
@@ -264,3 +268,19 @@ npm run build
 ```
 
 The optimized files will be in the `dist` folder, ready for deployment to any static hosting service.
+
+### Running the Production Build Locally
+
+After building, you can run the production build using Live Server:
+
+1. **Install Live Server** (if using VS Code):
+   - Install the "Live Server" extension from the VS Code marketplace
+   - Or use the Live Server extension in your preferred editor
+
+2. **Run with Live Server**:
+   - Right-click on `dist/index.html` in your file explorer
+   - Select "Open with Live Server" (if available)
+   - Or in VS Code: Right-click `dist/index.html` → "Open with Live Server"
+   - The application will open in your default browser
+
+Alternatively, you can use `npm run preview` to preview the production build using Vite's preview server.

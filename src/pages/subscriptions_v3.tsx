@@ -3,17 +3,17 @@ import {
   tokens,
   Button,
   Link,
+  Card,
+  Text,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbButton,
   BreadcrumbDivider,
 } from '@fluentui/react-components'
 import {
-  Storage24Regular,
-  ChevronUp16Regular,
-  ChevronDown16Regular,
   ArrowDownload16Regular,
   Calendar16Regular,
+  Checkmark16Regular,
 } from '@fluentui/react-icons'
 import React from 'react'
 import msLogo from '../images/ms.png'
@@ -22,7 +22,6 @@ import { useNavigation } from '../hooks/useNavigation'
 import { AccountHeader } from '../components/AccountHeader'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AccountAccordion } from '../components/AccountAccordion'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -103,7 +102,7 @@ const useStyles = makeStyles({
     flex: '1 1 300px',
     minWidth: '0',
     minHeight: '120px',
-    backgroundColor: tokens.colorNeutralBackground3,
+    backgroundColor: '#ffcccc',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -127,7 +126,8 @@ const useStyles = makeStyles({
   accordionImagePlaceholder: {
     width: '120px',
     height: '120px',
-    backgroundColor: tokens.colorNeutralBackground3,
+    backgroundColor: '#ffcccc',
+    border: '2px dashed #ff0000',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -345,11 +345,11 @@ const useStyles = makeStyles({
 // Note: makeStyles is still imported but only used for breadcrumbContainer
 // All other styles are now in shared hooks
 
-export default function SubscriptionV2() {
+export default function SubscriptionV3() {
   const styles = useStyles()
   const layoutStyles = useLayoutStyles()
   const { handleNavSelect, navigate } = useNavigation()
-  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
+  const [showMoreDetails, setShowMoreDetails] = React.useState(false)
   const { headerCollapsed } = useLayout()
 
   const infoColumns: InfoColumn[] = [
@@ -370,14 +370,14 @@ export default function SubscriptionV2() {
       <AccountHeader headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
-        <LeftNav selectedValue="subscriptions-v2" onNavItemSelect={handleNavSelect} />
+        <LeftNav selectedValue="subscriptions-v3" onNavItemSelect={handleNavSelect} />
 
         <div className={layoutStyles.content}>
           {/* Breadcrumb */}
           <div className={styles.breadcrumbContainer}>
             <Breadcrumb>
               <BreadcrumbItem>
-                <BreadcrumbButton onClick={() => navigate(ROUTES.SUBSCRIPTION_V2)}>
+                <BreadcrumbButton onClick={() => navigate(ROUTES.SUBSCRIPTION_V3)}>
                   Subscriptions
                 </BreadcrumbButton>
               </BreadcrumbItem>
@@ -413,42 +413,106 @@ export default function SubscriptionV2() {
             <div className={styles.currentPlanImagePlaceholder} />
           </div>
 
-          <AccountAccordion
-            value="manage-subscription"
-            title="Manage subscription"
-            icon={<Storage24Regular />}
-            billingText="Save 16% with annual billing ($129.99/year)"
-            isOpen={manageAccordionOpen}
-            onToggle={setManageAccordionOpen}
-            actionButton={
-              <Button appearance="primary">Upgrade</Button>
-            }
-            expandIcon={!manageAccordionOpen ? (
-              <ChevronDown16Regular style={{ fontSize: '16px' }} />
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
-          >
-            <div className={styles.accordionContentLayout}>
-              {/* Left Image Placeholder */}
-              <div className={styles.accordionImagePlaceholder} />
-              
-              {/* Right Text Content */}
-              <div className={styles.accordionTextContent}>
-                <h3 className={styles.accordionContentTitle}>Lorem ipsum</h3>
-                <p className={styles.accordionContentSubtitle}>Dolor sit amet</p>
-                <Link 
-                  href="#" 
-                  className={styles.accordionActionLink}
-                  onClick={(e) => {
-                    e.preventDefault()
-                  }}
-                >
-                  Action text
-                </Link>
+          {/* Cards Grid */}
+          <div className={styles.cardsGrid}>
+            {/* Card 1 */}
+            <Card className={styles.card}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardImagePlaceholder} />
+                <div className={styles.cardHeaderContent}>
+                  <h3 className={styles.cardTitle}>Card Title</h3>
+                  <div className={styles.cardPrice}>
+                    <span className={styles.cardPriceAmount}>$99</span>
+                    <span className={styles.cardPricePeriod}>/ month</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </AccountAccordion>
+              <p className={styles.cardDescription}>Description</p>
+              <Button appearance="primary" className={styles.cardButton}>
+                Upgrade
+              </Button>
+              <p className={styles.cardButtonDescription}>Button description</p>
+              {showMoreDetails && (
+                <div className={styles.cardFeaturesList}>
+                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <div key={item} className={styles.cardFeatureItem}>
+                      <Checkmark16Regular className={styles.cardFeatureIcon} />
+                      <Text>Lorem ipsum dolor sit amet</Text>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+
+            {/* Card 2 */}
+            <Card className={styles.card}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardImagePlaceholder} />
+                <div className={styles.cardHeaderContent}>
+                  <h3 className={styles.cardTitle}>Card Title</h3>
+                  <div className={styles.cardPrice}>
+                    <span className={styles.cardPriceAmount}>$99</span>
+                    <span className={styles.cardPricePeriod}>/ month</span>
+                  </div>
+                </div>
+              </div>
+              <p className={styles.cardDescription}>Description</p>
+              <Button appearance="primary" className={styles.cardButton}>
+                Upgrade
+              </Button>
+              <p className={styles.cardButtonDescription}>Button description</p>
+              {showMoreDetails && (
+                <div className={styles.cardFeaturesList}>
+                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <div key={item} className={styles.cardFeatureItem}>
+                      <Checkmark16Regular className={styles.cardFeatureIcon} />
+                      <Text>Lorem ipsum dolor sit amet</Text>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+
+            {/* Card 3 */}
+            <Card className={styles.card}>
+              <div className={styles.cardHeader}>
+                <div className={styles.cardImagePlaceholder} />
+                <div className={styles.cardHeaderContent}>
+                  <h3 className={styles.cardTitle}>Card Title</h3>
+                  <div className={styles.cardPrice}>
+                    <span className={styles.cardPriceAmount}>$99</span>
+                    <span className={styles.cardPricePeriod}>/ month</span>
+                  </div>
+                </div>
+              </div>
+              <p className={styles.cardDescription}>Description</p>
+              <Button appearance="primary" className={styles.cardButton}>
+                Downgrade
+              </Button>
+              <p className={styles.cardButtonDescription}>Button description</p>
+              {showMoreDetails && (
+                <div className={styles.cardFeaturesList}>
+                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <div key={item} className={styles.cardFeatureItem}>
+                      <Checkmark16Regular className={styles.cardFeatureIcon} />
+                      <Text>Lorem ipsum dolor sit amet</Text>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+          </div>
+
+          {/* Show More/Less Button */}
+          <div className={styles.showMoreButton}>
+            <Button
+              appearance="outline"
+              className={styles.showMoreButtonStyle}
+              onClick={() => setShowMoreDetails(!showMoreDetails)}
+            >
+              {showMoreDetails ? 'Show less' : 'Show more'}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

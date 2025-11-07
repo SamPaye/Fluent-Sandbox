@@ -19,12 +19,11 @@ import {
   ArrowDownload16Regular,
   Calendar16Regular,
 } from '@fluentui/react-icons'
-import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
-import { type OnNavItemSelectData } from '@fluentui/react-nav'
 import msLogo from '../images/ms.png'
 import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
+import { useNavigation } from '../hooks/useNavigation'
 import { AccountHeader } from '../components/AccountHeader'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
@@ -45,22 +44,12 @@ export default function Subscription() {
   const styles = useStyles()
   const layoutStyles = useLayoutStyles()
   const subscriptionStyles = useSubscriptionCardStyles()
-  const navigate = useNavigate()
+  const { handleNavSelect, navigate } = useNavigation()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
   const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
   const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
   const { headerCollapsed } = useLayout()
-
-  const handleNavSelect = (_: React.SyntheticEvent | Event, data: OnNavItemSelectData) => {
-    if (data.value === 'account') {
-      navigate(ROUTES.ACCOUNT)
-    } else if (data.value === 'subscriptions') {
-      navigate(ROUTES.SUBSCRIPTION)
-    } else if (data.value === 'subscriptions-v2') {
-      navigate(ROUTES.SUBSCRIPTION_V2)
-    }
-  }
 
   const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
     setSelectedTab(data.value)

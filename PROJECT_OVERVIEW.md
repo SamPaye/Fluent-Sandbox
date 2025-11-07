@@ -81,8 +81,17 @@ This page showcases **30+ Fluent UI v9 components** organized in a clean, center
 - **Route**: `/v8-migrated`
 - **File**: `V8Migrated.tsx`
 - **Tab Label**: "AMC Custom Components"
-- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics
-- **Features**: Showcases migrated custom components from v8 to v9
+- **Page Title**: "AMC Custom Components (wip)"
+- **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
+- **Features**: 
+  - Showcases migrated custom components from v8 to v9
+  - Components displayed in an organized table format with component names and live examples
+  - **Value Banner Component**: 
+    - First component in the showcase table
+    - Demonstrates the PageHeader component with customizable title and info columns
+    - Features 16x16 Fluent UI icons (Grid16Regular, ShieldCheckmark16Regular) centered in circular backgrounds
+    - Displays primary and secondary text for each info column
+    - Styled with light grey background (#F2F2F2) for visual separation
 
 ### 4. Accounts Demo (`/account-demo`)
 
@@ -220,9 +229,11 @@ The project uses **Fluent UI's makeStyles** API for styling:
 
 ### AMC Custom Components
 
-- Custom component showcase
+- Custom component showcase (work in progress)
 - Migration examples from v8 to v9
 - Rebuilt using v9 atomics
+- Table-based component gallery
+- Value Banner component demonstrating PageHeader with info columns
 
 ### Account Demo
 
@@ -264,6 +275,14 @@ The project uses **Fluent UI's makeStyles** API for styling:
 - **Vite**: Fast development server with HMR (Hot Module Replacement)
 - **TypeScript**: Strict mode enabled for type safety
 - **ESM**: Modern ES modules for better tree-shaking
+
+### Running Production Builds
+
+After building with `npm run build`, the optimized files are output to the `dist` folder. You can run the production build locally using:
+
+- **Live Server**: Right-click `dist/index.html` and select "Open with Live Server" (requires Live Server extension in VS Code or similar editor)
+- **Vite Preview**: Run `npm run preview` to use Vite's built-in preview server
+- **Static File Server**: Deploy the `dist` folder to any static hosting service
 
 ## 📱 Responsive Design
 

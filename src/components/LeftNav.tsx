@@ -12,6 +12,7 @@ import {
   Book24Regular,
 } from '@fluentui/react-icons'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
+import { useLayout } from '../contexts/LayoutContext'
 
 const useNavStyles = makeStyles({
   navItem: {
@@ -48,52 +49,74 @@ export const LeftNav: React.FC<LeftNavProps> = ({
 }) => {
   const styles = useLayoutStyles()
   const navStyles = useNavStyles()
+  const { drawerOpen, setDrawerOpen } = useLayout()
+
+  const handleNavSelect = (event: React.SyntheticEvent | Event, data: OnNavItemSelectData) => {
+    onNavItemSelect(event, data)
+    // Close drawer on mobile when item is selected
+    if (window.innerWidth <= 640) {
+      setDrawerOpen(false)
+    }
+  }
 
   return (
-    <div className={styles.sidebar}>
-      <div className={styles.userSection}>
-        <div className={styles.userInfo}>
-          <Avatar name={userName} color="colorful" size={48} />
-          <div>
-            <div className={styles.userName}>{userName}</div>
-            <div className={styles.userEmail}>{userEmail}</div>
-            <Link href="#">View my benefits</Link>
+    <>
+      {/* Overlay backdrop for mobile */}
+      <div 
+        className={`${styles.drawerOverlay} ${drawerOpen ? 'open' : ''}`}
+        onClick={() => setDrawerOpen(false)}
+        aria-hidden="true"
+      />
+      
+      {/* Navigation drawer */}
+      <div className={`${styles.sidebar} ${drawerOpen ? 'open' : ''}`}>
+        <div className={styles.userSection}>
+          <div className={styles.userInfo}>
+            <Avatar name={userName} color="colorful" size={48} />
+            <div>
+              <div className={styles.userName}>{userName}</div>
+              <div className={styles.userEmail}>{userEmail}</div>
+              <Link href="#">View my benefits</Link>
+            </div>
           </div>
         </div>
+        <Nav selectedValue={selectedValue} onNavItemSelect={handleNavSelect}>
+          <NavItem icon={<Home24Regular />} value="account" className={navStyles.navItem}>
+            Account
+          </NavItem>
+          <NavItem icon={<Person24Regular />} value="info" className={navStyles.navItem}>
+            Your info
+          </NavItem>
+          <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={navStyles.navItem}>
+            Subscriptions
+          </NavItem>
+          <NavItem icon={<SubscriptionsIcon />} value="subscriptions-v2" className={navStyles.navItem}>
+            Subscriptions v2
+          </NavItem>
+          <NavItem icon={<SubscriptionsIcon />} value="subscriptions-v3" className={navStyles.navItem}>
+            Subscriptions v3
+          </NavItem>
+          <NavItem icon={<Desktop24Regular />} value="devices" className={navStyles.navItem}>
+            Devices
+          </NavItem>
+          <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={navStyles.navItem}>
+            Security
+          </NavItem>
+          <NavItem icon={<Eye24Regular />} value="privacy" className={navStyles.navItem}>
+            Privacy
+          </NavItem>
+          <NavItem icon={<Payment24Regular />} value="payment" className={navStyles.navItem}>
+            Payment options
+          </NavItem>
+          <NavItem icon={<Cart24Regular />} value="orders" className={navStyles.navItem}>
+            Order history
+          </NavItem>
+          <NavItem icon={<Book24Regular />} value="address" className={navStyles.navItem}>
+            Address book
+          </NavItem>
+        </Nav>
       </div>
-      <Nav selectedValue={selectedValue} onNavItemSelect={onNavItemSelect}>
-        <NavItem icon={<Home24Regular />} value="account" className={navStyles.navItem}>
-          Account
-        </NavItem>
-        <NavItem icon={<Person24Regular />} value="info" className={navStyles.navItem}>
-          Your info
-        </NavItem>
-        <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={navStyles.navItem}>
-          Subscriptions
-        </NavItem>
-        <NavItem icon={<SubscriptionsIcon />} value="subscriptions-v2" className={navStyles.navItem}>
-          Subscriptions v2
-        </NavItem>
-        <NavItem icon={<Desktop24Regular />} value="devices" className={navStyles.navItem}>
-          Devices
-        </NavItem>
-        <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={navStyles.navItem}>
-          Security
-        </NavItem>
-        <NavItem icon={<Eye24Regular />} value="privacy" className={navStyles.navItem}>
-          Privacy
-        </NavItem>
-        <NavItem icon={<Payment24Regular />} value="payment" className={navStyles.navItem}>
-          Payment options
-        </NavItem>
-        <NavItem icon={<Cart24Regular />} value="orders" className={navStyles.navItem}>
-          Order history
-        </NavItem>
-        <NavItem icon={<Book24Regular />} value="address" className={navStyles.navItem}>
-          Address book
-        </NavItem>
-      </Nav>
-    </div>
+    </>
   )
 }
 

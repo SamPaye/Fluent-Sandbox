@@ -6,7 +6,11 @@ export const useLayoutStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     minHeight: 'calc(100vh - 100px)',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: tokens.colorNeutralBackground2,
+    width: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
   },
   header: {
     display: 'flex',
@@ -15,6 +19,11 @@ export const useLayoutStyles = makeStyles({
     padding: '12px 24px',
     backgroundColor: '#0F6CBD', // Fixed blue color - stays blue regardless of theme
     color: '#FFFFFF', // Fixed white color for text and icons
+    overflow: 'hidden',
+    minWidth: 0,
+    '@media (max-width: 640px)': {
+      padding: '12px 16px',
+    },
   },
   headerCenter: {
     flex: 1,
@@ -23,26 +32,86 @@ export const useLayoutStyles = makeStyles({
     alignItems: 'center',
     paddingLeft: '40px',
     paddingRight: '40px',
+    minWidth: 0,
+    '@media (max-width: 640px)': {
+      display: 'none', // Hide center section on mobile
+    },
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
+    minWidth: 0,
+    flexShrink: 1,
+    '@media (max-width: 640px)': {
+      gap: '8px',
+      flexShrink: 1,
+    },
   },
   headerRight: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
+    minWidth: 0,
+    flexShrink: 0,
+    '@media (max-width: 640px)': {
+      gap: '8px',
+    },
   },
   headerButton: {
     color: '#FFFFFF', // Fixed white color - stays unchanged regardless of theme
     cursor: 'pointer',
+    flexShrink: 0,
+    minWidth: '44px',
+    height: '44px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '@media (max-width: 640px)': {
+      minWidth: '40px',
+      height: '40px',
+    },
   },
   sidebar: {
     width: '260px',
     backgroundColor: 'transparent',
     display: 'flex',
     flexDirection: 'column',
+    flexShrink: 0,
+    '@media (max-width: 640px)': {
+      position: 'fixed',
+      left: '-260px',
+      top: 0,
+      bottom: 0,
+      zIndex: 1000,
+      backgroundColor: tokens.colorNeutralBackground1,
+      boxShadow: tokens.shadow16,
+      transition: 'left 0.3s ease',
+      width: '260px',
+      '&.open': {
+        left: '0',
+      },
+    },
+  },
+  drawerOverlay: {
+    display: 'none',
+    '@media (max-width: 640px)': {
+      display: 'block',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      zIndex: 999,
+      opacity: 0,
+      pointerEvents: 'none',
+      transition: 'opacity 0.3s ease',
+      '&.open': {
+        opacity: 1,
+        pointerEvents: 'auto',
+      },
+    },
   },
   userSection: {
     padding: '32px 16px 24px',
@@ -68,7 +137,14 @@ export const useLayoutStyles = makeStyles({
     display: 'flex',
     flex: 1,
     padding: '0px 10px',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: tokens.colorNeutralBackground2,
+    width: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+    '@media (max-width: 640px)': {
+      padding: '0px',
+    },
   },
   content: {
     flex: 1,
@@ -76,6 +152,13 @@ export const useLayoutStyles = makeStyles({
     maxWidth: '1200px',
     margin: '0 auto',
     fontSize: '14px',
+    width: '100%',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    '@media (max-width: 767px)': {
+      padding: '24px 16px',
+      maxWidth: '100%',
+    },
   },
 })
 
@@ -86,11 +169,27 @@ export const usePageHeaderStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: '42px',
+    width: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+    '@media (max-width: 767px)': {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '16px',
+      marginBottom: '24px',
+    },
   },
   headerTitleSection: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
+    minWidth: 0,
+    flex: 1,
+    overflow: 'hidden',
+    '@media (max-width: 767px)': {
+      width: '100%',
+      gap: '12px',
+    },
   },
   logoImage: {
     width: '32px',
@@ -103,18 +202,35 @@ export const usePageHeaderStyles = makeStyles({
   headerTitle: {
     fontSize: tokens.fontSizeBase600,
     fontWeight: tokens.fontWeightSemibold,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+    flex: 1,
+    '@media (max-width: 767px)': {
+      fontSize: tokens.fontSizeBase500,
+    },
   },
   headerInfoColumns: {
     display: 'flex',
     flexDirection: 'row',
     gap: '24px',
     alignItems: 'center',
+    '@media (max-width: 767px)': {
+      flexDirection: 'column',
+      gap: '12px',
+      alignItems: 'flex-start',
+    },
   },
   infoColumn: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
     minWidth: '296px',
+    '@media (max-width: 767px)': {
+      minWidth: 'auto',
+      width: '100%',
+    },
   },
   iconCircle: {
     width: '32px',
@@ -163,30 +279,67 @@ export const useAccordionStyles = makeStyles({
     paddingRight: '16px',
     marginBottom: '16px',
     boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.1)',
+    overflow: 'hidden',
+    width: '100%',
+    maxWidth: '100%',
+    boxSizing: 'border-box',
+    '@media (max-width: 640px)': {
+      paddingLeft: '12px',
+      paddingRight: '12px',
+      marginLeft: '0',
+      marginRight: '0',
+    },
   },
   accordionHeader: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
+    minWidth: 0,
+    overflow: 'hidden',
+    '@media (max-width: 640px)': {
+      gap: '12px',
+      flexWrap: 'wrap',
+    },
   },
   accordionIcon: {
     color: tokens.colorBrandBackground,
     fontSize: '20px',
+    flexShrink: 0,
+    '@media (max-width: 640px)': {
+      fontSize: '18px',
+    },
   },
   accordionHeaderText: {
     display: 'flex',
     flexDirection: 'column',
     gap: '0px',
+    minWidth: 0,
+    flex: 1,
+    overflow: 'hidden',
   },
   accordionTitle: {
     fontSize: '14px',
     paddingLeft: '16px',
     fontWeight: tokens.fontWeightSemibold,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    '@media (max-width: 640px)': {
+      paddingLeft: '12px',
+      fontSize: '13px',
+    },
   },
   accordionBillingText: {
     fontSize: '12px',
     paddingLeft: '16px',
     color: tokens.colorNeutralForeground3,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    '@media (max-width: 640px)': {
+      paddingLeft: '12px',
+      fontSize: '11px',
+    },
   },
   accordionPanel: {
     paddingTop: '16px',
@@ -196,6 +349,16 @@ export const useAccordionStyles = makeStyles({
     marginRight: '-16px',
     paddingLeft: '16px',
     paddingRight: '16px',
+    overflow: 'hidden',
+    width: 'calc(100% + 32px)',
+    boxSizing: 'border-box',
+    '@media (max-width: 640px)': {
+      marginLeft: '-12px',
+      marginRight: '-12px',
+      paddingLeft: '12px',
+      paddingRight: '12px',
+      width: 'calc(100% + 24px)',
+    },
   },
 })
 

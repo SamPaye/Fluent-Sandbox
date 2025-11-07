@@ -1,4 +1,6 @@
 import { makeStyles, tokens, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from '@fluentui/react-components'
+import { Grid16Regular, ShieldCheckmark16Regular } from '@fluentui/react-icons'
+import { PageHeader, InfoColumn } from '../components/PageHeader'
 
 const useStyles = makeStyles({
   container: {
@@ -30,15 +32,52 @@ const useStyles = makeStyles({
     gap: '8px',
     flexWrap: 'wrap',
     alignItems: 'center',
+    backgroundColor: '#F2F2F2',
+    padding: '12px',
+    '& > div': {
+      marginBottom: '0 !important',
+    },
+    '& div[class*="headerTitleSection"]': {
+      alignItems: 'flex-start',
+    },
+    '& span[class*="headerTitle"]': {
+      lineHeight: '1.2',
+      paddingBottom: '2px',
+      overflow: 'visible',
+    },
+    '& div[class*="iconSvg"]': {
+      width: '16px',
+      height: '16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      '& svg': {
+        width: '16px',
+        height: '16px',
+      },
+    },
   },
 })
 
 export default function V8Migrated() {
   const styles = useStyles()
 
+  const exampleInfoColumns: InfoColumn[] = [
+    {
+      icon: <Grid16Regular style={{ width: '16px', height: '16px', display: 'block' }} />,
+      primary: 'Example Value',
+      secondary: 'Sample data',
+    },
+    {
+      icon: <ShieldCheckmark16Regular style={{ width: '16px', height: '16px', display: 'block' }} />,
+      primary: 'Secure',
+      secondary: 'Protected',
+    },
+  ]
+
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>AMC Custom Components</h1>
+      <h1 className={styles.title}>AMC Custom Components (wip)</h1>
       <div className={styles.description}>
         <span>
           This page is meant to showcase the custom AMC components rebuilt using v9 atomics.
@@ -53,6 +92,16 @@ export default function V8Migrated() {
             </TableRow>
           </TableHeader>
           <TableBody>
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Value Banner</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <PageHeader title="Page title" infoColumns={exampleInfoColumns} />
+                </div>
+              </TableCell>
+            </TableRow>
             {/* Add your v8 custom components here */}
             <TableRow>
               <TableCell className={styles.componentCell}>
