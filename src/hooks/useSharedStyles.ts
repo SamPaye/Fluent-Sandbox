@@ -6,7 +6,7 @@ export const useLayoutStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     minHeight: 'calc(100vh - 100px)',
-    backgroundColor: tokens.colorNeutralBackground2,
+    backgroundColor: '#F2F2F2',
   },
   header: {
     display: 'flex',
@@ -68,7 +68,7 @@ export const useLayoutStyles = makeStyles({
     display: 'flex',
     flex: 1,
     padding: '0px 10px',
-    backgroundColor: tokens.colorNeutralBackground2, // Use theme token instead of hardcoded color
+    backgroundColor: '#F2F2F2',
   },
   content: {
     flex: 1,
@@ -157,7 +157,10 @@ export const useAccordionStyles = makeStyles({
   accordionWrapper: {
     backgroundColor: tokens.colorNeutralBackground1,
     borderRadius: tokens.borderRadiusLarge,
-    padding: '16px',
+    paddingTop: '14px',
+    paddingBottom: '14px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
     marginBottom: '16px',
     boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.1)',
   },

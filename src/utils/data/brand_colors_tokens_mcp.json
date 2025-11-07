@@ -4,23 +4,23 @@
       "light": {
         "background": {
           "pressed": {
-            "value": "#0C3B5E",
+            "value": "#005A9E",
             "type": "color"
           },
           "selected": {
-            "value": "#0F548C",
+            "value": "#0078D4",
             "type": "color"
           },
           "hover": {
-            "value": "#115EA3",
+            "value": "#106EBE",
             "type": "color"
           },
           "default": {
-            "value": "#0F6CBD",
+            "value": "#0078D4",
             "type": "color"
           },
           "secondary": {
-            "value": "#479EF5",
+            "value": "#4FC3F7",
             "type": "color"
           },
           "strokeHover": {
@@ -42,11 +42,11 @@
         },
         "foreground": {
           "primary": {
-            "value": "#0F6CBD",
+            "value": "#0078D4",
             "type": "color"
           },
           "inverted": {
-            "value": "#479EF5",
+            "value": "#4FC3F7",
             "type": "color"
           }
         }
@@ -54,23 +54,23 @@
       "dark": {
         "background": {
           "pressed": {
-            "value": "#0C3B5E",
+            "value": "#005A9E",
             "type": "color"
           },
           "selected": {
-            "value": "#0F548C",
+            "value": "#0078D4",
             "type": "color"
           },
           "hover": {
-            "value": "#0F6CBD",
+            "value": "#106EBE",
             "type": "color"
           },
           "default": {
-            "value": "#115EA3",
+            "value": "#0078D4",
             "type": "color"
           },
           "secondary": {
-            "value": "#0F6CBD",
+            "value": "#4FC3F7",
             "type": "color"
           },
           "strokeHover": {
@@ -92,11 +92,11 @@
         },
         "foreground": {
           "primary": {
-            "value": "#115EA3",
+            "value": "#0078D4",
             "type": "color"
           },
           "inverted": {
-            "value": "#0F6CBD",
+            "value": "#4FC3F7",
             "type": "color"
           }
         }

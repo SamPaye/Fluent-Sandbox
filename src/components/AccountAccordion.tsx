@@ -11,6 +11,7 @@ interface AccountAccordionProps {
   onToggle: (isOpen: boolean) => void
   children: React.ReactNode
   expandIcon?: React.ReactNode
+  actionButton?: React.ReactNode
 }
 
 export const AccountAccordion: React.FC<AccountAccordionProps> = ({
@@ -22,6 +23,7 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
   onToggle,
   children,
   expandIcon,
+  actionButton,
 }) => {
   const styles = useAccordionStyles()
 
@@ -36,7 +38,16 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
         }}
       >
         <AccordionItem value={value}>
-          <AccordionHeader expandIconPosition="end" className={styles.accordionHeader} expandIcon={expandIcon}>
+          <AccordionHeader 
+            expandIconPosition="end" 
+            className={styles.accordionHeader} 
+            expandIcon={
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                {actionButton && actionButton}
+                {expandIcon}
+              </div>
+            }
+          >
             {icon && <div className={styles.accordionIcon}>{icon}</div>}
             <div className={styles.accordionHeaderText}>
               <Text

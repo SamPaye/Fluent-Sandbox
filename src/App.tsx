@@ -4,8 +4,9 @@ import { AppThemeProvider } from './contexts/ThemeContext'
 import { LayoutProvider } from './contexts/LayoutContext'
 import Layout from './components/Layout'
 import V9Page from './pages/v9_page'
-import AccountDemo from './pages/AccountDemo'
-import SubscriptionDemo from './pages/SubscriptionDemo'
+import Account from './pages/Account'
+import Subscription from './pages/Subscription'
+import SubscriptionV2 from './pages/subscriptions_V2'
 import V8Page from './pages/v8_page'
 import V8Migrated from './pages/V8Migrated'
 import { ROUTES } from './constants/routes'
@@ -18,12 +19,13 @@ function App() {
         <HashRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-                <Route index element={<Navigate to={ROUTES.ACCOUNT_DEMO} replace />} />
+                <Route index element={<Navigate to={ROUTES.ACCOUNT} replace />} />
                 <Route path={ROUTES.V8_PAGE.slice(1)} element={<V8Page />} />
                 <Route path={ROUTES.V9_PAGE.slice(1)} element={<V9Page />} />
                 <Route path={ROUTES.V8_MIGRATED.slice(1)} element={<V8Migrated />} />
-                <Route path={ROUTES.ACCOUNT_DEMO.slice(1)} element={<AccountDemo />} />
-                <Route path={ROUTES.SUBSCRIPTION_DEMO.slice(1)} element={<SubscriptionDemo />} />
+                <Route path={ROUTES.ACCOUNT.slice(1)} element={<Account />} />
+                <Route path={ROUTES.SUBSCRIPTION.slice(1)} element={<Subscription />} />
+                <Route path={ROUTES.SUBSCRIPTION_V2.slice(1)} element={<SubscriptionV2 />} />
             </Route>
           </Routes>
         </HashRouter>

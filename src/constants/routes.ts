@@ -6,7 +6,8 @@ export const ROUTES = {
   V8_PAGE: '/v8-page',
   V9_PAGE: '/v9-page',
   V8_MIGRATED: '/v8-migrated',
-  ACCOUNT_DEMO: '/account-demo',
-  SUBSCRIPTION_DEMO: '/account-demo/subscription-demo',
+  ACCOUNT: '/account',
+  SUBSCRIPTION: '/account/subscription',
+  SUBSCRIPTION_V2: '/account/subscription-v2',
 } as const
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Link } from '@fluentui/react-components'
+import { Avatar, Link, makeStyles } from '@fluentui/react-components'
 import { Nav, NavItem, type OnNavItemSelectData } from '@fluentui/react-nav'
 import {
   Home24Regular,
@@ -12,6 +12,18 @@ import {
   Book24Regular,
 } from '@fluentui/react-icons'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
+
+const useNavStyles = makeStyles({
+  navItem: {
+    backgroundColor: 'transparent !important',
+    '&:hover': {
+      backgroundColor: 'transparent !important',
+    },
+    '&[aria-current="page"]': {
+      backgroundColor: 'transparent !important',
+    },
+  },
+})
 
 const SubscriptionsIcon: React.FC = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -35,6 +47,7 @@ export const LeftNav: React.FC<LeftNavProps> = ({
   userEmail = 'samp@hotmail.com',
 }) => {
   const styles = useLayoutStyles()
+  const navStyles = useNavStyles()
 
   return (
     <div className={styles.sidebar}>
@@ -49,31 +62,34 @@ export const LeftNav: React.FC<LeftNavProps> = ({
         </div>
       </div>
       <Nav selectedValue={selectedValue} onNavItemSelect={onNavItemSelect}>
-        <NavItem icon={<Home24Regular />} value="account">
+        <NavItem icon={<Home24Regular />} value="account" className={navStyles.navItem}>
           Account
         </NavItem>
-        <NavItem icon={<Person24Regular />} value="info">
+        <NavItem icon={<Person24Regular />} value="info" className={navStyles.navItem}>
           Your info
         </NavItem>
-        <NavItem icon={<SubscriptionsIcon />} value="subscriptions">
+        <NavItem icon={<SubscriptionsIcon />} value="subscriptions" className={navStyles.navItem}>
           Subscriptions
         </NavItem>
-        <NavItem icon={<Desktop24Regular />} value="devices">
+        <NavItem icon={<SubscriptionsIcon />} value="subscriptions-v2" className={navStyles.navItem}>
+          Subscriptions v2
+        </NavItem>
+        <NavItem icon={<Desktop24Regular />} value="devices" className={navStyles.navItem}>
           Devices
         </NavItem>
-        <NavItem icon={<ShieldCheckmark24Regular />} value="security">
+        <NavItem icon={<ShieldCheckmark24Regular />} value="security" className={navStyles.navItem}>
           Security
         </NavItem>
-        <NavItem icon={<Eye24Regular />} value="privacy">
+        <NavItem icon={<Eye24Regular />} value="privacy" className={navStyles.navItem}>
           Privacy
         </NavItem>
-        <NavItem icon={<Payment24Regular />} value="payment">
+        <NavItem icon={<Payment24Regular />} value="payment" className={navStyles.navItem}>
           Payment options
         </NavItem>
-        <NavItem icon={<Cart24Regular />} value="orders">
+        <NavItem icon={<Cart24Regular />} value="orders" className={navStyles.navItem}>
           Order history
         </NavItem>
-        <NavItem icon={<Book24Regular />} value="address">
+        <NavItem icon={<Book24Regular />} value="address" className={navStyles.navItem}>
           Address book
         </NavItem>
       </Nav>

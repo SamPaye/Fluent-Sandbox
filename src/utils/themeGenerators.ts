@@ -76,11 +76,94 @@ export function generateV9Theme(mode: ThemeMode = 'light'): Theme {
     }
   }
   
-  // Create theme with overrides
-  if (mode === 'light') {
-    return createLightTheme(tokenOverrides)
-  } else {
-    return createDarkTheme(tokenOverrides)
+  // Use navbar brand color #0F6CBD to match the navbar
+  const brandColor = '#0F6CBD'
+  const brandColorHover = '#0E5FA8'
+  
+  // Ensure brand colors are always set (use navbar color to match)
+  if (!tokenOverrides.colorBrandBackground) {
+    tokenOverrides.colorBrandBackground = brandColor
   }
+  if (!tokenOverrides.colorBrandBackgroundHover) {
+    tokenOverrides.colorBrandBackgroundHover = brandColorHover
+  }
+  if (!tokenOverrides.colorBrandBackgroundPressed) {
+    tokenOverrides.colorBrandBackgroundPressed = brandColorHover
+  }
+  if (!tokenOverrides.colorBrandBackgroundSelected) {
+    tokenOverrides.colorBrandBackgroundSelected = brandColor
+  }
+  if (!tokenOverrides.colorCompoundBrandBackground) {
+    tokenOverrides.colorCompoundBrandBackground = brandColor
+  }
+  if (!tokenOverrides.colorCompoundBrandBackgroundHover) {
+    tokenOverrides.colorCompoundBrandBackgroundHover = brandColorHover
+  }
+  if (!tokenOverrides.colorCompoundBrandBackgroundPressed) {
+    tokenOverrides.colorCompoundBrandBackgroundPressed = brandColorHover
+  }
+  if (!tokenOverrides.colorBrandBackgroundStatic) {
+    tokenOverrides.colorBrandBackgroundStatic = brandColor
+  }
+  if (!tokenOverrides.colorBrandBackground2) {
+    tokenOverrides.colorBrandBackground2 = brandColor
+  }
+  if (!tokenOverrides.colorBrandBackground2Hover) {
+    tokenOverrides.colorBrandBackground2Hover = brandColorHover
+  }
+  if (!tokenOverrides.colorBrandBackground2Pressed) {
+    tokenOverrides.colorBrandBackground2Pressed = brandColorHover
+  }
+  if (!tokenOverrides.colorBrandForeground1) {
+    tokenOverrides.colorBrandForeground1 = '#FFFFFF'
+  }
+  if (!tokenOverrides.colorBrandForegroundLink) {
+    tokenOverrides.colorBrandForegroundLink = brandColor
+  }
+  if (!tokenOverrides.colorBrandForegroundLinkHover) {
+    tokenOverrides.colorBrandForegroundLinkHover = brandColorHover
+  }
+  
+  // Create base theme with brand color ramp
+  // Fluent UI v9 requires BrandVariants, but we can create a simple one
+  const brandVariants = {
+    10: brandColor,
+    20: brandColor,
+    30: brandColor,
+    40: brandColor,
+    50: brandColor,
+    60: brandColor,
+    70: brandColor,
+    80: brandColor,
+    90: brandColor,
+    100: brandColor,
+    110: brandColor,
+    120: brandColor,
+    130: brandColor,
+    140: brandColor,
+    150: brandColor,
+    160: brandColor,
+  }
+  
+  const baseTheme = mode === 'light' 
+    ? createLightTheme(brandVariants) 
+    : createDarkTheme(brandVariants)
+  
+  // Apply additional token overrides by merging with base theme
+  // Note: Some tokens may need to be set via CSS custom properties
+  const customTheme: Theme = {
+    ...baseTheme,
+  }
+  
+  // Set token overrides as custom properties on the theme
+  // This ensures all brand color tokens are properly set
+  Object.entries(tokenOverrides).forEach(([key, value]) => {
+    if (value && customTheme) {
+      // Set token via theme object if supported
+      (customTheme as any)[key] = value
+    }
+  })
+  
+  return customTheme
 }
 
