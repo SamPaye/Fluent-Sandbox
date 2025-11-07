@@ -175,6 +175,8 @@ export const usePageHeaderStyles = makeStyles({
     width: '100%',
     overflow: 'hidden',
     boxSizing: 'border-box',
+    height: '64px',
+    padding: '10px',
     '@media (max-width: 767px)': {
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -232,7 +234,7 @@ export const usePageHeaderStyles = makeStyles({
     minWidth: '296px',
     '@media (max-width: 767px)': {
       minWidth: 'auto',
-      width: '100%',
+      width: 'auto',
     },
   },
   iconCircle: {
@@ -350,13 +352,13 @@ export const useAccordionStyles = makeStyles({
   },
   accordionBillingText: {
     fontSize: '12px',
-    paddingLeft: '16px',
+    paddingLeft: '0px',
     color: tokens.colorNeutralForeground3,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     '@media (max-width: 640px)': {
-      paddingLeft: '12px',
+      paddingLeft: '0px',
       fontSize: '11px',
     },
   },

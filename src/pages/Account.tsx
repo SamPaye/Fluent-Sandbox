@@ -1,9 +1,6 @@
 import React from 'react'
 import {
-  tokens,
   Text,
-  TabList,
-  Tab,
 } from '@fluentui/react-components'
 import {
   Grid24Regular,
@@ -13,17 +10,14 @@ import {
   Eye24Regular,
   Cart24Regular,
   Storage24Regular,
-  ChevronUp16Regular,
   Key16Regular,
 } from '@fluentui/react-icons'
-import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
+import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { AccountAccordion } from '../components/AccountAccordion'
-import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
-import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
 import { ACCORDION_KEYS } from '../constants/accordionKeys'
 
@@ -39,11 +33,8 @@ const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 
 export default function Account() {
   const layoutStyles = useLayoutStyles()
-  const subscriptionStyles = useSubscriptionCardStyles()
   const { handleNavSelect } = useNavigation()
   const { headerCollapsed } = useLayout()
-  const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
-  const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
   const [accordionStates, setAccordionStates] = React.useState<Record<string, boolean>>({
     [ACCORDION_KEYS.CURRENT_PLAN]: true,
     [ACCORDION_KEYS.MS_STORAGE]: false,
@@ -53,26 +44,7 @@ export default function Account() {
     [ACCORDION_KEYS.SECURITY]: false,
     [ACCORDION_KEYS.PAYMENT_OPTIONS]: false,
     [ACCORDION_KEYS.ORDER_HISTORY]: false,
-    [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: false,
   })
-
-  const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
-    setSelectedTab(data.value)
-  }
-
-  const toggleExpanded = (cardId: string) => {
-    setExpandedCards((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(cardId)) {
-        newSet.delete(cardId)
-      } else {
-        newSet.add(cardId)
-      }
-      return newSet
-    })
-  }
-
-  const isExpanded = (cardId: string) => expandedCards.has(cardId)
 
   const infoColumns: InfoColumn[] = [
     {
@@ -176,94 +148,6 @@ export default function Account() {
             <Text>Placeholder content for Order history.</Text>
           </AccountAccordion>
 
-          <AccountAccordion
-            value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
-            title="Manage subscription"
-            icon={<Storage24Regular />}
-            subtitle="Save 16% with annual billing ($129.99/year)"
-            isOpen={accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: isOpen }))}
-            expandIcon={!accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION] ? (
-              <span
-                role="button"
-                tabIndex={0}
-                style={{ 
-                  fontWeight: tokens.fontWeightSemibold,
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                  color: tokens.colorBrandForegroundLink,
-                }}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
-                  }
-                }}
-              >
-                Change
-              </span>
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
-          >
-            {/* Billing Period Tabs */}
-            <div className={subscriptionStyles.cardWrapperTransparent}>
-              <div className={subscriptionStyles.tabsContainer}>
-                <TabList selectedValue={selectedTab} onTabSelect={handleTabSelect}>
-                  <Tab value="monthly">Monthly</Tab>
-                  <Tab value="annual">Annual (Save 16%)</Tab>
-                </TabList>
-              </div>
-            </div>
-
-            {/* Subscription Plans */}
-            {(() => {
-              const plans: SubscriptionPlan[] = [
-                {
-                  id: 'family',
-                  name: 'Microsoft 365 Family',
-                  description: 'Share with up to 5 others',
-                  price: '$12.99/month',
-                  headerLabel: 'Recommended',
-                  headerType: 'recommended',
-                  buttonLabel: 'Upgrade',
-                  buttonAction: 'upgrade',
-                },
-                {
-                  id: 'premium',
-                  name: 'Microsoft 365 Premium',
-                  description: 'Share with up to 5 others',
-                  price: '$19.99/month',
-                  headerLabel: 'Highest AI limits',
-                  headerType: 'premium',
-                  buttonLabel: 'Upgrade',
-                  buttonAction: 'upgrade',
-                },
-                {
-                  id: 'basic',
-                  name: 'Microsoft 365 Basic',
-                  price: '$2.99/month',
-                  buttonLabel: 'Downgrade',
-                  buttonAction: 'downgrade',
-                },
-              ]
-
-              return plans.map((plan) => (
-                <SubscriptionCard
-                  key={plan.id}
-                  plan={plan}
-                  isExpanded={isExpanded(plan.id)}
-                  onToggleExpand={() => toggleExpanded(plan.id)}
-                />
-              ))
-            })()}
-          </AccountAccordion>
         </div>
       </div>
     </div>

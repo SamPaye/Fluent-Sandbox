@@ -1,6 +1,8 @@
 import { makeStyles, tokens, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from '@fluentui/react-components'
 import { Grid16Regular, ShieldCheckmark16Regular } from '@fluentui/react-icons'
+import { useState } from 'react'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
+import { AccountAccordion } from '../components/AccountAccordion'
 
 const useStyles = makeStyles({
   container: {
@@ -38,7 +40,7 @@ const useStyles = makeStyles({
       marginBottom: '0 !important',
     },
     '& div[class*="headerTitleSection"]': {
-      alignItems: 'flex-start',
+      alignItems: 'center',
     },
     '& span[class*="headerTitle"]': {
       lineHeight: '1.2',
@@ -61,6 +63,7 @@ const useStyles = makeStyles({
 
 export default function V8Migrated() {
   const styles = useStyles()
+  const [accordionOpen, setAccordionOpen] = useState(false)
 
   const exampleInfoColumns: InfoColumn[] = [
     {
@@ -99,6 +102,26 @@ export default function V8Migrated() {
               <TableCell className={styles.componentCell}>
                 <div className={styles.exampleWrapper}>
                   <PageHeader title="Page title" infoColumns={exampleInfoColumns} />
+                </div>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className={styles.componentCell}>
+                <strong>Drawer</strong>
+              </TableCell>
+              <TableCell className={styles.componentCell}>
+                <div className={styles.exampleWrapper}>
+                  <AccountAccordion
+                    value="account-accordion-example"
+                    title="Account Information"
+                    subtitle="Account details and settings"
+                    isOpen={accordionOpen}
+                    onToggle={setAccordionOpen}
+                  >
+                    <div style={{ padding: '16px' }}>
+                      <p>This is the accordion content. You can add any content here.</p>
+                    </div>
+                  </AccountAccordion>
                 </div>
               </TableCell>
             </TableRow>

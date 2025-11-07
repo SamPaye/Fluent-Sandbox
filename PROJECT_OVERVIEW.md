@@ -2,7 +2,7 @@
 
 ## 🎯 Project Goals
 
-This project was created to demonstrate the capabilities of **Fluent UI React v9**, Microsoft's latest design system for building modern web applications. It includes:
+This project is being created as a sandbox for prototyping v8 & v9 components and demos.
 
 1. **Component Showcase** - A comprehensive display of all major Fluent UI components
 2. **Real-world Layout** - A recreation of the Microsoft Account page to demonstrate practical usage
@@ -14,16 +14,16 @@ This project was created to demonstrate the capabilities of **Fluent UI React v9
 - **Route**: `/v8-page`
 - **File**: `v8_page.tsx`
 - **Tab Label**: "v8 Components"
-- **Description**: Fluent UI v8 components demonstration
-- **Features**: Shows v8 components alongside v9 for comparison
+- **Description**: Fluent UI v8 components
 
 ### 2. v9 Components (`/v9-page`)
 
 - **Route**: `/v9-page`
 - **File**: `v9_page.tsx`
 - **Tab Label**: "v9 Components"
+- **Description**: Fluent UI v9 components
 
-This page showcases **30+ Fluent UI v9 components** organized in a clean, centered table format:
+This page showcases **47+ Fluent UI v9 components** organized in a clean, centered table format:
 
 #### Form Controls
 
@@ -83,21 +83,12 @@ This page showcases **30+ Fluent UI v9 components** organized in a clean, center
 - **Tab Label**: "AMC Custom Components"
 - **Page Title**: "AMC Custom Components (wip)"
 - **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
-- **Features**: 
-  - Showcases migrated custom components from v8 to v9
-  - Components displayed in an organized table format with component names and live examples
-  - **Value Banner Component**: 
-    - First component in the showcase table
-    - Demonstrates the PageHeader component with customizable title and info columns
-    - Features 16x16 Fluent UI icons (Grid16Regular, ShieldCheckmark16Regular) centered in circular backgrounds
-    - Displays primary and secondary text for each info column
-    - Styled with light grey background (#F2F2F2) for visual separation
 
-### 4. Accounts Demo (`/account-demo`)
+### 4. Accounts (`/account`)
 
-- **Route**: `/account-demo` (default landing page)
-- **File**: `AccountDemo.tsx`
-- **Tab Label**: "Accounts Demo"
+- **Route**: `/account` (default landing page)
+- **File**: `Account.tsx`
+- **Tab Label**: "Accounts"
 - **Description**: A pixel-perfect recreation of the Microsoft Account management page
 
 **Features:**
@@ -172,6 +163,38 @@ This page showcases **30+ Fluent UI v9 components** organized in a clean, center
   - Rewards (Microsoft Rewards program)
   - Outlook (Email organizer)
 
+### 5. Subscription (`/account/subscription`)
+
+- **Route**: `/account/subscription`
+- **File**: `Subscription.tsx`
+- **Description**: Subscription management interface with monthly/yearly tabs and subscription cards
+- **Features**:
+  - Breadcrumb navigation
+  - Tab-based view (Monthly/Yearly)
+  - Expandable subscription cards
+  - Manage subscription accordion
+  - Download and calendar actions
+
+### 6. Subscription V2 (`/account/subscription-v2`)
+
+- **Route**: `/account/subscription-v2`
+- **File**: `subscriptions_V2.tsx`
+- **Description**: Enhanced subscription management interface (version 2)
+- **Features**:
+  - Advanced subscription display
+  - Improved card layouts
+  - Enhanced management options
+
+### 7. Subscription V3 (`/account/subscription-v3`)
+
+- **Route**: `/account/subscription-v3`
+- **File**: `subscriptions_v3.tsx`
+- **Description**: Latest subscription management interface (version 3)
+- **Features**:
+  - Modern subscription UI
+  - Optimized user experience
+  - Latest design patterns
+
 ## 🏗️ Technical Architecture
 
 ### Component Structure
@@ -186,8 +209,10 @@ App (Root)
                 ├── V8Page
                 ├── V9Page
                 ├── V8Migrated
-                ├── AccountDemo
-                └── SubscriptionDemo
+                ├── Account
+                ├── Subscription
+                ├── SubscriptionV2
+                └── SubscriptionV3
 ```
 
 ### Styling Approach
@@ -235,7 +260,7 @@ The project uses **Fluent UI's makeStyles** API for styling:
 - Table-based component gallery
 - Value Banner component demonstrating PageHeader with info columns
 
-### Account Demo
+### Account & Subscription Pages
 
 - Faithful recreation of Microsoft's design
 - Fluent design language throughout
@@ -244,6 +269,9 @@ The project uses **Fluent UI's makeStyles** API for styling:
 - Card-based layout system
 - Hover effects and interactions
 - Professional color scheme
+- Multiple subscription management interfaces
+- Breadcrumb navigation
+- Tab-based views for different subscription periods
 
 ## 🔧 Development Details
 
@@ -328,7 +356,6 @@ This sandbox is perfect for:
 
 Potential improvements for this sandbox:
 
-- Add dark theme toggle
 - Include form validation examples
 - Add data table with sorting/filtering
 - Demonstrate custom themes
@@ -355,7 +382,3 @@ To add new components or pages:
 - [React Documentation](https://react.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 - [Vite Guide](https://vitejs.dev/guide/)
-
-## 🎉 Conclusion
-
-This Fluent UI React Sandbox provides a comprehensive, interactive way to explore Microsoft's latest design system. Whether you're building a new application or exploring components, this sandbox serves as both a learning tool and a reference implementation.

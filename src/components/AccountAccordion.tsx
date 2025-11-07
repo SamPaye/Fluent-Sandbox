@@ -65,7 +65,10 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
               <Text
                 weight="semibold"
                 className={styles.accordionTitle}
-                style={!icon ? { paddingLeft: '0px' } : undefined}
+                style={{
+                  fontSize: '14px',
+                  ...(!icon ? { paddingLeft: '0px' } : {}),
+                }}
               >
                 {title}
               </Text>

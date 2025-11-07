@@ -4,13 +4,15 @@ A sandbox web app demonstrating Fluent UI React v9 components with multiple demo
 
 ## Features
 
-This sandbox includes five demo pages:
+This sandbox includes seven demo pages:
 
 - **v8 Components** (`/v8-page`): Fluent UI v8 components demonstration alongside v9 components
 - **v9 Components** (`/v9-page`): Comprehensive showcase of 30+ Fluent UI v9 components displayed in an organized table format
 - **AMC Custom Components** (`/v8-migrated`): Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
-- **Accounts Demo** (`/account-demo`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections (default landing page)
-- **Subscriptions Demo** (`/account-demo/subscription-demo`): Subscription management interface demonstrating data display and management patterns
+- **Accounts** (`/account`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections (default landing page)
+- **Subscription** (`/account/subscription`): Subscription management interface with monthly/yearly tabs and subscription cards
+- **Subscription V2** (`/account/subscription-v2`): Enhanced subscription management interface (version 2)
+- **Subscription V3** (`/account/subscription-v3`): Latest subscription management interface (version 3)
 
 ## Prerequisites
 
@@ -138,11 +140,11 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
   - Layout (Card, Divider, Accordion, Table, Drawer)
   - All components are live and interactive
 
-### Accounts Demo (`/account-demo`)
+### Accounts (`/account`)
 
-- **Route**: `/account-demo` (default landing page)
-- **File**: `AccountDemo.tsx`
-- **Tab Label**: "Accounts Demo"
+- **Route**: `/account` (default landing page)
+- **File**: `Account.tsx`
+- **Tab Label**: "Accounts"
 - **Description**: Recreation of Microsoft Account management page
 - **Features**:
   - Top navigation bar with app launcher and user menu
@@ -154,12 +156,37 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
   - Payment options and order history
   - Promotional cards
 
-### Subscriptions Demo (`/account-demo/subscription-demo`)
+### Subscription (`/account/subscription`)
 
-- **Route**: `/account-demo/subscription-demo`
-- **File**: `SubscriptionDemo.tsx`
-- **Description**: Subscription management interface
-- **Features**: Data display and management patterns for subscription services
+- **Route**: `/account/subscription`
+- **File**: `Subscription.tsx`
+- **Description**: Subscription management interface with monthly/yearly tabs and subscription cards
+- **Features**:
+  - Breadcrumb navigation
+  - Tab-based view (Monthly/Yearly)
+  - Expandable subscription cards
+  - Manage subscription accordion
+  - Download and calendar actions
+
+### Subscription V2 (`/account/subscription-v2`)
+
+- **Route**: `/account/subscription-v2`
+- **File**: `subscriptions_V2.tsx`
+- **Description**: Enhanced subscription management interface (version 2)
+- **Features**:
+  - Advanced subscription display
+  - Improved card layouts
+  - Enhanced management options
+
+### Subscription V3 (`/account/subscription-v3`)
+
+- **Route**: `/account/subscription-v3`
+- **File**: `subscriptions_v3.tsx`
+- **Description**: Latest subscription management interface (version 3)
+- **Features**:
+  - Modern subscription UI
+  - Optimized user experience
+  - Latest design patterns
 
 ### AMC Custom Components (`/v8-migrated`)
 
@@ -168,7 +195,7 @@ The terminal will display a local URL (typically `http://localhost:5173`). Open 
 - **Tab Label**: "AMC Custom Components"
 - **Page Title**: "AMC Custom Components (wip)"
 - **Description**: Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
-- **Features**: 
+- **Features**:
   - Showcases migrated custom components from v8 to v9
   - Components displayed in an organized table format
   - **Value Banner**: PageHeader component demonstration with title and info columns featuring 16x16 icons
@@ -239,8 +266,10 @@ Fluent Sandbox/
 │   │   ├── v8_page.tsx         # V8 components demo
 │   │   ├── v9_page.tsx         # V9 components showcase
 │   │   ├── V8Migrated.tsx      # AMC custom components
-│   │   ├── AccountDemo.tsx     # Account page layout
-│   │   └── SubscriptionDemo.tsx # Subscriptions page
+│   │   ├── Account.tsx         # Account page layout
+│   │   ├── Subscription.tsx    # Subscription page
+│   │   ├── subscriptions_V2.tsx # Subscription V2 page
+│   │   └── subscriptions_v3.tsx # Subscription V3 page
 │   ├── App.tsx                 # Root component with routing
 │   ├── main.tsx                # Entry point
 │   └── index.css               # Global styles
@@ -274,10 +303,11 @@ The optimized files will be in the `dist` folder, ready for deployment to any st
 After building, you can run the production build using Live Server:
 
 1. **Install Live Server** (if using VS Code):
+
    - Install the "Live Server" extension from the VS Code marketplace
    - Or use the Live Server extension in your preferred editor
-
 2. **Run with Live Server**:
+
    - Right-click on `dist/index.html` in your file explorer
    - Select "Open with Live Server" (if available)
    - Or in VS Code: Right-click `dist/index.html` → "Open with Live Server"
