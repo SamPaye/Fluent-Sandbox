@@ -36,11 +36,11 @@ const useHeaderStyles = makeStyles({
   },
 })
 
-interface AccountHeaderProps {
+interface TopNavigationProps {
   headerCollapsed: boolean
 }
 
-export const AccountHeader: React.FC<AccountHeaderProps> = ({ headerCollapsed }) => {
+export const TopNavigation: React.FC<TopNavigationProps> = ({ headerCollapsed }) => {
   const styles = useLayoutStyles()
   const headerStyles = useHeaderStyles()
   const [isHovered, setIsHovered] = React.useState(false)

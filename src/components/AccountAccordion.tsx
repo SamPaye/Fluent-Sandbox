@@ -6,7 +6,7 @@ interface AccountAccordionProps {
   value: string
   title: string
   icon?: React.ReactNode
-  billingText?: string
+  subtitle?: string
   isOpen: boolean
   onToggle: (isOpen: boolean) => void
   children: React.ReactNode
@@ -18,7 +18,7 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
   value,
   title,
   icon,
-  billingText,
+  subtitle,
   isOpen,
   onToggle,
   children,
@@ -42,10 +42,22 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
             expandIconPosition="end" 
             className={styles.accordionHeader} 
             expandIcon={
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                {actionButton && actionButton}
-                {expandIcon}
-              </div>
+              (actionButton || expandIcon) ? (
+                <div 
+                  className={styles.accordionExpandIcon}
+                  onClick={(e) => {
+                    // Stop propagation to prevent accordion toggle when clicking action button
+                    e.stopPropagation()
+                  }}
+                >
+                  {actionButton && (
+                    <div onClick={(e) => e.stopPropagation()}>
+                      {actionButton}
+                    </div>
+                  )}
+                  {expandIcon}
+                </div>
+              ) : undefined
             }
           >
             {icon && <div className={styles.accordionIcon}>{icon}</div>}
@@ -57,9 +69,9 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
               >
                 {title}
               </Text>
-              {billingText && (
+              {subtitle && (
                 <Text className={styles.accordionBillingText}>
-                  {billingText}
+                  {subtitle}
                 </Text>
               )}
             </div>

@@ -19,7 +19,7 @@ import {
 } from '@fluentui/react-icons'
 import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
-import { AccountHeader } from '../components/AccountHeader'
+import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { AccountAccordion } from '../components/AccountAccordion'
@@ -91,7 +91,7 @@ export default function Account() {
 
   return (
     <div className={layoutStyles.root}>
-      <AccountHeader headerCollapsed={headerCollapsed} />
+      <TopNavigation headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
         <LeftNav selectedValue="account" onNavItemSelect={handleNavSelect} />
@@ -182,7 +182,7 @@ export default function Account() {
             value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
             title="Manage subscription"
             icon={<Storage24Regular />}
-            billingText="Save 16% with annual billing ($129.99/year)"
+            subtitle="Save 16% with annual billing ($129.99/year)"
             isOpen={accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION]}
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: isOpen }))}
             expandIcon={!accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION] ? (

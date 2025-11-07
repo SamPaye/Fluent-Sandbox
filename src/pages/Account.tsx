@@ -2,7 +2,6 @@ import React from 'react'
 import {
   tokens,
   Text,
-  Link,
   TabList,
   Tab,
 } from '@fluentui/react-components'
@@ -19,14 +18,13 @@ import {
 } from '@fluentui/react-icons'
 import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
-import { AccountHeader } from '../components/AccountHeader'
+import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { AccountAccordion } from '../components/AccountAccordion'
 import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
 import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
-import { ROUTES } from '../constants/routes'
 import { ACCORDION_KEYS } from '../constants/accordionKeys'
 
 // Custom Windows logo icon (monochrome, matches other icons)
@@ -42,7 +40,7 @@ const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 export default function Account() {
   const layoutStyles = useLayoutStyles()
   const subscriptionStyles = useSubscriptionCardStyles()
-  const { handleNavSelect, navigate } = useNavigation()
+  const { handleNavSelect } = useNavigation()
   const { headerCollapsed } = useLayout()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
@@ -91,7 +89,7 @@ export default function Account() {
 
   return (
     <div className={layoutStyles.root}>
-      <AccountHeader headerCollapsed={headerCollapsed} />
+      <TopNavigation headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
         <LeftNav selectedValue="account" onNavItemSelect={handleNavSelect} />
@@ -182,24 +180,34 @@ export default function Account() {
             value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
             title="Manage subscription"
             icon={<Storage24Regular />}
-            billingText="Save 16% with annual billing ($129.99/year)"
+            subtitle="Save 16% with annual billing ($129.99/year)"
             isOpen={accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION]}
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: isOpen }))}
             expandIcon={!accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION] ? (
-              <Link 
-                as="button" 
+              <span
+                role="button"
+                tabIndex={0}
                 style={{ 
                   fontWeight: tokens.fontWeightSemibold,
                   textDecoration: 'none',
                   cursor: 'pointer',
+                  color: tokens.colorBrandForegroundLink,
                 }}
                 onClick={(e) => {
                   e.preventDefault()
+                  e.stopPropagation()
                   setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
+                  }
                 }}
               >
                 Change
-              </Link>
+              </span>
             ) : (
               <ChevronUp16Regular style={{ fontSize: '16px' }} />
             )}

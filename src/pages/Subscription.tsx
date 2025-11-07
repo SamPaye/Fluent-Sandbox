@@ -24,7 +24,7 @@ import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import msLogo from '../images/ms.png'
 import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
-import { AccountHeader } from '../components/AccountHeader'
+import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { AccountAccordion } from '../components/AccountAccordion'
@@ -84,7 +84,7 @@ export default function Subscription() {
 
   return (
     <div className={layoutStyles.root} style={{ minHeight: '100vh' }}>
-      <AccountHeader headerCollapsed={headerCollapsed} />
+      <TopNavigation headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
         <LeftNav selectedValue="subscriptions" onNavItemSelect={handleNavSelect} />
@@ -120,7 +120,7 @@ export default function Subscription() {
             value="manage-subscription"
             title="Manage subscription"
             icon={<Storage24Regular />}
-            billingText="Save 16% with annual billing ($129.99/year)"
+            subtitle="Save 16% with annual billing ($129.99/year)"
             isOpen={manageAccordionOpen}
             onToggle={setManageAccordionOpen}
             expandIcon={!manageAccordionOpen ? (

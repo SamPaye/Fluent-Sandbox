@@ -19,7 +19,7 @@ import React from 'react'
 import msLogo from '../images/ms.png'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
-import { AccountHeader } from '../components/AccountHeader'
+import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { AccountAccordion } from '../components/AccountAccordion'
@@ -91,7 +91,7 @@ const useStyles = makeStyles({
     marginTop: '4px',
   },
   currentPlanButton: {
-    // Button styles handled by Fluent UI Button component
+    borderRadius: tokens.borderRadiusSmall,
   },
   currentPlanActionLink: {
     fontSize: '14px',
@@ -113,7 +113,7 @@ const useStyles = makeStyles({
     gap: '16px',
     alignItems: 'center',
     maxHeight: '194px',
-    paddingLeft: '64px',
+    paddingLeft: '48px', // 64px - 16px to compensate for padding on the left of the accordion
     width: '100%',
     maxWidth: '100%',
     overflow: 'hidden',
@@ -283,6 +283,7 @@ const useStyles = makeStyles({
   },
   cardButton: {
     width: '100%',
+    borderRadius: tokens.borderRadiusSmall,
   },
   cardButtonDescription: {
     fontSize: '12px',
@@ -339,6 +340,30 @@ const useStyles = makeStyles({
     border: `1px solid ${tokens.colorNeutralStroke1}`,
     backgroundColor: tokens.colorNeutralBackground1,
     color: tokens.colorNeutralForeground1,
+    borderRadius: tokens.borderRadiusSmall,
+  },
+  actionButtonSpan: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4px 16px',
+    minWidth: '96px',
+    height: '32px',
+    backgroundColor: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundOnBrand,
+    borderRadius: tokens.borderRadiusSmall,
+    fontSize: '14px',
+    fontWeight: tokens.fontWeightSemibold,
+    cursor: 'pointer',
+    border: 'none',
+    outline: 'none',
+    transition: 'background-color 0.1s ease',
+    ':hover': {
+      backgroundColor: tokens.colorBrandBackgroundHover,
+    },
+    ':active': {
+      backgroundColor: tokens.colorBrandBackgroundPressed,
+    },
   },
 })
 
@@ -349,7 +374,9 @@ export default function SubscriptionV2() {
   const styles = useStyles()
   const layoutStyles = useLayoutStyles()
   const { handleNavSelect, navigate } = useNavigation()
-  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
+  const [sku1AccordionOpen, setSku1AccordionOpen] = React.useState(false)
+  const [sku2AccordionOpen, setSku2AccordionOpen] = React.useState(false)
+  const [sku3AccordionOpen, setSku3AccordionOpen] = React.useState(false)
   const { headerCollapsed } = useLayout()
 
   const infoColumns: InfoColumn[] = [
@@ -367,7 +394,7 @@ export default function SubscriptionV2() {
 
   return (
     <div className={layoutStyles.root} style={{ minHeight: '100vh' }}>
-      <AccountHeader headerCollapsed={headerCollapsed} />
+      <TopNavigation headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
         <LeftNav selectedValue="subscriptions-v2" onNavItemSelect={handleNavSelect} />
@@ -414,16 +441,141 @@ export default function SubscriptionV2() {
           </div>
 
           <AccountAccordion
-            value="manage-subscription"
-            title="Manage subscription"
+            value="sku-1"
+            title="SKU 1"
             icon={<Storage24Regular />}
-            billingText="Save 16% with annual billing ($129.99/year)"
-            isOpen={manageAccordionOpen}
-            onToggle={setManageAccordionOpen}
+            subtitle="Subtitle text"
+            isOpen={sku1AccordionOpen}
+            onToggle={setSku1AccordionOpen}
             actionButton={
-              <Button appearance="primary">Upgrade</Button>
+              <span
+                role="button"
+                tabIndex={0}
+                className={styles.actionButtonSpan}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // Add your upgrade action here
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    // Add your upgrade action here
+                  }
+                }}
+              >
+                Upgrade
+              </span>
             }
-            expandIcon={!manageAccordionOpen ? (
+            expandIcon={!sku1AccordionOpen ? (
+              <ChevronDown16Regular style={{ fontSize: '16px' }} />
+            ) : (
+              <ChevronUp16Regular style={{ fontSize: '16px' }} />
+            )}
+          >
+            <div className={styles.accordionContentLayout}>
+              {/* Left Image Placeholder */}
+              <div className={styles.accordionImagePlaceholder} />
+              
+              {/* Right Text Content */}
+              <div className={styles.accordionTextContent}>
+                <h3 className={styles.accordionContentTitle}>Lorem ipsum</h3>
+                <p className={styles.accordionContentSubtitle}>Dolor sit amet</p>
+                <Link 
+                  href="#" 
+                  className={styles.accordionActionLink}
+                  onClick={(e) => {
+                    e.preventDefault()
+                  }}
+                >
+                  Action text
+                </Link>
+              </div>
+            </div>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value="sku-2"
+            title="SKU 2"
+            icon={<Storage24Regular />}
+            subtitle="Subtitle text"
+            isOpen={sku2AccordionOpen}
+            onToggle={setSku2AccordionOpen}
+            actionButton={
+              <span
+                role="button"
+                tabIndex={0}
+                className={styles.actionButtonSpan}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // Add your upgrade action here
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    // Add your upgrade action here
+                  }
+                }}
+              >
+                Upgrade
+              </span>
+            }
+            expandIcon={!sku2AccordionOpen ? (
+              <ChevronDown16Regular style={{ fontSize: '16px' }} />
+            ) : (
+              <ChevronUp16Regular style={{ fontSize: '16px' }} />
+            )}
+          >
+            <div className={styles.accordionContentLayout}>
+              {/* Left Image Placeholder */}
+              <div className={styles.accordionImagePlaceholder} />
+              
+              {/* Right Text Content */}
+              <div className={styles.accordionTextContent}>
+                <h3 className={styles.accordionContentTitle}>Lorem ipsum</h3>
+                <p className={styles.accordionContentSubtitle}>Dolor sit amet</p>
+                <Link 
+                  href="#" 
+                  className={styles.accordionActionLink}
+                  onClick={(e) => {
+                    e.preventDefault()
+                  }}
+                >
+                  Action text
+                </Link>
+              </div>
+            </div>
+          </AccountAccordion>
+
+          <AccountAccordion
+            value="sku-3"
+            title="SKU 3"
+            icon={<Storage24Regular />}
+            subtitle="Subtitle text"
+            isOpen={sku3AccordionOpen}
+            onToggle={setSku3AccordionOpen}
+            actionButton={
+              <span
+                role="button"
+                tabIndex={0}
+                className={styles.actionButtonSpan}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // Add your upgrade action here
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    // Add your upgrade action here
+                  }
+                }}
+              >
+                Upgrade
+              </span>
+            }
+            expandIcon={!sku3AccordionOpen ? (
               <ChevronDown16Regular style={{ fontSize: '16px' }} />
             ) : (
               <ChevronUp16Regular style={{ fontSize: '16px' }} />

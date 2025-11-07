@@ -1,6 +1,5 @@
 import { makeStyles, tokens, Tab, TabList, type SelectTabEvent, type TabValue } from '@fluentui/react-components'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import React from 'react'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'

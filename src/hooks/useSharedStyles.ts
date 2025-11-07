@@ -16,13 +16,15 @@ export const useLayoutStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '12px 24px',
+    padding: '2px 24px',
+    height: '48px',
     backgroundColor: '#0F6CBD', // Fixed blue color - stays blue regardless of theme
     color: '#FFFFFF', // Fixed white color for text and icons
     overflow: 'hidden',
     minWidth: 0,
     '@media (max-width: 640px)': {
-      padding: '12px 16px',
+      padding: '2px 16px',
+      height: '48px',
     },
   },
   headerCenter: {
@@ -148,13 +150,14 @@ export const useLayoutStyles = makeStyles({
   },
   content: {
     flex: 1,
-    padding: '48px 0px',
+    padding: '48px 4px',
     maxWidth: '1200px',
     margin: '0 auto',
     fontSize: '14px',
     width: '100%',
     boxSizing: 'border-box',
-    overflow: 'hidden',
+    overflowX: 'hidden',
+    overflowY: 'visible',
     '@media (max-width: 767px)': {
       padding: '24px 16px',
       maxWidth: '100%',
@@ -214,11 +217,11 @@ export const usePageHeaderStyles = makeStyles({
   headerInfoColumns: {
     display: 'flex',
     flexDirection: 'row',
-    gap: '24px',
+    gap: '0',
     alignItems: 'center',
     '@media (max-width: 767px)': {
       flexDirection: 'column',
-      gap: '12px',
+      gap: '0',
       alignItems: 'flex-start',
     },
   },
@@ -272,7 +275,7 @@ export const usePageHeaderStyles = makeStyles({
 export const useAccordionStyles = makeStyles({
   accordionWrapper: {
     backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: tokens.borderRadiusLarge,
+    borderRadius: tokens.borderRadiusMedium,
     paddingTop: '14px',
     paddingBottom: '14px',
     paddingLeft: '16px',
@@ -295,7 +298,16 @@ export const useAccordionStyles = makeStyles({
     alignItems: 'center',
     gap: '16px',
     minWidth: 0,
-    overflow: 'hidden',
+    overflow: 'visible',
+    width: '100%',
+    padding: '0',
+    '& button': {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '0',
+    },
     '@media (max-width: 640px)': {
       gap: '12px',
       flexWrap: 'wrap',
@@ -303,9 +315,16 @@ export const useAccordionStyles = makeStyles({
   },
   accordionIcon: {
     color: tokens.colorBrandBackground,
-    fontSize: '20px',
+    width: '32px',
+    height: '32px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexShrink: 0,
+    fontSize: '20px',
     '@media (max-width: 640px)': {
+      width: '32px',
+      height: '32px',
       fontSize: '18px',
     },
   },
@@ -340,6 +359,13 @@ export const useAccordionStyles = makeStyles({
       paddingLeft: '12px',
       fontSize: '11px',
     },
+  },
+  accordionExpandIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+    flexShrink: 0,
+    marginLeft: 'auto',
   },
   accordionPanel: {
     paddingTop: '16px',
@@ -413,6 +439,7 @@ export const useSubscriptionCardStyles = makeStyles({
   },
   subscriptionCardButton: {
     marginLeft: '16px',
+    borderRadius: tokens.borderRadiusSmall,
   },
   subscriptionCardFooter: {
     marginTop: '16px',

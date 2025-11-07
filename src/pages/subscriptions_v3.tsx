@@ -19,7 +19,7 @@ import React from 'react'
 import msLogo from '../images/ms.png'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
-import { AccountHeader } from '../components/AccountHeader'
+import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
 import { useLayout } from '../contexts/LayoutContext'
@@ -90,7 +90,7 @@ const useStyles = makeStyles({
     marginTop: '4px',
   },
   currentPlanButton: {
-    // Button styles handled by Fluent UI Button component
+    borderRadius: tokens.borderRadiusSmall,
   },
   currentPlanActionLink: {
     fontSize: '14px',
@@ -102,7 +102,7 @@ const useStyles = makeStyles({
     flex: '1 1 300px',
     minWidth: '0',
     minHeight: '120px',
-    backgroundColor: '#ffcccc',
+    backgroundColor: tokens.colorNeutralBackground3,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -112,7 +112,7 @@ const useStyles = makeStyles({
     gap: '16px',
     alignItems: 'center',
     maxHeight: '194px',
-    paddingLeft: '64px',
+    paddingLeft: '16px', // 64px - 16px to compensate for padding on the left of the accordion
     width: '100%',
     maxWidth: '100%',
     overflow: 'hidden',
@@ -184,7 +184,7 @@ const useStyles = makeStyles({
     marginBottom: '32px',
     width: '100%',
     maxWidth: '100%',
-    overflow: 'hidden',
+    overflow: 'visible',
     boxSizing: 'border-box',
     '@media (max-width: 767px)': {
       gridTemplateColumns: '1fr',
@@ -197,7 +197,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     maxWidth: '100%',
-    overflow: 'hidden',
+    overflow: 'visible',
     boxSizing: 'border-box',
     '@media (max-width: 767px)': {
       padding: '16px',
@@ -283,6 +283,7 @@ const useStyles = makeStyles({
   },
   cardButton: {
     width: '100%',
+    borderRadius: tokens.borderRadiusSmall,
   },
   cardButtonDescription: {
     fontSize: '12px',
@@ -331,14 +332,23 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     boxSizing: 'border-box',
     '@media (max-width: 767px)': {
-      marginTop: '24px',
-      marginBottom: '12px',
+      display: 'none', // Hide on mobile
     },
   },
   showMoreButtonStyle: {
     border: `1px solid ${tokens.colorNeutralStroke1}`,
     backgroundColor: tokens.colorNeutralBackground1,
     color: tokens.colorNeutralForeground1,
+    borderRadius: tokens.borderRadiusSmall,
+  },
+  cardShowMoreButton: {
+    display: 'none', // Hidden on desktop
+    width: '100%',
+    marginTop: '16px',
+    justifyContent: 'center',
+    '@media (max-width: 767px)': {
+      display: 'flex', // Show on mobile
+    },
   },
 })
 
@@ -349,8 +359,73 @@ export default function SubscriptionV3() {
   const styles = useStyles()
   const layoutStyles = useLayoutStyles()
   const { handleNavSelect, navigate } = useNavigation()
-  const [showMoreDetails, setShowMoreDetails] = React.useState(false)
+  const [expandedCards, setExpandedCards] = React.useState<Set<number>>(new Set())
+  const [showAllDetails, setShowAllDetails] = React.useState(false)
   const { headerCollapsed } = useLayout()
+
+  // Track previous viewport state to detect mobile-to-desktop transitions
+  const wasMobileRef = React.useRef(window.innerWidth <= 767)
+
+  // Handle viewport resize: sync card expansion state between mobile and desktop
+  React.useEffect(() => {
+    const handleResize = () => {
+      const isDesktop = window.innerWidth > 767
+      const isMobile = window.innerWidth <= 767
+      
+      // Transitioning from mobile to desktop
+      if (wasMobileRef.current && isDesktop && expandedCards.size > 0) {
+        // If we transitioned to desktop and any cards are expanded, expand all
+        setShowAllDetails(true)
+        setExpandedCards(new Set([0, 1, 2]))
+      }
+      
+      // Transitioning from desktop to mobile
+      if (!wasMobileRef.current && isMobile && showAllDetails) {
+        // If we transitioned to mobile and all details were showing, clear showAllDetails
+        // and set all cards as expanded so individual controls work
+        setShowAllDetails(false)
+        setExpandedCards(new Set([0, 1, 2]))
+      }
+      
+      wasMobileRef.current = isMobile
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [expandedCards.size, showAllDetails])
+
+  const toggleCardDetails = (cardIndex: number) => {
+    // On mobile, clear showAllDetails so individual card state takes precedence
+    const isMobile = window.innerWidth <= 767
+    if (isMobile && showAllDetails) {
+      setShowAllDetails(false)
+    }
+    
+    setExpandedCards(prev => {
+      const newSet = new Set(prev)
+      if (newSet.has(cardIndex)) {
+        newSet.delete(cardIndex)
+      } else {
+        newSet.add(cardIndex)
+      }
+      return newSet
+    })
+  }
+
+  const toggleAllDetails = () => {
+    setShowAllDetails(prev => {
+      const newValue = !prev
+      if (newValue) {
+        setExpandedCards(new Set([0, 1, 2]))
+      } else {
+        setExpandedCards(new Set())
+      }
+      return newValue
+    })
+  }
 
   const infoColumns: InfoColumn[] = [
     {
@@ -367,7 +442,7 @@ export default function SubscriptionV3() {
 
   return (
     <div className={layoutStyles.root} style={{ minHeight: '100vh' }}>
-      <AccountHeader headerCollapsed={headerCollapsed} />
+      <TopNavigation headerCollapsed={headerCollapsed} />
 
       <div className={layoutStyles.mainLayoutWithPadding}>
         <LeftNav selectedValue="subscriptions-v3" onNavItemSelect={handleNavSelect} />
@@ -416,91 +491,124 @@ export default function SubscriptionV3() {
           {/* Cards Grid */}
           <div className={styles.cardsGrid}>
             {/* Card 1 */}
-            <Card className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardImagePlaceholder} />
-                <div className={styles.cardHeaderContent}>
-                  <h3 className={styles.cardTitle}>Card Title</h3>
-                  <div className={styles.cardPrice}>
-                    <span className={styles.cardPriceAmount}>$99</span>
-                    <span className={styles.cardPricePeriod}>/ month</span>
+            <div>
+              <Card className={styles.card}>
+                <div className={styles.cardHeader}>
+                  <div className={styles.cardImagePlaceholder} />
+                  <div className={styles.cardHeaderContent}>
+                    <h3 className={styles.cardTitle}>Card Title</h3>
+                    <div className={styles.cardPrice}>
+                      <span className={styles.cardPriceAmount}>$99</span>
+                      <span className={styles.cardPricePeriod}>/ month</span>
+                    </div>
                   </div>
                 </div>
+                <p className={styles.cardDescription}>Description</p>
+                <Button appearance="primary" className={styles.cardButton}>
+                  Upgrade
+                </Button>
+                <p className={styles.cardButtonDescription}>Button description</p>
+                {(expandedCards.has(0) || showAllDetails) && (
+                  <div className={styles.cardFeaturesList}>
+                    {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                      <div key={item} className={styles.cardFeatureItem}>
+                        <Checkmark16Regular className={styles.cardFeatureIcon} />
+                        <Text>Lorem ipsum dolor sit amet</Text>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+              <div className={styles.cardShowMoreButton}>
+                <Button
+                  appearance="outline"
+                  className={styles.showMoreButtonStyle}
+                  onClick={() => toggleCardDetails(0)}
+                >
+                  {expandedCards.has(0) ? 'Show less' : 'Show more'}
+                </Button>
               </div>
-              <p className={styles.cardDescription}>Description</p>
-              <Button appearance="primary" className={styles.cardButton}>
-                Upgrade
-              </Button>
-              <p className={styles.cardButtonDescription}>Button description</p>
-              {showMoreDetails && (
-                <div className={styles.cardFeaturesList}>
-                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <div key={item} className={styles.cardFeatureItem}>
-                      <Checkmark16Regular className={styles.cardFeatureIcon} />
-                      <Text>Lorem ipsum dolor sit amet</Text>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Card>
+            </div>
 
             {/* Card 2 */}
-            <Card className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardImagePlaceholder} />
-                <div className={styles.cardHeaderContent}>
-                  <h3 className={styles.cardTitle}>Card Title</h3>
-                  <div className={styles.cardPrice}>
-                    <span className={styles.cardPriceAmount}>$99</span>
-                    <span className={styles.cardPricePeriod}>/ month</span>
+            <div>
+              <Card className={styles.card}>
+                <div className={styles.cardHeader}>
+                  <div className={styles.cardImagePlaceholder} />
+                  <div className={styles.cardHeaderContent}>
+                    <h3 className={styles.cardTitle}>Card Title</h3>
+                    <div className={styles.cardPrice}>
+                      <span className={styles.cardPriceAmount}>$99</span>
+                      <span className={styles.cardPricePeriod}>/ month</span>
+                    </div>
                   </div>
                 </div>
+                <p className={styles.cardDescription}>Description</p>
+                <Button appearance="primary" className={styles.cardButton}>
+                  Upgrade
+                </Button>
+                <p className={styles.cardButtonDescription}>Button description</p>
+                {(expandedCards.has(1) || showAllDetails) && (
+                  <div className={styles.cardFeaturesList}>
+                    {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                      <div key={item} className={styles.cardFeatureItem}>
+                        <Checkmark16Regular className={styles.cardFeatureIcon} />
+                        <Text>Lorem ipsum dolor sit amet</Text>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+              <div className={styles.cardShowMoreButton}>
+                <Button
+                  appearance="outline"
+                  className={styles.showMoreButtonStyle}
+                  onClick={() => toggleCardDetails(1)}
+                >
+                  {expandedCards.has(1) ? 'Show less' : 'Show more'}
+                </Button>
               </div>
-              <p className={styles.cardDescription}>Description</p>
-              <Button appearance="primary" className={styles.cardButton}>
-                Upgrade
-              </Button>
-              <p className={styles.cardButtonDescription}>Button description</p>
-              {showMoreDetails && (
-                <div className={styles.cardFeaturesList}>
-                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <div key={item} className={styles.cardFeatureItem}>
-                      <Checkmark16Regular className={styles.cardFeatureIcon} />
-                      <Text>Lorem ipsum dolor sit amet</Text>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Card>
+            </div>
 
             {/* Card 3 */}
-            <Card className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardImagePlaceholder} />
-                <div className={styles.cardHeaderContent}>
-                  <h3 className={styles.cardTitle}>Card Title</h3>
-                  <div className={styles.cardPrice}>
-                    <span className={styles.cardPriceAmount}>$99</span>
-                    <span className={styles.cardPricePeriod}>/ month</span>
+            <div>
+              <Card className={styles.card}>
+                <div className={styles.cardHeader}>
+                  <div className={styles.cardImagePlaceholder} />
+                  <div className={styles.cardHeaderContent}>
+                    <h3 className={styles.cardTitle}>Card Title</h3>
+                    <div className={styles.cardPrice}>
+                      <span className={styles.cardPriceAmount}>$99</span>
+                      <span className={styles.cardPricePeriod}>/ month</span>
+                    </div>
                   </div>
                 </div>
+                <p className={styles.cardDescription}>Description</p>
+                <Button appearance="primary" className={styles.cardButton}>
+                  Downgrade
+                </Button>
+                <p className={styles.cardButtonDescription}>Button description</p>
+                {(expandedCards.has(2) || showAllDetails) && (
+                  <div className={styles.cardFeaturesList}>
+                    {[1, 2, 3, 4, 5, 6, 7].map((item) => (
+                      <div key={item} className={styles.cardFeatureItem}>
+                        <Checkmark16Regular className={styles.cardFeatureIcon} />
+                        <Text>Lorem ipsum dolor sit amet</Text>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+              <div className={styles.cardShowMoreButton}>
+                <Button
+                  appearance="outline"
+                  className={styles.showMoreButtonStyle}
+                  onClick={() => toggleCardDetails(2)}
+                >
+                  {expandedCards.has(2) ? 'Show less' : 'Show more'}
+                </Button>
               </div>
-              <p className={styles.cardDescription}>Description</p>
-              <Button appearance="primary" className={styles.cardButton}>
-                Downgrade
-              </Button>
-              <p className={styles.cardButtonDescription}>Button description</p>
-              {showMoreDetails && (
-                <div className={styles.cardFeaturesList}>
-                  {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <div key={item} className={styles.cardFeatureItem}>
-                      <Checkmark16Regular className={styles.cardFeatureIcon} />
-                      <Text>Lorem ipsum dolor sit amet</Text>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Card>
+            </div>
           </div>
 
           {/* Show More/Less Button */}
@@ -508,9 +616,9 @@ export default function SubscriptionV3() {
             <Button
               appearance="outline"
               className={styles.showMoreButtonStyle}
-              onClick={() => setShowMoreDetails(!showMoreDetails)}
+              onClick={toggleAllDetails}
             >
-              {showMoreDetails ? 'Show less' : 'Show more'}
+              {showAllDetails ? 'Show less' : 'Show more'}
             </Button>
           </div>
         </div>
