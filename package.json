@@ -15,8 +15,8 @@
     "@fluentui/react-drawer": "^9.10.6",
     "@fluentui/react-icons": "^2.0.258",
     "@fluentui/react-nav": "^9.3.11",
-    "@fluentui/react-tree": "^9.15.3",
     "@fluentui/react-toast": "^9.7.6",
+    "@fluentui/react-tree": "^9.15.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
@@ -26,7 +26,6 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.5.4",
-    "vite": "^5.4.8"
+    "vite": "^7.2.2"
   }
 }
-

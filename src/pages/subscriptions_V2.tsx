@@ -7,13 +7,24 @@ import {
   BreadcrumbItem,
   BreadcrumbButton,
   BreadcrumbDivider,
+  Text,
+  Dialog,
+  DialogSurface,
+  DialogBody,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogTrigger,
 } from '@fluentui/react-components'
 import {
   Storage24Regular,
   ChevronUp16Regular,
   ChevronDown16Regular,
+  ChevronRight16Regular,
   ArrowDownload16Regular,
   Calendar16Regular,
+  Dismiss16Regular,
+  Dismiss24Regular,
 } from '@fluentui/react-icons'
 import React from 'react'
 import msLogo from '../images/ms.png'
@@ -365,6 +376,115 @@ const useStyles = makeStyles({
       backgroundColor: tokens.colorBrandBackgroundPressed,
     },
   },
+  listContainer: {
+    width: '100%',
+    maxWidth: '100%',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+    backgroundColor: tokens.colorNeutralBackground1,
+    borderRadius: tokens.borderRadiusMedium,
+    border: `1px solid ${tokens.colorNeutralStroke1}`,
+    '@media (max-width: 767px)': {
+      marginTop: '24px',
+    },
+  },
+  listLabel: {
+    fontSize: '14px',
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+    marginBottom: '8px',
+    '@media (max-width: 767px)': {
+      fontSize: '13px',
+    },
+  },
+  listItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    cursor: 'pointer',
+    borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+    transition: 'background-color 0.1s ease',
+    ':hover': {
+      backgroundColor: tokens.colorNeutralBackground2,
+    },
+    ':last-child': {
+      borderBottom: 'none',
+    },
+    '@media (max-width: 767px)': {
+      padding: '10px 12px',
+    },
+  },
+  listItemContent: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    flex: 1,
+    minWidth: 0,
+  },
+  listItemText: {
+    fontSize: '14px',
+    color: tokens.colorNeutralForeground1,
+    '@media (max-width: 767px)': {
+      fontSize: '13px',
+    },
+  },
+  listItemIcon: {
+    color: tokens.colorNeutralForeground1,
+    flexShrink: 0,
+  },
+  listItemChevron: {
+    color: tokens.colorNeutralForeground1,
+    flexShrink: 0,
+  },
+  dialogImagePlaceholder: {
+    width: '100%',
+    height: '200px',
+    backgroundColor: tokens.colorNeutralBackground3,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '16px',
+    borderRadius: tokens.borderRadiusMedium,
+  },
+  dialogTextPlaceholder: {
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: tokens.colorNeutralForeground1,
+    marginBottom: '16px',
+  },
+  dialogBulletList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '16px 0',
+  },
+  dialogBulletItem: {
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: tokens.colorNeutralForeground1,
+    marginBottom: '8px',
+    paddingLeft: '20px',
+    position: 'relative',
+    '::before': {
+      content: '"•"',
+      position: 'absolute',
+      left: '0',
+    },
+  },
+  dialogSummary: {
+    fontSize: '14px',
+    lineHeight: '20px',
+    color: tokens.colorNeutralForeground1,
+    marginTop: '16px',
+    marginBottom: '24px',
+  },
+  dialogCancelButton: {
+    backgroundColor: '#d13438',
+    color: tokens.colorNeutralForegroundOnBrand,
+    ':hover': {
+      backgroundColor: '#a4262c',
+    },
+  },
 })
 
 // Note: makeStyles is still imported but only used for breadcrumbContainer
@@ -377,6 +497,7 @@ export default function SubscriptionV2() {
   const [sku1AccordionOpen, setSku1AccordionOpen] = React.useState(false)
   const [sku2AccordionOpen, setSku2AccordionOpen] = React.useState(false)
   const [sku3AccordionOpen, setSku3AccordionOpen] = React.useState(false)
+  const [dialogOpen, setDialogOpen] = React.useState(false)
   const { headerCollapsed } = useLayout()
 
   const infoColumns: InfoColumn[] = [
@@ -601,6 +722,133 @@ export default function SubscriptionV2() {
               </div>
             </div>
           </AccountAccordion>
+
+          {/* List Section */}
+          <Text className={styles.listLabel} style={{ display: 'block', marginBottom: '8px', marginTop: '32px' }}>
+            Cancel Subscriptions
+          </Text>
+          <div className={styles.listContainer}>
+            <div
+              className={styles.listItem}
+              onClick={() => setDialogOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setDialogOpen(true)
+                }
+              }}
+            >
+              <div className={styles.listItemContent}>
+                <Text className={styles.listItemText}>Label 1</Text>
+              </div>
+              <ChevronRight16Regular className={styles.listItemChevron} />
+            </div>
+            <div
+              className={styles.listItem}
+              onClick={() => setDialogOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setDialogOpen(true)
+                }
+              }}
+            >
+              <div className={styles.listItemContent}>
+                <Text className={styles.listItemText}>Label 2</Text>
+              </div>
+              <ChevronRight16Regular className={styles.listItemChevron} />
+            </div>
+            <div
+              className={styles.listItem}
+              onClick={() => setDialogOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setDialogOpen(true)
+                }
+              }}
+            >
+              <div className={styles.listItemContent}>
+                <Text className={styles.listItemText}>Label 3</Text>
+              </div>
+              <ChevronRight16Regular className={styles.listItemChevron} />
+            </div>
+            <div
+              className={styles.listItem}
+              onClick={() => setDialogOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  setDialogOpen(true)
+                }
+              }}
+            >
+              <div className={styles.listItemContent}>
+                <Dismiss16Regular className={styles.listItemIcon} />
+                <Text className={styles.listItemText}>Cancel subscription</Text>
+              </div>
+              <ChevronRight16Regular className={styles.listItemChevron} />
+            </div>
+          </div>
+
+          {/* Cancel Subscription Dialog */}
+          <Dialog open={dialogOpen} onOpenChange={(_, data) => setDialogOpen(data.open)}>
+            <DialogSurface style={{ maxWidth: '500px', width: '90%' }}>
+              <DialogBody>
+                <DialogTitle
+                  action={
+                    <Button
+                      appearance="subtle"
+                      icon={<Dismiss24Regular />}
+                      aria-label="Close"
+                      onClick={() => setDialogOpen(false)}
+                    />
+                  }
+                >
+                  Are you sure you want to cancel?
+                </DialogTitle>
+                <DialogContent>
+                  {/* Image Placeholder */}
+                  <div className={styles.dialogImagePlaceholder}>
+                    <Text style={{ color: tokens.colorNeutralForeground3 }}>Image Placeholder</Text>
+                  </div>
+
+                  {/* Text Placeholder */}
+                  <div className={styles.dialogTextPlaceholder}>
+                    <Text>Text content placeholder</Text>
+                  </div>
+
+                  {/* Summary Statement */}
+                  <Text className={styles.dialogSummary}>
+                    If you cancel you'll lose access to your Microsoft 365 benefits at the end of your billing cycle.
+                  </Text>
+                </DialogContent>
+                <DialogActions>
+                  <DialogTrigger disableButtonEnhancement>
+                    <Button appearance="secondary">No, keep subscription</Button>
+                  </DialogTrigger>
+                  <Button
+                    appearance="primary"
+                    className={styles.dialogCancelButton}
+                    onClick={() => {
+                      // Handle cancel subscription action
+                      setDialogOpen(false)
+                    }}
+                  >
+                    Yes, cancel subscription
+                  </Button>
+                </DialogActions>
+              </DialogBody>
+            </DialogSurface>
+          </Dialog>
         </div>
       </div>
     </div>
