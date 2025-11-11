@@ -26,7 +26,6 @@ import { AccountAccordion } from '../components/AccountAccordion'
 import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
 import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
-import { ROUTES } from '../constants/routes'
 import { ACCORDION_KEYS } from '../constants/accordionKeys'
 
 // Custom Windows logo icon (monochrome, matches other icons)
@@ -42,7 +41,7 @@ const WindowsLogoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 export default function Account() {
   const layoutStyles = useLayoutStyles()
   const subscriptionStyles = useSubscriptionCardStyles()
-  const { handleNavSelect, navigate } = useNavigation()
+  const { handleNavSelect } = useNavigation()
   const { headerCollapsed } = useLayout()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())

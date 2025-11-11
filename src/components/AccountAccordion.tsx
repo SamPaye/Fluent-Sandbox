@@ -73,7 +73,7 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
                 {title}
               </Text>
               {subtitle && (
-                <Text className={styles.accordionBillingText}>
+                <Text className={styles.subTitleText}>
                   {subtitle}
                 </Text>
               )}

@@ -65,7 +65,7 @@ const useStyles = makeStyles({
     flex: '1 1 auto',
     maxWidth: '668px',
     paddingTop: '20px',
-    paddingLeft: '36px',
+    paddingLeft: '64px',
     paddingBottom: '20px',
     paddingRight: '36px',
     display: 'flex',
@@ -100,6 +100,12 @@ const useStyles = makeStyles({
     alignItems: 'center',
     gap: '12px',
     marginTop: '4px',
+    flexWrap: 'wrap',
+    '@media (max-width: 767px)': {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: '8px',
+    },
   },
   currentPlanButton: {
     borderRadius: tokens.borderRadiusSmall,

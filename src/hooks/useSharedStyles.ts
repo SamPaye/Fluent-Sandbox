@@ -350,9 +350,9 @@ export const useAccordionStyles = makeStyles({
       fontSize: '13px',
     },
   },
-  accordionBillingText: {
+  subTitleText: {
     fontSize: '12px',
-    paddingLeft: '0px',
+    paddingLeft: '16px',
     color: tokens.colorNeutralForeground3,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
