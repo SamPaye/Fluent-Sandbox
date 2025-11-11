@@ -1,0 +1,728 @@
+{
+  "metadata": {
+    "title": "Fluent UI React Component Migration from v8 to v9",
+    "version": "1.0",
+    "description": "Comprehensive mapping guide for migrating from Fluent UI React v8 to v9 components",
+    "source": "https://storybooks.fluentui.dev/react/?path=/docs/concepts-migration-from-v8-component-mapping--docs",
+    "installation": {
+      "package": "@fluentui/react-components",
+      "command": "npm install @fluentui/react-components"
+    },
+    "notes": {
+      "blankCells": "Blank cells mean that there is not a v9 component (yet) or the component did not exist in v8",
+      "inDevelopment": "A (🔁) means the v9 component is currently being developed. It may be in preview or not exported from react-components yet. Check out the latest schedule information on the v9 Component Roadmap: https://github.com/microsoft/fluentui/wiki/Fluent-UI-React-v9-Component-Roadmap"
+    }
+  },
+  "mappings": [
+    {
+      "v8Component": "ActionButton",
+      "v9Component": "Button",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-button--docs",
+      "notes": "Use Button with iconPosition=\"before\" for similar functionality.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "ActivityItem",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9; custom implementation needed.",
+      "status": "deprecated",
+      "migrationType": "custom"
+    },
+    {
+      "v8Component": "Announced",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "none"
+    },
+    {
+      "v8Component": "Breadcrumb",
+      "v9Component": "Breadcrumb",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-breadcrumb--docs",
+      "notes": "No major changes; available in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Button",
+      "v9Component": "Button",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-button--docs",
+      "notes": "Unified button API; use appearance prop for variants like PrimaryButton.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Callout",
+      "v9Component": "Popover",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-popover--docs",
+      "notes": "Replaced by Popover, with enhanced accessibility and customization.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Calendar",
+      "v9Component": "CalendarCompat",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/compat-components-calendar--docs",
+      "notes": "Use the compact variant in v9.",
+      "status": "available",
+      "migrationType": "compat"
+    },
+    {
+      "v8Component": "CommandBar",
+      "v9Component": "Toolbar",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-toolbar--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "CommandBarButton",
+      "v9Component": "Toolbar",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-toolbar--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "CommandButton",
+      "v9Component": "MenuButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-docs--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "CompoundButton",
+      "v9Component": "CompoundButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-compoundbutton--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Charts",
+      "v9Component": null,
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/concepts-migration-from-v8-components-charts-migration--docs",
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "guide"
+    },
+    {
+      "v8Component": "Checkbox",
+      "v9Component": "Checkbox",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-checkbox--docs",
+      "notes": "API remains mostly the same in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "ChoiceGroup",
+      "v9Component": "RadioGroup",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-radiogroup--docs",
+      "notes": "Renamed to RadioGroup with similar functionality.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "Coachmark",
+      "v9Component": "TeachingPopover",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-teachingpopover--docs",
+      "notes": "Use TeachingPopover in v9 for the same functionality.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "ColorPicker",
+      "v9Component": "ColorPicker",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-colorpicker--docs",
+      "notes": "No major changes in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "ComboBox",
+      "v9Component": "Combobox",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-combobox--docs",
+      "notes": "Renamed to Combobox with API improvements.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "ContextualMenu",
+      "v9Component": "Menu",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-menu-menu--docs",
+      "notes": "Use Menu in v9 with MenuTrigger.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "DefaultButton (anchor)",
+      "v9Component": "Button",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-button--docs",
+      "notes": "Use Button in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "DefaultButton (menu)",
+      "v9Component": "MenuButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-menubutton--docs",
+      "notes": "Use Button in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "DatePicker",
+      "v9Component": "DatePickerCompat",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/compat-components-datepicker--docs",
+      "notes": "API remains similar with enhanced theming options.",
+      "status": "available",
+      "migrationType": "compat"
+    },
+    {
+      "v8Component": "DetailsList",
+      "v9Component": "DataGrid",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-datagrid--docs",
+      "notes": "Experimental DataGrid in v9 could be a substitute.",
+      "status": "experimental",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Dialog",
+      "v9Component": "Dialog",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-dialog--docs",
+      "notes": "Refined API, using open and onOpenChange props.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "DocumentCard",
+      "v9Component": "Card",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-card-card--docs",
+      "notes": "Use Card in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Dropdown",
+      "v9Component": "Dropdown",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-dropdown--docs",
+      "notes": "API and performance enhancements.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Fabric",
+      "v9Component": "FluentProvider",
+      "v9ComponentUrl": null,
+      "notes": "Use FluentProvider for managing themes and global context.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Facepile",
+      "v9Component": "AvatarGroup",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-avatargroup--docs",
+      "notes": "Replaced by AvatarGroup in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "FocusTrapZone",
+      "v9Component": "Tabster",
+      "v9ComponentUrl": "https://tabster.io/",
+      "notes": "Use Tabster.",
+      "status": "available",
+      "migrationType": "external"
+    },
+    {
+      "v8Component": "FocusZone",
+      "v9Component": "Tabster",
+      "v9ComponentUrl": "https://tabster.io/",
+      "notes": "Use Tabster.",
+      "status": "available",
+      "migrationType": "external"
+    },
+    {
+      "v8Component": "GroupedList",
+      "v9Component": "Tree",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tree--docs",
+      "notes": "Use Tree in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "HoverCard",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent; could use Popover with custom behavior.",
+      "status": "deprecated",
+      "migrationType": "custom"
+    },
+    {
+      "v8Component": "Icon",
+      "v9Component": "@fluentui/react-icons package",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/icons-overview--docs",
+      "notes": "v9 provides more customization options.",
+      "status": "available",
+      "migrationType": "package"
+    },
+    {
+      "v8Component": "IconButton",
+      "v9Component": "Button",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-button--docs",
+      "notes": "v9 provides more customization options.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Image",
+      "v9Component": "Image",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-image--docs",
+      "notes": "No major changes in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Keytips",
+      "v9Component": "Keytips",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/contrib_packages-react-keytips--docs",
+      "notes": "No major changes in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Label",
+      "v9Component": "Label",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-label--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Layer",
+      "v9Component": "Portal",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-portal--docs",
+      "notes": "Use Portal for similar layering behavior.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Link",
+      "v9Component": "Link",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-link--docs",
+      "notes": "Available in v9, with better accessibility handling.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "List",
+      "v9Component": "List",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-list--docs",
+      "notes": "Enhanced performance in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "MarqueeSelection",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "none"
+    },
+    {
+      "v8Component": "MessageBar",
+      "v9Component": "MessageBar",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-messagebar--docs",
+      "notes": "Available in v9, with better accessibility handling.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Modal",
+      "v9Component": "Dialog",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-dialog--docs",
+      "notes": "Dialog in v9 serves the modal role with updated API.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Nav",
+      "v9Component": "Nav",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-nav--docs",
+      "notes": "No major changes; available in v9 with improvements.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "OverflowSet",
+      "v9Component": "Overflow",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-overflow--docs",
+      "notes": "No direct equivalent; consider Dialog for overflow menus.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Overlay",
+      "v9Component": "Portal",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-portal--docs",
+      "notes": "Replaced with Dialog in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Panel",
+      "v9Component": "Drawer",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-drawer--docs",
+      "notes": "Replaced by Drawer for side panel navigation.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Popup",
+      "v9Component": "Dialog",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-dialog--default",
+      "notes": "Replaced by Dialog.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "PeoplePicker",
+      "v9Component": "TagPicker",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tagpicker--docs",
+      "notes": "Replaced by TagPicker for improved functionality.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Persona",
+      "v9Component": "Persona",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-persona--docs",
+      "notes": "No major changes; available in v9 with improvements.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Pickers",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "none"
+    },
+    {
+      "v8Component": "Pivot",
+      "v9Component": "TabList",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tablist--docs",
+      "notes": "Replaced by TabList in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "PivotItem",
+      "v9Component": "Tab",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tablist--docs",
+      "notes": "Replaced by TabList in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "ProgressIndicator",
+      "v9Component": "ProgressBar",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-progressbar--docs",
+      "notes": "Renamed to ProgressBar in v9; similar functionality.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "Rating",
+      "v9Component": "Rating",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-rating--docs",
+      "notes": "Available in v9 with slight API refinements.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "ResizeGroup",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "none"
+    },
+    {
+      "v8Component": "ScrollablePane",
+      "v9Component": null,
+      "v9ComponentUrl": null,
+      "notes": "No direct equivalent in v9.",
+      "status": "deprecated",
+      "migrationType": "none"
+    },
+    {
+      "v8Component": "SearchBox",
+      "v9Component": "SearchBox",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-searchbox--docs",
+      "notes": "Available in v9 with updated API and better accessibility.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Separator",
+      "v9Component": "Divider",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-divider--docs",
+      "notes": "Replaced by Divider in v9.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "Shimmer",
+      "v9Component": "Skeleton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-skeleton--docs",
+      "notes": "Updated to Skeleton in v9 for loading states.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "Slider",
+      "v9Component": "Slider",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-slider--docs",
+      "notes": "API enhancements for better customization.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "SplitButton",
+      "v9Component": "SplitButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-splitbutton--docs",
+      "notes": "Various updates done in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "SpinButton",
+      "v9Component": "SpinButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-spinbutton--docs",
+      "notes": "Available in v9 with improved API.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Spinner",
+      "v9Component": "Spinner",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-spinner--docs",
+      "notes": "Available in v9 with better control over animations.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Stack",
+      "v9Component": null,
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/concepts-migration-from-v8-components-flex-stack--docs",
+      "notes": "Various changes in v9.",
+      "status": "available",
+      "migrationType": "guide"
+    },
+    {
+      "v8Component": "SwatchColorPicker",
+      "v9Component": "SwatchPicker",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-swatchpicker--docs",
+      "notes": "Replaced by SwatchPicker in v9 for color selection.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "TagPicker",
+      "v9Component": "TagPicker",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tagpicker--docs",
+      "notes": "No major changes; retained as TagPicker.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "TeachingBubble",
+      "v9Component": "TeachingPopover",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-teachingpopover--docs",
+      "notes": "Replaced by TeachingPopover in v9.",
+      "status": "available",
+      "migrationType": "replacement"
+    },
+    {
+      "v8Component": "Text",
+      "v9Component": "Text",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-text--docs",
+      "notes": "Similar functionality in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "TextField",
+      "v9Component": "Input",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-input--docs",
+      "notes": "Replaced by Input in v9 for text input functionality.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "ThemeProvider",
+      "v9Component": "FluentProvider",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-fluentprovider--docs",
+      "notes": "Replaced by FluentProvider in v9; similar behavior.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "TimePicker",
+      "v9Component": "TimePickerCompat",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/compat-components-timepicker--docs",
+      "notes": "Replaced by TimePickerCompat in v9; similar behavior.",
+      "status": "available",
+      "migrationType": "compat"
+    },
+    {
+      "v8Component": "ToggleButton",
+      "v9Component": "ToggleButton",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-button-togglebutton--docs",
+      "notes": "No major changes in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    },
+    {
+      "v8Component": "Toggle",
+      "v9Component": "Switch",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-switch--docs",
+      "notes": "Renamed to Switch in v9; similar behavior.",
+      "status": "available",
+      "migrationType": "renamed"
+    },
+    {
+      "v8Component": "Tooltip",
+      "v9Component": "Tooltip",
+      "v9ComponentUrl": "https://storybooks.fluentui.dev/react/?path=/docs/components-tooltip--docs",
+      "notes": "No major changes in v9.",
+      "status": "available",
+      "migrationType": "direct"
+    }
+  ],
+  "newComponents": [
+    {
+      "name": "Accordion",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-accordion--docs",
+      "description": "Allowing to toggle the display of content by expanding or collapsing sections."
+    },
+    {
+      "name": "Avatar",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-avatar--docs",
+      "description": "Replaces Persona for rendering user images."
+    },
+    {
+      "name": "AvatarGroup",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-avatargroup--docs",
+      "description": "Replaces Facepile."
+    },
+    {
+      "name": "Badge",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-badge-badge--docs",
+      "description": "Displays text and/or an icon."
+    },
+    {
+      "name": "CounterBadge",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-badge-counter-badge--docs",
+      "description": "Displays Badge numerical values."
+    },
+    {
+      "name": "PresenceBadge",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-badge-presencebadge--docs",
+      "description": "Displays Badge status."
+    },
+    {
+      "name": "Carousel",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-carousel--docs",
+      "description": "Sliding window of elements controlled by previous, next, and direct pagination buttons."
+    },
+    {
+      "name": "Drawer",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-drawer--docs",
+      "description": "Replaces Panel for side-drawer navigation."
+    },
+    {
+      "name": "InfoLabel",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-badge-presencebadge--docs",
+      "description": "An InfoLabel is a Label with an InfoButton at the end."
+    },
+    {
+      "name": "Popover",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-popover--docs",
+      "description": "Enhanced version of Callout with improved accessibility."
+    },
+    {
+      "name": "TabList",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-tablist--docs",
+      "description": "Replaces Pivot for tabbed navigation."
+    },
+    {
+      "name": "ProgressBar",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-progressbar--docs",
+      "description": "Renamed from ProgressIndicator, with similar functionality but refined API."
+    },
+    {
+      "name": "Input",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-input--docs",
+      "description": "A new input component replacing TextField for simpler text input handling."
+    },
+    {
+      "name": "Skeleton",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-skeleton--docs",
+      "description": "A new input component replacing Shimmer."
+    },
+    {
+      "name": "Switch",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-switch--docs",
+      "description": "A new component replacing Toggle for binary options."
+    },
+    {
+      "name": "SwatchPicker",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-swatchpicker--docs",
+      "description": "A new component replacing SwatchColorPicker with added functionality."
+    },
+    {
+      "name": "Toast",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-badge-presencebadge--docs",
+      "description": "A Toasts displays temporary content to the user."
+    },
+    {
+      "name": "TeachingPopover",
+      "url": "https://storybooks.fluentui.dev/react/?path=/docs/components-teachingpopover--docs",
+      "description": "A new component in v9 that replaces TeachingBubble and Coachmark in v8."
+    }
+  ],
+  "deprecatedComponents": [
+    "Coachmark",
+    "ActivityItem",
+    "Hovercard",
+    "MarqueeSelection",
+    "ResizeGroup",
+    "ScrollablePane",
+    "DetailsList",
+    "Pickers",
+    "Popup"
+  ],
+  "additionalResources": [
+    {
+      "name": "Fluent UI Extensions Packages",
+      "url": "https://github.com/microsoft/fluentui-contrib"
+    },
+    {
+      "name": "Fluent 2 Design System Website",
+      "url": "https://fluent2.microsoft.design/"
+    },
+    {
+      "name": "Fluent UI GitHub",
+      "url": "https://github.com/microsoft/fluentui"
+    }
+  ]
+}
+
