@@ -33,7 +33,7 @@ import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AccountAccordion } from '../components/AccountAccordion'
+import { AMC_Drawer } from '../components/AMC_Drawer'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -567,7 +567,7 @@ export default function SubscriptionV2() {
             <div className={styles.currentPlanImagePlaceholder} />
           </div>
 
-          <AccountAccordion
+          <AMC_Drawer
             value="sku-1"
             title="SKU 1"
             icon={<Storage24Regular />}
@@ -619,9 +619,9 @@ export default function SubscriptionV2() {
                 </Link>
               </div>
             </div>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value="sku-2"
             title="SKU 2"
             icon={<Storage24Regular />}
@@ -673,9 +673,9 @@ export default function SubscriptionV2() {
                 </Link>
               </div>
             </div>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value="sku-3"
             title="SKU 3"
             icon={<Storage24Regular />}
@@ -727,7 +727,7 @@ export default function SubscriptionV2() {
                 </Link>
               </div>
             </div>
-          </AccountAccordion>
+          </AMC_Drawer>
 
           {/* List Section */}
           <Text className={styles.listLabel} style={{ display: 'block', marginBottom: '8px', marginTop: '32px' }}>

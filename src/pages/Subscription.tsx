@@ -27,7 +27,7 @@ import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AccountAccordion } from '../components/AccountAccordion'
+import { AMC_Drawer } from '../components/AMC_Drawer'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -107,16 +107,16 @@ export default function Subscription() {
 
           <PageHeader title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
 
-          <AccountAccordion
+          <AMC_Drawer
             value="current-plan"
             title="Your current Plan"
             isOpen={currentPlanAccordionOpen}
             onToggle={setCurrentPlanAccordionOpen}
           >
             <Text style={{ fontSize: '20px', fontWeight: 500 }}>Microsoft 365 Personal</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value="manage-subscription"
             title="Manage subscription"
             icon={<Storage24Regular />}
@@ -264,7 +264,7 @@ export default function Subscription() {
                 )}
               </div>
             </Card>
-          </AccountAccordion>
+          </AMC_Drawer>
         </div>
       </div>
     </div>

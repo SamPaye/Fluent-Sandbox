@@ -2,7 +2,7 @@ import React from 'react'
 import { Accordion, AccordionHeader, AccordionItem, AccordionPanel, Text, type AccordionToggleEvent } from '@fluentui/react-components'
 import { useAccordionStyles } from '../hooks/useSharedStyles'
 
-interface AccountAccordionProps {
+interface AMC_DrawerProps {
   value: string
   title: string
   icon?: React.ReactNode
@@ -14,7 +14,7 @@ interface AccountAccordionProps {
   actionButton?: React.ReactNode
 }
 
-export const AccountAccordion: React.FC<AccountAccordionProps> = ({
+export const AMC_Drawer: React.FC<AMC_DrawerProps> = ({
   value,
   title,
   icon,
@@ -73,7 +73,12 @@ export const AccountAccordion: React.FC<AccountAccordionProps> = ({
                 {title}
               </Text>
               {subtitle && (
-                <Text className={styles.subTitleText}>
+                <Text 
+                  className={styles.subTitleText}
+                  style={{
+                    ...(!icon ? { paddingLeft: '0px' } : {}),
+                  }}
+                >
                   {subtitle}
                 </Text>
               )}

@@ -22,7 +22,7 @@ import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AccountAccordion } from '../components/AccountAccordion'
+import { AMC_Drawer } from '../components/AMC_Drawer'
 import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
 import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
@@ -98,16 +98,16 @@ export default function Account() {
         <div className={layoutStyles.content}>
           <PageHeader title="Account" infoColumns={infoColumns} />
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.CURRENT_PLAN}
             title="Your current Plan"
             isOpen={accordionStates[ACCORDION_KEYS.CURRENT_PLAN]}
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.CURRENT_PLAN]: isOpen }))}
           >
             <Text style={{ fontSize: '20px', fontWeight: 500 }}>Microsoft 365 Personal</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.MS_STORAGE}
             title="Microsoft storage"
             icon={<Storage24Regular />}
@@ -115,9 +115,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MS_STORAGE]: isOpen }))}
           >
             <Text>Placeholder content for Microsoft storage.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.GAME_PASS}
             title="Game Pass"
             icon={<Grid24Regular />}
@@ -125,9 +125,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.GAME_PASS]: isOpen }))}
           >
             <Text>Placeholder content for Game Pass.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.DEVICES}
             title="Devices"
             icon={<Desktop24Regular />}
@@ -135,9 +135,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.DEVICES]: isOpen }))}
           >
             <Text>Placeholder content for Devices.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.PRIVACY}
             title="Privacy"
             icon={<Eye24Regular />}
@@ -145,9 +145,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PRIVACY]: isOpen }))}
           >
             <Text>Placeholder content for Privacy.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.SECURITY}
             title="Security"
             icon={<ShieldCheckmark24Regular />}
@@ -155,9 +155,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.SECURITY]: isOpen }))}
           >
             <Text>Placeholder content for Security.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.PAYMENT_OPTIONS}
             title="Payment options"
             icon={<Payment24Regular />}
@@ -165,9 +165,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PAYMENT_OPTIONS]: isOpen }))}
           >
             <Text>Placeholder content for Payment options.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.ORDER_HISTORY}
             title="Order history"
             icon={<Cart24Regular />}
@@ -175,9 +175,9 @@ export default function Account() {
             onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.ORDER_HISTORY]: isOpen }))}
           >
             <Text>Placeholder content for Order history.</Text>
-          </AccountAccordion>
+          </AMC_Drawer>
 
-          <AccountAccordion
+          <AMC_Drawer
             value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
             title="Manage subscription"
             icon={<Storage24Regular />}
@@ -254,7 +254,7 @@ export default function Account() {
                 />
               ))
             })()}
-          </AccountAccordion>
+          </AMC_Drawer>
         </div>
       </div>
     </div>

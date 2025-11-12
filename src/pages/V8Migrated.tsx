@@ -2,7 +2,7 @@ import { makeStyles, tokens, Table, TableHeader, TableRow, TableHeaderCell, Tabl
 import { Grid16Regular, ShieldCheckmark16Regular } from '@fluentui/react-icons'
 import { useState } from 'react'
 import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AccountAccordion } from '../components/AccountAccordion'
+import { AMC_Drawer } from '../components/AMC_Drawer'
 
 const useStyles = makeStyles({
   container: {
@@ -111,7 +111,7 @@ export default function V8Migrated() {
               </TableCell>
               <TableCell className={styles.componentCell}>
                 <div className={styles.exampleWrapper}>
-                  <AccountAccordion
+                  <AMC_Drawer
                     value="account-accordion-example"
                     title="Account Information"
                     subtitle="Account details and settings"
@@ -121,7 +121,7 @@ export default function V8Migrated() {
                     <div style={{ padding: '16px' }}>
                       <p>This is the accordion content. You can add any content here.</p>
                     </div>
-                  </AccountAccordion>
+                  </AMC_Drawer>
                 </div>
               </TableCell>
             </TableRow>
