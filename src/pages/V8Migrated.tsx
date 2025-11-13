@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     gap: '8px',
     flexWrap: 'wrap',
     alignItems: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: tokens.colorNeutralBackground1,
     padding: '12px',
     '& > div': {
       marginBottom: '0 !important',
@@ -67,7 +67,22 @@ export default function V8Migrated() {
   const [openItems, setOpenItems] = useState<string[]>([])
 
   const handleToggle = (_: AccordionToggleEvent, data: { value: unknown; openItems: unknown[] }) => {
-    setOpenItems(data.openItems as string[])
+    const toggledValue = data.value as string
+    setOpenItems((prevOpenItems) => {
+      // If the item is in the new openItems array, it's being opened
+      // If not, it's being closed
+      const isOpening = (data.openItems as string[]).includes(toggledValue)
+      
+      if (isOpening) {
+        // Add the item if it's not already in the array
+        return prevOpenItems.includes(toggledValue) 
+          ? prevOpenItems 
+          : [...prevOpenItems, toggledValue]
+      } else {
+        // Remove the item from the array
+        return prevOpenItems.filter(item => item !== toggledValue)
+      }
+    })
   }
 
   const exampleInfoColumns: InfoColumn[] = [

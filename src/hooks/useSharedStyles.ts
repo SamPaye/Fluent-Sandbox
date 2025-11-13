@@ -5,7 +5,7 @@ export const useLayoutStyles = makeStyles({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    minHeight: 'calc(100vh - 100px)',
+    minHeight: '100vh',
     backgroundColor: tokens.colorNeutralBackground2,
     width: '100%',
     maxWidth: '100%',

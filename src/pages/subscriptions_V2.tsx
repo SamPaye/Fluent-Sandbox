@@ -504,7 +504,22 @@ export default function SubscriptionV2() {
   const [openItems, setOpenItems] = React.useState<string[]>([])
 
   const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
-    setOpenItems(data.openItems)
+    const toggledValue = data.value
+    setOpenItems((prevOpenItems) => {
+      // If the item is in the new openItems array, it's being opened
+      // If not, it's being closed
+      const isOpening = data.openItems.includes(toggledValue)
+      
+      if (isOpening) {
+        // Add the item if it's not already in the array
+        return prevOpenItems.includes(toggledValue) 
+          ? prevOpenItems 
+          : [...prevOpenItems, toggledValue]
+      } else {
+        // Remove the item from the array
+        return prevOpenItems.filter(item => item !== toggledValue)
+      }
+    })
   }
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const { headerCollapsed } = useLayout()
