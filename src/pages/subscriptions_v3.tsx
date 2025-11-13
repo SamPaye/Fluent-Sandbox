@@ -21,7 +21,7 @@ import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
-import { PageHeader, InfoColumn } from '../components/PageHeader'
+import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -463,7 +463,7 @@ export default function SubscriptionV3() {
             </Breadcrumb>
           </div>
 
-          <PageHeader title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
+          <AMC_ValueBanner title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
 
           {/* Current Plan Panel */}
           <div className={styles.currentPlanPanel}>

@@ -26,8 +26,9 @@ import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedSt
 import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
-import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AMC_Drawer } from '../components/AMC_Drawer'
+import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
+import { AMC_Drawer, DrawerHeader } from '../components/AMC_Drawer'
+import type { AccordionToggleEvent } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -47,8 +48,11 @@ export default function Subscription() {
   const { handleNavSelect, navigate } = useNavigation()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
-  const [manageAccordionOpen, setManageAccordionOpen] = React.useState(false)
-  const [currentPlanAccordionOpen, setCurrentPlanAccordionOpen] = React.useState(true)
+  const [openItems, setOpenItems] = React.useState<string[]>(['current-plan'])
+
+  const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
+    setOpenItems(data.openItems)
+  }
   const { headerCollapsed } = useLayout()
 
   const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
@@ -105,42 +109,36 @@ export default function Subscription() {
             </Breadcrumb>
           </div>
 
-          <PageHeader title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
+          <AMC_ValueBanner title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
 
           <AMC_Drawer
             value="current-plan"
-            title="Your current Plan"
-            isOpen={currentPlanAccordionOpen}
-            onToggle={setCurrentPlanAccordionOpen}
+            openItems={openItems.includes('current-plan') ? ['current-plan'] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Your current Plan" />}
           >
             <Text style={{ fontSize: '20px', fontWeight: 500 }}>Microsoft 365 Personal</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value="manage-subscription"
-            title="Manage subscription"
-            icon={<Storage24Regular />}
-            subtitle="Save 16% with annual billing ($129.99/year)"
-            isOpen={manageAccordionOpen}
-            onToggle={setManageAccordionOpen}
-            expandIcon={!manageAccordionOpen ? (
-              <Link 
-                as="button" 
-                style={{ 
-                  fontWeight: tokens.fontWeightSemibold,
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                }}
-                onClick={(e) => {
-                  e.preventDefault()
-                  setManageAccordionOpen(true)
-                }}
-              >
-                Change
-              </Link>
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
+            openItems={openItems.includes('manage-subscription') ? ['manage-subscription'] : []}
+            onToggle={handleToggle}
+            hideDefaultExpandIcon={true}
+            header={
+              <DrawerHeader
+                title="Manage subscription"
+                icon={<Storage24Regular />}
+                subtitle="Save 16% with annual billing ($129.99/year)"
+                expandIcon={
+                  !openItems.includes('manage-subscription') ? (
+                    <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                  ) : (
+                    <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                  )
+                }
+              />
+            }
           >
             {/* Billing Period Tabs */}
             <div className={subscriptionStyles.cardWrapper} style={{ backgroundColor: 'transparent', marginBottom: '16px' }}>

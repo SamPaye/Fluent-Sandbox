@@ -171,12 +171,14 @@ export const usePageHeaderStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
     marginBottom: '42px',
     width: '100%',
     overflow: 'hidden',
     boxSizing: 'border-box',
-    height: '64px',
+    minHeight: '64px',
     padding: '10px',
+    gap: '16px',
     '@media (max-width: 767px)': {
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -189,7 +191,7 @@ export const usePageHeaderStyles = makeStyles({
     alignItems: 'center',
     gap: '16px',
     minWidth: 0,
-    flex: 1,
+    flex: '1 1 auto',
     overflow: 'hidden',
     '@media (max-width: 767px)': {
       width: '100%',
@@ -212,6 +214,8 @@ export const usePageHeaderStyles = makeStyles({
     whiteSpace: 'nowrap',
     minWidth: 0,
     flex: 1,
+    lineHeight: '1.4',
+    paddingBottom: '2px',
     '@media (max-width: 767px)': {
       fontSize: tokens.fontSizeBase500,
     },
@@ -219,12 +223,16 @@ export const usePageHeaderStyles = makeStyles({
   headerInfoColumns: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: '0',
     alignItems: 'center',
+    flex: '0 0 auto',
+    minWidth: 0,
     '@media (max-width: 767px)': {
       flexDirection: 'column',
       gap: '0',
       alignItems: 'flex-start',
+      width: '100%',
     },
   },
   infoColumn: {
@@ -232,6 +240,7 @@ export const usePageHeaderStyles = makeStyles({
     alignItems: 'center',
     gap: '12px',
     minWidth: '296px',
+    flexShrink: 0,
     '@media (max-width: 767px)': {
       minWidth: 'auto',
       width: 'auto',

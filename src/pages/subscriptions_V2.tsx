@@ -32,8 +32,9 @@ import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
-import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AMC_Drawer } from '../components/AMC_Drawer'
+import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
+import { AMC_Drawer, DrawerHeader } from '../components/AMC_Drawer'
+import type { AccordionToggleEvent } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
@@ -500,9 +501,11 @@ export default function SubscriptionV2() {
   const styles = useStyles()
   const layoutStyles = useLayoutStyles()
   const { handleNavSelect, navigate } = useNavigation()
-  const [sku1AccordionOpen, setSku1AccordionOpen] = React.useState(false)
-  const [sku2AccordionOpen, setSku2AccordionOpen] = React.useState(false)
-  const [sku3AccordionOpen, setSku3AccordionOpen] = React.useState(false)
+  const [openItems, setOpenItems] = React.useState<string[]>([])
+
+  const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
+    setOpenItems(data.openItems)
+  }
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const { headerCollapsed } = useLayout()
 
@@ -542,7 +545,7 @@ export default function SubscriptionV2() {
             </Breadcrumb>
           </div>
 
-          <PageHeader title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
+          <AMC_ValueBanner title="Microsoft 365 Personal" logo={<img src={msLogo} alt="Microsoft" />} infoColumns={infoColumns} />
 
           {/* Current Plan Panel */}
           <div className={styles.currentPlanPanel}>
@@ -569,36 +572,45 @@ export default function SubscriptionV2() {
 
           <AMC_Drawer
             value="sku-1"
-            title="SKU 1"
-            icon={<Storage24Regular />}
-            subtitle="Subtitle text"
-            isOpen={sku1AccordionOpen}
-            onToggle={setSku1AccordionOpen}
-            actionButton={
-              <span
-                role="button"
-                tabIndex={0}
-                className={styles.actionButtonSpan}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Add your upgrade action here
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    // Add your upgrade action here
-                  }
-                }}
-              >
-                Upgrade
-              </span>
+            openItems={openItems.includes('sku-1') ? ['sku-1'] : []}
+            onToggle={handleToggle}
+            hideDefaultExpandIcon={true}
+            header={
+              <DrawerHeader
+                title="SKU 1"
+                icon={<Storage24Regular />}
+                subtitle="Subtitle text"
+                actionButton={
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className={styles.actionButtonSpan}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      // Add your upgrade action here
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        // Add your upgrade action here
+                      }
+                    }}
+                  >
+                    Upgrade
+                  </span>
+                }
+                expandIcon={
+                  <div style={{ paddingLeft: '16px' }}>
+                    {!openItems.includes('sku-1') ? (
+                      <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                    ) : (
+                      <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                    )}
+                  </div>
+                }
+              />
             }
-            expandIcon={!sku1AccordionOpen ? (
-              <ChevronDown16Regular style={{ fontSize: '16px' }} />
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
           >
             <div className={styles.accordionContentLayout}>
               {/* Left Image Placeholder */}
@@ -623,36 +635,45 @@ export default function SubscriptionV2() {
 
           <AMC_Drawer
             value="sku-2"
-            title="SKU 2"
-            icon={<Storage24Regular />}
-            subtitle="Subtitle text"
-            isOpen={sku2AccordionOpen}
-            onToggle={setSku2AccordionOpen}
-            actionButton={
-              <span
-                role="button"
-                tabIndex={0}
-                className={styles.actionButtonSpan}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Add your upgrade action here
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    // Add your upgrade action here
-                  }
-                }}
-              >
-                Upgrade
-              </span>
+            openItems={openItems.includes('sku-2') ? ['sku-2'] : []}
+            onToggle={handleToggle}
+            hideDefaultExpandIcon={true}
+            header={
+              <DrawerHeader
+                title="SKU 2"
+                icon={<Storage24Regular />}
+                subtitle="Subtitle text"
+                actionButton={
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className={styles.actionButtonSpan}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      // Add your upgrade action here
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        // Add your upgrade action here
+                      }
+                    }}
+                  >
+                    Upgrade
+                  </span>
+                }
+                expandIcon={
+                  <div style={{ paddingLeft: '16px' }}>
+                    {!openItems.includes('sku-2') ? (
+                      <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                    ) : (
+                      <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                    )}
+                  </div>
+                }
+              />
             }
-            expandIcon={!sku2AccordionOpen ? (
-              <ChevronDown16Regular style={{ fontSize: '16px' }} />
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
           >
             <div className={styles.accordionContentLayout}>
               {/* Left Image Placeholder */}
@@ -677,36 +698,45 @@ export default function SubscriptionV2() {
 
           <AMC_Drawer
             value="sku-3"
-            title="SKU 3"
-            icon={<Storage24Regular />}
-            subtitle="Subtitle text"
-            isOpen={sku3AccordionOpen}
-            onToggle={setSku3AccordionOpen}
-            actionButton={
-              <span
-                role="button"
-                tabIndex={0}
-                className={styles.actionButtonSpan}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Add your upgrade action here
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    // Add your upgrade action here
-                  }
-                }}
-              >
-                Upgrade
-              </span>
+            openItems={openItems.includes('sku-3') ? ['sku-3'] : []}
+            onToggle={handleToggle}
+            hideDefaultExpandIcon={true}
+            header={
+              <DrawerHeader
+                title="SKU 3"
+                icon={<Storage24Regular />}
+                subtitle="Subtitle text"
+                actionButton={
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className={styles.actionButtonSpan}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      // Add your upgrade action here
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        // Add your upgrade action here
+                      }
+                    }}
+                  >
+                    Upgrade
+                  </span>
+                }
+                expandIcon={
+                  <div style={{ paddingLeft: '16px' }}>
+                    {!openItems.includes('sku-3') ? (
+                      <ChevronDown16Regular style={{ fontSize: '16px' }} />
+                    ) : (
+                      <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                    )}
+                  </div>
+                }
+              />
             }
-            expandIcon={!sku3AccordionOpen ? (
-              <ChevronDown16Regular style={{ fontSize: '16px' }} />
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
           >
             <div className={styles.accordionContentLayout}>
               {/* Left Image Placeholder */}

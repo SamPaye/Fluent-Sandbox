@@ -21,8 +21,9 @@ import { useLayoutStyles, useSubscriptionCardStyles } from '../hooks/useSharedSt
 import { useNavigation } from '../hooks/useNavigation'
 import { TopNavigation } from '../components/TopNavigation'
 import { LeftNav } from '../components/LeftNav'
-import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AMC_Drawer } from '../components/AMC_Drawer'
+import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
+import { AMC_Drawer, DrawerHeader } from '../components/AMC_Drawer'
+import type { AccordionToggleEvent } from '@fluentui/react-components'
 import { SubscriptionCard, type SubscriptionPlan } from '../components/SubscriptionCard'
 import type { SelectTabEvent, TabValue } from '@fluentui/react-components'
 import { useLayout } from '../contexts/LayoutContext'
@@ -45,17 +46,13 @@ export default function Account() {
   const { headerCollapsed } = useLayout()
   const [selectedTab, setSelectedTab] = React.useState<TabValue>('monthly')
   const [expandedCards, setExpandedCards] = React.useState<Set<string>>(new Set())
-  const [accordionStates, setAccordionStates] = React.useState<Record<string, boolean>>({
-    [ACCORDION_KEYS.CURRENT_PLAN]: true,
-    [ACCORDION_KEYS.MS_STORAGE]: false,
-    [ACCORDION_KEYS.GAME_PASS]: false,
-    [ACCORDION_KEYS.DEVICES]: false,
-    [ACCORDION_KEYS.PRIVACY]: false,
-    [ACCORDION_KEYS.SECURITY]: false,
-    [ACCORDION_KEYS.PAYMENT_OPTIONS]: false,
-    [ACCORDION_KEYS.ORDER_HISTORY]: false,
-    [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: false,
-  })
+  const [openItems, setOpenItems] = React.useState<string[]>([
+    ACCORDION_KEYS.CURRENT_PLAN
+  ])
+
+  const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
+    setOpenItems(data.openItems)
+  }
 
   const handleTabSelect = (_: SelectTabEvent, data: { value: TabValue }) => {
     setSelectedTab(data.value)
@@ -96,112 +93,109 @@ export default function Account() {
         <LeftNav selectedValue="account" onNavItemSelect={handleNavSelect} />
 
         <div className={layoutStyles.content}>
-          <PageHeader title="Account" infoColumns={infoColumns} />
+          <AMC_ValueBanner title="Account" infoColumns={infoColumns} />
 
           <AMC_Drawer
             value={ACCORDION_KEYS.CURRENT_PLAN}
-            title="Your current Plan"
-            isOpen={accordionStates[ACCORDION_KEYS.CURRENT_PLAN]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.CURRENT_PLAN]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.CURRENT_PLAN) ? [ACCORDION_KEYS.CURRENT_PLAN] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Your current Plan" />}
           >
             <Text style={{ fontSize: '20px', fontWeight: 500 }}>Microsoft 365 Personal</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.MS_STORAGE}
-            title="Microsoft storage"
-            icon={<Storage24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.MS_STORAGE]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MS_STORAGE]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.MS_STORAGE) ? [ACCORDION_KEYS.MS_STORAGE] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Microsoft storage" icon={<Storage24Regular />} />}
           >
             <Text>Placeholder content for Microsoft storage.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.GAME_PASS}
-            title="Game Pass"
-            icon={<Grid24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.GAME_PASS]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.GAME_PASS]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.GAME_PASS) ? [ACCORDION_KEYS.GAME_PASS] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Game Pass" icon={<Grid24Regular />} />}
           >
             <Text>Placeholder content for Game Pass.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.DEVICES}
-            title="Devices"
-            icon={<Desktop24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.DEVICES]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.DEVICES]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.DEVICES) ? [ACCORDION_KEYS.DEVICES] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Devices" icon={<Desktop24Regular />} />}
           >
             <Text>Placeholder content for Devices.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.PRIVACY}
-            title="Privacy"
-            icon={<Eye24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.PRIVACY]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PRIVACY]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.PRIVACY) ? [ACCORDION_KEYS.PRIVACY] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Privacy" icon={<Eye24Regular />} />}
           >
             <Text>Placeholder content for Privacy.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.SECURITY}
-            title="Security"
-            icon={<ShieldCheckmark24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.SECURITY]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.SECURITY]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.SECURITY) ? [ACCORDION_KEYS.SECURITY] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Security" icon={<ShieldCheckmark24Regular />} />}
           >
             <Text>Placeholder content for Security.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.PAYMENT_OPTIONS}
-            title="Payment options"
-            icon={<Payment24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.PAYMENT_OPTIONS]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.PAYMENT_OPTIONS]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.PAYMENT_OPTIONS) ? [ACCORDION_KEYS.PAYMENT_OPTIONS] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Payment options" icon={<Payment24Regular />} />}
           >
             <Text>Placeholder content for Payment options.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.ORDER_HISTORY}
-            title="Order history"
-            icon={<Cart24Regular />}
-            isOpen={accordionStates[ACCORDION_KEYS.ORDER_HISTORY]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.ORDER_HISTORY]: isOpen }))}
+            openItems={openItems.includes(ACCORDION_KEYS.ORDER_HISTORY) ? [ACCORDION_KEYS.ORDER_HISTORY] : []}
+            onToggle={handleToggle}
+            header={<DrawerHeader title="Order history" icon={<Cart24Regular />} />}
           >
             <Text>Placeholder content for Order history.</Text>
           </AMC_Drawer>
 
           <AMC_Drawer
             value={ACCORDION_KEYS.MANAGE_SUBSCRIPTION}
-            title="Manage subscription"
-            icon={<Storage24Regular />}
-            subtitle="Save 16% with annual billing ($129.99/year)"
-            isOpen={accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION]}
-            onToggle={(isOpen) => setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: isOpen }))}
-            expandIcon={!accordionStates[ACCORDION_KEYS.MANAGE_SUBSCRIPTION] ? (
-              <Link 
-                as="button" 
-                style={{ 
-                  fontWeight: tokens.fontWeightSemibold,
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                }}
-                onClick={(e) => {
-                  e.preventDefault()
-                  setAccordionStates((prev) => ({ ...prev, [ACCORDION_KEYS.MANAGE_SUBSCRIPTION]: true }))
-                }}
-              >
-                Change
-              </Link>
-            ) : (
-              <ChevronUp16Regular style={{ fontSize: '16px' }} />
-            )}
+            openItems={openItems.includes(ACCORDION_KEYS.MANAGE_SUBSCRIPTION) ? [ACCORDION_KEYS.MANAGE_SUBSCRIPTION] : []}
+            onToggle={handleToggle}
+            header={
+              <DrawerHeader
+                title="Manage subscription"
+                icon={<Storage24Regular />}
+                subtitle="Save 16% with annual billing ($129.99/year)"
+                expandIcon={!openItems.includes(ACCORDION_KEYS.MANAGE_SUBSCRIPTION) ? (
+                  <Link 
+                    as="button" 
+                    style={{ 
+                      fontWeight: tokens.fontWeightSemibold,
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setOpenItems([ACCORDION_KEYS.MANAGE_SUBSCRIPTION])
+                    }}
+                  >
+                    Change
+                  </Link>
+                ) : (
+                  <ChevronUp16Regular style={{ fontSize: '16px' }} />
+                )}
+              />
+            }
           >
             {/* Billing Period Tabs */}
             <div className={subscriptionStyles.cardWrapperTransparent}>

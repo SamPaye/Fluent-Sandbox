@@ -8,7 +8,7 @@ export interface InfoColumn {
   secondary: string
 }
 
-interface PageHeaderProps {
+interface AMC_ValueBannerProps {
   title: string
   logo?: React.ReactNode
   infoColumns?: InfoColumn[]
@@ -32,7 +32,7 @@ const renderLogo = (logo: React.ReactNode) => {
   return logo
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ title, logo, infoColumns = [] }) => {
+export const AMC_ValueBanner: React.FC<AMC_ValueBannerProps> = ({ title, logo, infoColumns = [] }) => {
   const styles = usePageHeaderStyles()
 
   return (

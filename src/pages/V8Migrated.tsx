@@ -1,8 +1,9 @@
 import { makeStyles, tokens, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from '@fluentui/react-components'
 import { Grid16Regular, ShieldCheckmark16Regular } from '@fluentui/react-icons'
 import { useState } from 'react'
-import { PageHeader, InfoColumn } from '../components/PageHeader'
-import { AMC_Drawer } from '../components/AMC_Drawer'
+import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
+import { AMC_Drawer, DrawerHeader } from '../components/AMC_Drawer'
+import type { AccordionToggleEvent } from '@fluentui/react-components'
 
 const useStyles = makeStyles({
   container: {
@@ -63,7 +64,11 @@ const useStyles = makeStyles({
 
 export default function V8Migrated() {
   const styles = useStyles()
-  const [accordionOpen, setAccordionOpen] = useState(false)
+  const [openItems, setOpenItems] = useState<string[]>([])
+
+  const handleToggle = (_: AccordionToggleEvent, data: { value: unknown; openItems: unknown[] }) => {
+    setOpenItems(data.openItems as string[])
+  }
 
   const exampleInfoColumns: InfoColumn[] = [
     {
@@ -83,7 +88,7 @@ export default function V8Migrated() {
       <h1 className={styles.title}>AMC Custom Components (wip)</h1>
       <div className={styles.description}>
         <span>
-          This page is meant to showcase the custom AMC components rebuilt using v9 atomics.
+          This page is meant to showcase the custom AMC components rebuilt using v9 components and styles.
         </span>
       </div>
       <div className={styles.tableWrapper}>
@@ -101,7 +106,7 @@ export default function V8Migrated() {
               </TableCell>
               <TableCell className={styles.componentCell}>
                 <div className={styles.exampleWrapper}>
-                  <PageHeader title="Page title" infoColumns={exampleInfoColumns} />
+                  <AMC_ValueBanner title="Page title" infoColumns={exampleInfoColumns} />
                 </div>
               </TableCell>
             </TableRow>
@@ -113,10 +118,9 @@ export default function V8Migrated() {
                 <div className={styles.exampleWrapper}>
                   <AMC_Drawer
                     value="account-accordion-example"
-                    title="Account Information"
-                    subtitle="Account details and settings"
-                    isOpen={accordionOpen}
-                    onToggle={setAccordionOpen}
+                    openItems={openItems.includes('account-accordion-example') ? ['account-accordion-example'] : []}
+                    onToggle={handleToggle}
+                    header={<DrawerHeader title="Account Information" subtitle="Account details and settings" />}
                   >
                     <div style={{ padding: '16px' }}>
                       <p>This is the accordion content. You can add any content here.</p>
