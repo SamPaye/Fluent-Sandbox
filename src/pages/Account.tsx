@@ -40,12 +40,12 @@ export default function Account() {
     ACCORDION_KEYS.CURRENT_PLAN
   ])
 
-  const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
-    const toggledValue = data.value
+  const handleToggle = (_: AccordionToggleEvent, data: { value: unknown; openItems: unknown[] }) => {
+    const toggledValue = data.value as string
     setOpenItems((prevOpenItems) => {
       // If the item is in the new openItems array, it's being opened
       // If not, it's being closed
-      const isOpening = data.openItems.includes(toggledValue)
+      const isOpening = (data.openItems as string[]).includes(toggledValue)
       
       if (isOpening) {
         // Add the item if it's not already in the array

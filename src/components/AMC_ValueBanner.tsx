@@ -36,7 +36,7 @@ export const AMC_ValueBanner: React.FC<AMC_ValueBannerProps> = ({ title, logo, i
   const styles = usePageHeaderStyles()
 
   return (
-    <div className={styles.headerSection}>
+    <div className={styles.headerSection} style={{ padding: '0px' }}>
       <div className={styles.headerTitleSection}>
         {logo && (
           <div className={styles.logoImage}>

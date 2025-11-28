@@ -1,13 +1,14 @@
-import { makeStyles, tokens, Table, TableHeader, TableRow, TableHeaderCell, TableBody, TableCell } from '@fluentui/react-components'
+import { makeStyles, tokens } from '@fluentui/react-components'
 import { Grid16Regular, ShieldCheckmark16Regular } from '@fluentui/react-icons'
 import { useState } from 'react'
 import { AMC_ValueBanner, InfoColumn } from '../components/AMC_ValueBanner'
 import { AMC_Drawer, DrawerHeader } from '../components/AMC_Drawer'
+import { AMC_MediaGroup } from '../components/AMC_MediaGroup'
 import type { AccordionToggleEvent } from '@fluentui/react-components'
 
 const useStyles = makeStyles({
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1100px',
     margin: '0 auto',
   },
   title: {
@@ -21,22 +22,14 @@ const useStyles = makeStyles({
     marginBottom: '24px',
     lineHeight: tokens.lineHeightBase400,
   },
-  tableWrapper: {
-    backgroundColor: tokens.colorNeutralBackground1,
-    borderRadius: tokens.borderRadiusMedium,
-    boxShadow: tokens.shadow4,
-    overflow: 'auto',
-  },
-  componentCell: {
-    padding: '12px',
-  },
+
   exampleWrapper: {
     display: 'flex',
     gap: '8px',
     flexWrap: 'wrap',
     alignItems: 'center',
     backgroundColor: tokens.colorNeutralBackground1,
-    padding: '12px',
+    padding: '0px',
     '& > div': {
       marginBottom: '0 !important',
     },
@@ -59,6 +52,28 @@ const useStyles = makeStyles({
         height: '16px',
       },
     },
+  },
+  mediaGroupWrapper: {
+    display: 'flex',
+    gap: '8px',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    backgroundColor: tokens.colorNeutralBackground1,
+    padding: '24px',
+    borderRadius: tokens.borderRadiusLarge,
+    boxShadow: tokens.shadow2,
+    minWidth: '580px',
+  },
+  componentSection: {
+    marginBottom: '32px',
+  },
+  componentHeader: {
+    fontSize: tokens.fontSizeBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    color: tokens.colorNeutralForeground1,
+    marginBottom: '16px',
+    paddingBottom: '8px',
+    borderBottom: `2px solid ${tokens.colorNeutralStroke2}`,
   },
 })
 
@@ -99,64 +114,47 @@ export default function V8Migrated() {
   ]
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{ background: tokens.colorNeutralBackground2, padding: '24px' }}>
       <h1 className={styles.title}>AMC Custom Components (wip)</h1>
       <div className={styles.description}>
         <span>
           This page is meant to showcase the custom AMC components rebuilt using v9 components and styles.
         </span>
       </div>
-      <div className={styles.tableWrapper}>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderCell style={{ width: '200px' }}>Component</TableHeaderCell>
-              <TableHeaderCell>Examples</TableHeaderCell>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className={styles.componentCell}>
-                <strong>Value Banner</strong>
-              </TableCell>
-              <TableCell className={styles.componentCell}>
-                <div className={styles.exampleWrapper}>
-                  <AMC_ValueBanner title="Page title" infoColumns={exampleInfoColumns} />
-                </div>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className={styles.componentCell}>
-                <strong>Drawer</strong>
-              </TableCell>
-              <TableCell className={styles.componentCell}>
-                <div className={styles.exampleWrapper}>
-                  <AMC_Drawer
-                    value="account-accordion-example"
-                    openItems={openItems.includes('account-accordion-example') ? ['account-accordion-example'] : []}
-                    onToggle={handleToggle}
-                    header={<DrawerHeader title="Account Information" subtitle="Account details and settings" />}
-                  >
-                    <div style={{ padding: '16px' }}>
-                      <p>This is the accordion content. You can add any content here.</p>
-                    </div>
-                  </AMC_Drawer>
-                </div>
-              </TableCell>
-            </TableRow>
-            {/* Add your v8 custom components here */}
-            <TableRow>
-              <TableCell className={styles.componentCell}>
-                <strong>Custom Component</strong>
-              </TableCell>
-              <TableCell className={styles.componentCell}>
-                <div className={styles.exampleWrapper}>
-                  {/* Add component examples here */}
-                </div>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+      <div>
+        <div className={styles.componentSection}>
+          <h2 className={styles.componentHeader}>Value Banner</h2>
+          <div className={styles.exampleWrapper} style={{ background: 'transparent' }}>
+            <AMC_ValueBanner title="Page title" infoColumns={exampleInfoColumns} />
+          </div>
+        </div>
+
+        <div className={styles.componentSection}>
+          <h2 className={styles.componentHeader}>Drawer</h2>
+          <div className={styles.exampleWrapper}>
+            <AMC_Drawer
+              value="account-accordion-example"
+              openItems={openItems.includes('account-accordion-example') ? ['account-accordion-example'] : []}
+              onToggle={handleToggle}
+              header={<DrawerHeader title="Account Information" subtitle="Account details and settings" />}
+            >
+              <div style={{ padding: '16px' }}>
+                <p>This is the accordion content. You can add any content here.</p>
+              </div>
+            </AMC_Drawer>
+          </div>
+        </div>
+
+        <div className={styles.componentSection}>
+          <h2 className={styles.componentHeader}>Media Group</h2>
+          <div className={styles.mediaGroupWrapper}>
+            <AMC_MediaGroup icon="&#xE62A;" label="MediaGroup Item 1" onClick={() => console.log('Item 1 clicked')} />
+            <AMC_MediaGroup icon="&#xE62A;" label="MediaGroup Item 2" onClick={() => console.log('Item 2 clicked')} />
+            <AMC_MediaGroup icon="&#xE62A;" label="MediaGroup Item 3" onClick={() => console.log('Item 3 clicked')} />
+            <AMC_MediaGroup icon="&#xE62A;" label="MediaGroup Item 4" onClick={() => console.log('Item 4 clicked')} />
+            <AMC_MediaGroup icon="&#xE62A;" label="MediaGroup Item 5" onClick={() => console.log('Item 5 clicked')} />
+          </div>
+        </div>
       </div>
     </div>
   )

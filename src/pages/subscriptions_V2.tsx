@@ -503,12 +503,13 @@ export default function SubscriptionV2() {
   const { handleNavSelect, navigate } = useNavigation()
   const [openItems, setOpenItems] = React.useState<string[]>([])
 
-  const handleToggle = (_: AccordionToggleEvent, data: { value: string; openItems: string[] }) => {
-    const toggledValue = data.value
+  const handleToggle = (_: AccordionToggleEvent, data: { value: unknown; openItems: unknown[] }) => {
+    const toggledValue = data.value as string
+    const openItemsArray = data.openItems as string[]
     setOpenItems((prevOpenItems) => {
       // If the item is in the new openItems array, it's being opened
       // If not, it's being closed
-      const isOpening = data.openItems.includes(toggledValue)
+      const isOpening = openItemsArray.includes(toggledValue)
       
       if (isOpening) {
         // Add the item if it's not already in the array
