@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { AMC_Drawer, DrawerHeader } from './AMC_Drawer'
-import { Person24Regular, Settings24Regular, Home24Regular, Account24Regular } from '@fluentui/react-icons'
+import { Person24Regular, Settings24Regular, Home24Regular } from '@fluentui/react-icons'
 import { Button } from '@fluentui/react-components'
 import type { AccordionToggleEvent } from '@fluentui/react-components'
 
@@ -195,7 +195,7 @@ export const ComplexContent: Story = {
       <DrawerHeader 
         title="My Account" 
         subtitle="View and manage your account information"
-        icon={<Account24Regular />}
+        icon={<Person24Regular />}
       />
     ),
   },
@@ -249,7 +249,7 @@ export const MultipleDrawers: Story = {
           value="drawer-multi-3"
           openItems={openItems.includes('drawer-multi-3') ? ['drawer-multi-3'] : []}
           onToggle={handleToggle}
-          header={<DrawerHeader title="Account" icon={<Account24Regular />} subtitle="User account information" />}
+          header={<DrawerHeader title="Account" icon={<Person24Regular />} subtitle="User account information" />}
         >
           <div style={{ padding: '16px' }}>
             <p>This is the account section content.</p>

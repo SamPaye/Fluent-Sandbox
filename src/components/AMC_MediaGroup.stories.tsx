@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { AMC_MediaGroup } from './AMC_MediaGroup'
-import { action } from '@storybook/addon-actions'
 
 const meta = {
   title: 'AMC Components/MediaGroup',
@@ -42,7 +41,6 @@ export const Default: Story = {
   args: {
     icon: '&#xE62A;',
     label: 'MediaGroup Item',
-    onClick: action('clicked'),
   },
 }
 
@@ -53,22 +51,18 @@ export const WithDifferentIcons: Story = {
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="Item 1" 
-        onClick={action('item-1-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE700;" 
         label="Item 2" 
-        onClick={action('item-2-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE713;" 
         label="Item 3" 
-        onClick={action('item-3-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE734;" 
         label="Item 4" 
-        onClick={action('item-4-clicked')} 
       />
     </div>
   ),
@@ -86,7 +80,6 @@ export const LongLabel: Story = {
   args: {
     icon: '&#xE62A;',
     label: 'This is a very long label that demonstrates text wrapping',
-    onClick: action('clicked'),
   },
 }
 
@@ -95,7 +88,6 @@ export const ShortLabel: Story = {
   args: {
     icon: '&#xE62A;',
     label: 'Item',
-    onClick: action('clicked'),
   },
 }
 
@@ -116,27 +108,22 @@ export const MediaGroupGrid: Story = {
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="MediaGroup Item 1" 
-        onClick={action('item-1-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="MediaGroup Item 2" 
-        onClick={action('item-2-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="MediaGroup Item 3" 
-        onClick={action('item-3-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="MediaGroup Item 4" 
-        onClick={action('item-4-clicked')} 
       />
       <AMC_MediaGroup 
         icon="&#xE62A;" 
         label="MediaGroup Item 5" 
-        onClick={action('item-5-clicked')} 
       />
     </div>
   ),
@@ -166,7 +153,6 @@ export const InteractiveStates: Story = {
         <AMC_MediaGroup 
           icon="&#xE62A;" 
           label="Default State" 
-          onClick={action('default-clicked')} 
         />
       </div>
       <div>
@@ -174,7 +160,6 @@ export const InteractiveStates: Story = {
         <AMC_MediaGroup 
           icon="&#xE700;" 
           label="Hover State" 
-          onClick={action('hover-clicked')} 
         />
       </div>
       <div>
@@ -182,7 +167,6 @@ export const InteractiveStates: Story = {
         <AMC_MediaGroup 
           icon="&#xE713;" 
           label="Pressed State" 
-          onClick={action('pressed-clicked')} 
         />
       </div>
     </div>
