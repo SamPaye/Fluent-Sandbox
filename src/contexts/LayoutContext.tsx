@@ -12,7 +12,7 @@ interface LayoutContextValue {
 const LayoutContext = createContext<LayoutContextValue | undefined>(undefined)
 
 export function LayoutProvider({ children }: { children: ReactNode }) {
-  const [headerCollapsed, setHeaderCollapsedState] = useState(true)
+  const [headerCollapsed, setHeaderCollapsedState] = useState(false)
   const [drawerOpen, setDrawerOpenState] = useState(false)
 
   const setHeaderCollapsed = useCallback((collapsed: boolean) => {

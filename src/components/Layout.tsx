@@ -4,7 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 import { useLayout } from '../contexts/LayoutContext'
 import { ROUTES } from '../constants/routes'
 
-const DEFAULT_TAB = ROUTES.V9_PAGE.slice(1) as TabValue
+const DEFAULT_TAB = ROUTES.V8_MIGRATED.slice(1) as TabValue
 
 const useStyles = makeStyles({
   root: {
@@ -57,7 +57,6 @@ export default function Layout() {
             <Tab value={ROUTES.V8_PAGE.slice(1)}>v8 Components</Tab>
             <Tab value={ROUTES.V9_PAGE.slice(1)}>v9 Components</Tab>
             <Tab value={ROUTES.V8_MIGRATED.slice(1)}>AMC Custom Components</Tab>
-            <Tab value={ROUTES.ACCOUNT.slice(1)}>Accounts</Tab>
           </TabList>
         </div>
         <ThemeSwitcher />
