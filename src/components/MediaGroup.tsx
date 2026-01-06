@@ -261,7 +261,9 @@ export const MediaGroupIcon: React.FC<MediaGroupIconProps> = ({
               alt="" 
               className={styles.iconImage}
               src={iconSrc || iconGlyphNeutral}
-              style={{ filter: 'none' }}
+              style={{ 
+                filter: 'var(--icon-neutral-filter, none)',
+              }}
             />
           </div>
         </div>

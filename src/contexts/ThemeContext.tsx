@@ -50,11 +50,15 @@ export function AppThemeProvider({ children }: { children: React.ReactNode }) {
         root.style.color = '#F3F2F1' // Light text
         body.style.backgroundColor = '#1B1A19' // Dark background
         body.style.color = '#F3F2F1' // Light text
+        // Add CSS variable for icon filter in dark mode
+        root.style.setProperty('--icon-neutral-filter', 'brightness(0) invert(1)')
       } else {
         root.style.backgroundColor = '#F3F2F1' // Light background
         root.style.color = '#323130' // Dark text
         body.style.backgroundColor = '#F3F2F1' // Light background
         body.style.color = '#323130' // Dark text
+        // Reset icon filter for light mode
+        root.style.setProperty('--icon-neutral-filter', 'none')
       }
     }
   }, [mode])
