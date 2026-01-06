@@ -10,6 +10,7 @@ import {
   Eye24Regular,
   Cart24Regular,
   Book24Regular,
+  Grid24Regular,
 } from '@fluentui/react-icons'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { useLayout } from '../contexts/LayoutContext'
@@ -113,6 +114,9 @@ export const LeftNav: React.FC<LeftNavProps> = ({
           </NavItem>
           <NavItem icon={<Book24Regular />} value="address" className={navStyles.navItem}>
             Address book
+          </NavItem>
+          <NavItem icon={<Grid24Regular />} value="media-group-demo" className={navStyles.navItem}>
+            MediaGroup Demo
           </NavItem>
         </Nav>
       </div>

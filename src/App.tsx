@@ -6,6 +6,7 @@ import Layout from './components/Layout'
 import V9Page from './pages/v9_page'
 import V8Page from './pages/v8_page'
 import V8Migrated from './pages/V8Migrated'
+import MediaGroupDemo from './pages/MediaGroupDemo'
 import { ROUTES } from './constants/routes'
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path={ROUTES.V8_PAGE.slice(1)} element={<V8Page />} />
                 <Route path={ROUTES.V9_PAGE.slice(1)} element={<V9Page />} />
                 <Route path={ROUTES.V8_MIGRATED.slice(1)} element={<V8Migrated />} />
+                <Route path={ROUTES.MEDIA_GROUP_DEMO.slice(1)} element={<MediaGroupDemo />} />
             </Route>
           </Routes>
         </HashRouter>

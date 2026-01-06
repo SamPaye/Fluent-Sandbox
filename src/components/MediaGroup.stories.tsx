@@ -1,309 +1,369 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { MediaGroup, MediaGroupVariant } from './MediaGroup'
-import windowsIcon from '../images/windows.png'
-import windowsBackplateIcon from '../images/windows_backplate.png'
-import windowsLightIcon from '../images/windows_light.png'
-import windowsDarkIcon from '../images/windows_dark.png'
+import type { Meta, StoryObj } from '@storybook/react';
+import { MediaGroup, type MediaGroupIconType, type MediaGroupSize, type MediaGroupState } from './MediaGroup';
+import linkedinIcon from '../images/linkedin.png';
+import officeIcon from '../images/office.png';
+import skypeIcon from '../images/skype.png';
+import teamsIcon from '../images/teams.png';
+import xboxIcon from '../images/xbox.png';
+
+// Icon source options for SRC type
+export const iconSourceOptions = {
+  LinkedIn: linkedinIcon,
+  Office: officeIcon,
+  Skype: skypeIcon,
+  Teams: teamsIcon,
+  Xbox: xboxIcon,
+};
 
 const meta: Meta<typeof MediaGroup> = {
   title: 'Components/MediaGroup',
   component: MediaGroup,
   tags: ['autodocs'],
   argTypes: {
-    property1: {
-      control: 'select',
-      options: [
-        'Backplated glyph large',
-        'Backplated glyph medium',
-        'Backplated glyph small',
-        'Glyph / nuetral large',
-        'Glyph / nuetral medium',
-        'Glyph / nuetral small',
-        'Glyph / accented large',
-        'Glyph / accented medium',
-        'Glyph / accented small',
-        'SVG large',
-        'SVG medium',
-        'SVG small',
-      ] as MediaGroupVariant[],
-      description: 'The variant of the MediaGroup component',
-      defaultValue: 'Backplated glyph large',
-    },
     title: {
       control: 'text',
-      description: 'The title text to display below the media',
-      defaultValue: 'Title 1',
+      description: 'The title text displayed below the icon',
     },
-    iconGlyph: {
+    states: {
+      control: 'select',
+      options: ['Rest', 'Hover', 'Pressed', 'Focus'],
+      description: 'The visual state of the component',
+    },
+    iconType: {
+      control: 'select',
+      options: ['BackplatedGlyp', 'GlyphAccented', 'GlyphNeutral', 'SVG'],
+      description: 'The type of icon to display. BackplatedGlyp: blue background with white icon. GlyphAccented: blue icon without background. GlyphNeutral: dark icon without background. SVG: light blue border with X pattern.',
+    },
+    iconSrc: {
       control: 'text',
-      description: 'Custom icon glyph character (for glyph variants)',
+      description: 'Optional custom icon source URL',
     },
-    imageSrc: {
-      control: 'text',
-      description: 'Custom image source (for image-based variants)',
+    size: {
+      control: 'select',
+      options: ['Small', 'Medium', 'Large'],
+      description: 'The size of the component',
     },
-    imageSrcLight: {
-      control: 'text',
-      description: 'Light theme image source (for theme-aware variants)',
-    },
-    imageSrcDark: {
-      control: 'text',
-      description: 'Dark theme image source (for theme-aware variants)',
-    },
-    themeMode: {
-      control: false,
-      description: 'Injected from Storybook global theme (light/dark).',
+    onClick: {
+      action: 'clicked',
+      description: 'Click event handler',
     },
   },
-  decorators: [
-    (Story, context) => (
-      <div style={{ backgroundColor: '#f2f2f2', padding: '24px' }}>
-        <Story args={{ ...context.args, themeMode: context.globals.theme }} />
-      </div>
-    ),
-  ],
   parameters: {
-    layout: 'padded',
-    docs: {
-      description: {
-        component: 'MediaGroup component displays media content with a title in various sizes and styles.',
-      },
-    },
+    layout: 'centered',
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof MediaGroup>
+export default meta;
+type Story = StoryObj<typeof MediaGroup>;
 
 // Default story
 export const Default: Story = {
   args: {
-    property1: 'Backplated glyph large',
     title: 'Title',
-    imageSrc: windowsBackplateIcon,
+    states: 'Rest',
+    iconType: 'BackplatedGlyp',
+    size: 'Large',
   },
-}
+};
 
-// Backplated Glyph variants
-export const BackplatedGlyphLarge: Story = {
-  args: {
-    property1: 'Backplated glyph large',
-    title: 'Title',
-    imageSrc: windowsBackplateIcon,
-  },
-}
-
-export const BackplatedGlyphMedium: Story = {
-  args: {
-    property1: 'Backplated glyph medium',
-    title: 'Title',
-    imageSrc: windowsBackplateIcon,
-  },
-}
-
-export const BackplatedGlyphSmall: Story = {
-  args: {
-    property1: 'Backplated glyph small',
-    title: 'Title',
-    imageSrc: windowsBackplateIcon,
-  },
-}
-
-// Neutral Glyph variants
-export const GlyphNeutralLarge: Story = {
-  args: {
-    property1: 'Glyph / nuetral large',
-    title: 'Title',
-    imageSrcLight: windowsLightIcon,
-    imageSrcDark: windowsDarkIcon,
-  },
-}
-
-export const GlyphNeutralMedium: Story = {
-  args: {
-    property1: 'Glyph / nuetral medium',
-    title: 'Title',
-    imageSrcLight: windowsLightIcon,
-    imageSrcDark: windowsDarkIcon,
-  },
-}
-
-export const GlyphNeutralSmall: Story = {
-  args: {
-    property1: 'Glyph / nuetral small',
-    title: 'Title',
-    imageSrcLight: windowsLightIcon,
-    imageSrcDark: windowsDarkIcon,
-  },
-}
-
-// Accented Glyph variants
-export const GlyphAccentedLarge: Story = {
-  args: {
-    property1: 'Glyph / accented large',
-    title: 'Title',
-    imageSrc: windowsIcon,
-  },
-}
-
-export const GlyphAccentedMedium: Story = {
-  args: {
-    property1: 'Glyph / accented medium',
-    title: 'Title',
-    imageSrc: windowsIcon,
-  },
-}
-
-export const GlyphAccentedSmall: Story = {
-  args: {
-    property1: 'Glyph / accented small',
-    title: 'Title',
-    imageSrc: windowsIcon,
-  },
-}
-
-// SVG variants
-export const SVGLarge: Story = {
-  args: {
-    property1: 'SVG large',
-    title: 'Title',
-  },
-}
-
-export const SVGMedium: Story = {
-  args: {
-    property1: 'SVG medium',
-    title: 'Title',
-  },
-}
-
-export const SVGSmall: Story = {
-  args: {
-    property1: 'SVG small',
-    title: 'Title',
-  },
-}
-
-// All variants showcase
-export const AllVariants: Story = {
-  args: {
-    iconGlyph: '',
-    title: 'Title',
-  },
-
-  render: (_args, context) => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', padding: '24px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Backplated glyph large" title="Title" imageSrc={windowsBackplateIcon} themeMode={context.globals.theme} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Backplated Large</span>
+// All States
+export const AllStates: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Rest</p>
+        <MediaGroup title="Rest" states="Rest" />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Backplated glyph medium" title="Title" imageSrc={windowsBackplateIcon} themeMode={context.globals.theme} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Backplated Medium</span>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Hover</p>
+        <MediaGroup title="Hover" states="Hover" />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Backplated glyph small" title="Title" imageSrc={windowsBackplateIcon} themeMode={context.globals.theme} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Backplated Small</span>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Pressed</p>
+        <MediaGroup title="Pressed" states="Pressed" />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup
-          property1="Glyph / nuetral large"
-          title="Title"
-          imageSrcLight={windowsLightIcon}
-          imageSrcDark={windowsDarkIcon}
-          themeMode={context.globals.theme}
-        />
-        <span style={{ fontSize: '12px', color: '#666' }}>Neutral Large</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup
-          property1="Glyph / nuetral medium"
-          title="Title"
-          imageSrcLight={windowsLightIcon}
-          imageSrcDark={windowsDarkIcon}
-          themeMode={context.globals.theme}
-        />
-        <span style={{ fontSize: '12px', color: '#666' }}>Neutral Medium</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup
-          property1="Glyph / nuetral small"
-          title="Title"
-          imageSrcLight={windowsLightIcon}
-          imageSrcDark={windowsDarkIcon}
-          themeMode={context.globals.theme}
-        />
-        <span style={{ fontSize: '12px', color: '#666' }}>Neutral Small</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Glyph / accented large" title="Title" imageSrc={windowsIcon} themeMode={context.globals.theme} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Accented Large</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Glyph / accented medium" title="Title" imageSrc={windowsIcon} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Accented Medium</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="Glyph / accented small" title="Title" imageSrc={windowsIcon} />
-        <span style={{ fontSize: '12px', color: '#666' }}>Accented Small</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="SVG large" title="Title" />
-        <span style={{ fontSize: '12px', color: '#666' }}>SVG Large</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="SVG medium" title="Title" />
-        <span style={{ fontSize: '12px', color: '#666' }}>SVG Medium</span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
-        <MediaGroup property1="SVG small" title="Title" />
-        <span style={{ fontSize: '12px', color: '#666' }}>SVG Small</span>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Focus</p>
+        <MediaGroup title="Focus" states="Focus" />
       </div>
     </div>
   ),
+};
 
+// All Sizes
+export const AllSizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-end', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Small (96px)</p>
+        <MediaGroup title="Small" size="Small" />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Medium (150px)</p>
+        <MediaGroup title="Medium" size="Medium" />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Large (200px)</p>
+        <MediaGroup title="Large" size="Large" />
+      </div>
+    </div>
+  ),
+};
+
+// All Icon Types
+export const AllIconTypes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>BackplatedGlyp</p>
+        <p style={{ marginBottom: '8px', fontSize: '10px', color: '#666' }}>Blue background + white icon</p>
+        <MediaGroup title="Backplated" iconType="BackplatedGlyp" />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>GlyphAccented</p>
+        <p style={{ marginBottom: '8px', fontSize: '10px', color: '#666' }}>Blue icon, no background</p>
+        <MediaGroup title="Accented" iconType="GlyphAccented" />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>GlyphNeutral</p>
+        <p style={{ marginBottom: '8px', fontSize: '10px', color: '#666' }}>Dark icon, no background</p>
+        <MediaGroup title="Neutral" iconType="GlyphNeutral" />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>SVG</p>
+        <p style={{ marginBottom: '8px', fontSize: '10px', color: '#666' }}>Blue border + X pattern</p>
+        <MediaGroup title="SVG" iconType="SVG" />
+      </div>
+    </div>
+  ),
+};
+
+// Custom Image Sources (using iconSrc prop with different icon types)
+export const CustomImageSources: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>LinkedIn (Backplated)</p>
+        <MediaGroup title="LinkedIn" iconType="BackplatedGlyp" iconSrc={linkedinIcon} />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Office (Accented)</p>
+        <MediaGroup title="Office" iconType="GlyphAccented" iconSrc={officeIcon} />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Skype (Neutral)</p>
+        <MediaGroup title="Skype" iconType="GlyphNeutral" iconSrc={skypeIcon} />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Teams (Backplated)</p>
+        <MediaGroup title="Teams" iconType="BackplatedGlyp" iconSrc={teamsIcon} />
+      </div>
+      <div>
+        <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>Xbox (Accented)</p>
+        <MediaGroup title="Xbox" iconType="GlyphAccented" iconSrc={xboxIcon} />
+      </div>
+    </div>
+  ),
+};
+
+// Custom Images with Different Sizes
+export const CustomImagesAllSizes: Story = {
+  render: () => {
+    const sizes: MediaGroupSize[] = ['Small', 'Medium', 'Large'];
+    const customIcons = [
+      { name: 'LinkedIn', src: linkedinIcon },
+      { name: 'Office', src: officeIcon },
+      { name: 'Skype', src: skypeIcon },
+      { name: 'Teams', src: teamsIcon },
+      { name: 'Xbox', src: xboxIcon },
+    ];
+    
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+        {sizes.map((size) => (
+          <div key={size}>
+            <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
+              {size} ({size === 'Small' ? '96px' : size === 'Medium' ? '150px' : '200px'})
+            </h3>
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+              {customIcons.map((icon) => (
+                <div key={icon.name}>
+                  <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>{icon.name}</p>
+                  <MediaGroup 
+                    title={icon.name} 
+                    size={size} 
+                    iconType="BackplatedGlyp"
+                    iconSrc={icon.src}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
   parameters: {
-    docs: {
-      description: {
-        story: 'Displays all available MediaGroup variants in a grid layout.',
-      },
-    },
-  }
-}
+    layout: 'padded',
+  },
+};
 
-// Custom icon example
-export const CustomIcon: Story = {
+// Size and Icon Type Combinations
+export const SizeAndIconTypeCombinations: Story = {
+  render: () => {
+    const sizes: MediaGroupSize[] = ['Small', 'Medium', 'Large'];
+    const iconTypes: MediaGroupIconType[] = ['BackplatedGlyp', 'GlyphAccented', 'GlyphNeutral', 'SVG'];
+    
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+        {sizes.map((size) => (
+          <div key={size}>
+            <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>
+              {size} ({size === 'Small' ? '96px' : size === 'Medium' ? '150px' : '200px'})
+            </h3>
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+              {iconTypes.map((iconType) => (
+                <div key={iconType}>
+                  <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>{iconType}</p>
+                  <MediaGroup 
+                    title={iconType} 
+                    size={size} 
+                    iconType={iconType}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// All States with All Icon Types
+export const StatesWithIconTypes: Story = {
+  render: () => {
+    const states: MediaGroupState[] = ['Rest', 'Hover', 'Pressed', 'Focus'];
+    const iconTypes: MediaGroupIconType[] = ['BackplatedGlyp', 'GlyphAccented', 'GlyphNeutral', 'SVG'];
+    
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+        {states.map((state) => (
+          <div key={state}>
+            <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: 600 }}>{state} State</h3>
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+              {iconTypes.map((iconType) => (
+                <div key={iconType}>
+                  <p style={{ marginBottom: '8px', fontSize: '12px', fontWeight: 600 }}>{iconType}</p>
+                  <MediaGroup 
+                    title={iconType} 
+                    states={state} 
+                    iconType={iconType}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// Complete Matrix: All Sizes, All Icon Types, All States
+export const CompleteMatrix: Story = {
+  render: () => {
+    const sizes: MediaGroupSize[] = ['Small', 'Medium', 'Large'];
+    const iconTypes: MediaGroupIconType[] = ['BackplatedGlyp', 'GlyphAccented', 'GlyphNeutral', 'SVG'];
+    const states: MediaGroupState[] = ['Rest', 'Hover', 'Pressed', 'Focus'];
+    
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '48px', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+        {sizes.map((size) => (
+          <div key={size}>
+            <h2 style={{ marginBottom: '24px', fontSize: '18px', fontWeight: 700 }}>
+              {size} ({size === 'Small' ? '96px' : size === 'Medium' ? '150px' : '200px'})
+            </h2>
+            {states.map((state) => (
+              <div key={state} style={{ marginBottom: '32px' }}>
+                <h3 style={{ marginBottom: '16px', fontSize: '14px', fontWeight: 600, color: '#666' }}>
+                  {state} State
+                </h3>
+                <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+                  {iconTypes.map((iconType) => (
+                    <div key={iconType}>
+                      <p style={{ marginBottom: '8px', fontSize: '11px', fontWeight: 600 }}>{iconType}</p>
+                      <MediaGroup 
+                        title={iconType.substring(0, 8)} 
+                        size={size}
+                        states={state} 
+                        iconType={iconType}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// Interactive Example
+export const Interactive: Story = {
   args: {
-    property1: 'Backplated glyph large',
-    title: 'Title',
-    iconGlyph: '\uE8FB', // Calendar icon from Full MDL2 Assets
+    title: 'Interactive',
+    states: 'Rest',
+    iconType: 'BackplatedGlyp',
+    size: 'Large',
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Example with a custom icon glyph (Calendar icon).',
-      },
-    },
-  },
-}
+};
 
-// Custom SVG content example
-export const CustomSVG: Story = {
+// Interactive with Custom Image
+export const InteractiveWithCustomImage: Story = {
   args: {
-    property1: 'SVG large',
-    title: 'Title',
-    svgContent: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="12" fill="white" />
-        <path d="M16 8V16L20 20" stroke="#0F6CBD" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
+    title: 'Teams',
+    states: 'Rest',
+    iconType: 'BackplatedGlyp',
+    iconSrc: teamsIcon,
+    size: 'Large',
   },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Example with custom SVG content (a clock icon).',
-      },
-    },
-  },
-}
+};
+
+// Small Size Examples
+export const SmallSize: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <MediaGroup title="Videos" size="Small" iconType="BackplatedGlyp" />
+      <MediaGroup title="Photos" size="Small" iconType="GlyphAccented" />
+      <MediaGroup title="Music" size="Small" iconType="GlyphNeutral" />
+      <MediaGroup title="Files" size="Small" iconType="SVG" />
+    </div>
+  ),
+};
+
+// Medium Size Examples
+export const MediumSize: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <MediaGroup title="Videos" size="Medium" iconType="BackplatedGlyp" />
+      <MediaGroup title="Photos" size="Medium" iconType="GlyphAccented" />
+      <MediaGroup title="Music" size="Medium" iconType="GlyphNeutral" />
+      <MediaGroup title="Files" size="Medium" iconType="SVG" />
+    </div>
+  ),
+};
+
+// Large Size Examples
+export const LargeSize: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', background: '#f2f2f2', padding: '20px', minHeight: '100vh' }}>
+      <MediaGroup title="Videos" size="Large" iconType="BackplatedGlyp" />
+      <MediaGroup title="Photos" size="Large" iconType="GlyphAccented" />
+      <MediaGroup title="Music" size="Large" iconType="GlyphNeutral" />
+      <MediaGroup title="Files" size="Large" iconType="SVG" />
+    </div>
+  ),
+};

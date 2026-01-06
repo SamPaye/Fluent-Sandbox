@@ -57,6 +57,7 @@ export default function Layout() {
             <Tab value={ROUTES.V8_PAGE.slice(1)}>v8 Components</Tab>
             <Tab value={ROUTES.V9_PAGE.slice(1)}>v9 Components</Tab>
             <Tab value={ROUTES.V8_MIGRATED.slice(1)}>AMC Custom Components</Tab>
+            <Tab value={ROUTES.MEDIA_GROUP_DEMO.slice(1)}>MediaGroup Demo</Tab>
           </TabList>
         </div>
         <ThemeSwitcher />

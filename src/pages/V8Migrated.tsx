@@ -47,17 +47,6 @@ const useStyles = makeStyles({
       },
     },
   },
-  mediaGroupWrapper: {
-    display: 'flex',
-    gap: '8px',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    backgroundColor: tokens.colorNeutralBackground1,
-    padding: '24px',
-    borderRadius: tokens.borderRadiusLarge,
-    boxShadow: tokens.shadow2,
-    minWidth: '580px',
-  },
   componentSection: {
     marginBottom: '32px',
   },
