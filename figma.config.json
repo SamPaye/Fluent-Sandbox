@@ -1,7 +1,0 @@
-{
-  "codeConnect": {
-    "include": ["src/components/**/*.{tsx,jsx}"],
-    "label": "React",
-    "interactiveSetupFigmaFileUrl": "https://www.figma.com/design/cY96ulPzhaatPT8FyBoSOl/branch/IYYUxJFgOSmR33xp7MmxrR/TwoUI-Component-Library--v9-Custom?node-id=1173-0&p=f&t=jqqoBNNxRmr05IxO-0"
-  }
-}
