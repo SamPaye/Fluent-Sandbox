@@ -5,6 +5,7 @@ import { LayoutProvider } from './contexts/LayoutContext'
 import Layout from './components/Layout'
 import V9Page from './pages/v9_page'
 import Account from './pages/Account'
+import Devices from './pages/Devices'
 import Subscription from './pages/Subscription'
 import SubscriptionV2 from './pages/subscriptions_V2'
 import SubscriptionV3 from './pages/subscriptions_v3'
@@ -30,6 +31,7 @@ function App() {
                 <Route path={ROUTES.V9_PAGE.slice(1)} element={<V9Page />} />
                 <Route path={ROUTES.V8_MIGRATED.slice(1)} element={<V8Migrated />} />
                 <Route path={ROUTES.ACCOUNT.slice(1)} element={<Account />} />
+                <Route path={ROUTES.DEVICES.slice(1)} element={<Devices />} />
                 <Route path={ROUTES.SUBSCRIPTION.slice(1)} element={<Subscription />} />
                 <Route path={ROUTES.SUBSCRIPTION_V2.slice(1)} element={<SubscriptionV2 />} />
                 <Route path={ROUTES.SUBSCRIPTION_V3.slice(1)} element={<SubscriptionV3 />} />
@@ -43,4 +45,3 @@ function App() {
 }
 
 export default App
-

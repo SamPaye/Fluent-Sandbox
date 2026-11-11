@@ -6,12 +6,13 @@ For the account sidebar implementation, setup, and verification steps, see the [
 
 ## Features
 
-This sandbox includes seven demo pages:
+This sandbox includes eight demo pages:
 
 - **v8 Components** (`/v8-page`): Fluent UI v8 components demonstration alongside v9 components
 - **v9 Components** (`/v9-page`): Comprehensive showcase of 30+ Fluent UI v9 components displayed in an organized table format
 - **AMC Custom Components** (`/v8-migrated`): Custom AMC components rebuilt using Fluent UI v9 atomics (work in progress)
 - **Accounts** (`/account`): Microsoft Account page layout recreation with sidebar navigation, user profile, and management sections (default landing page)
+- **Devices** (`/account/devices`): Responsive device management layout with expandable sample devices and links to Microsoft account services
 - **Subscription** (`/account/subscription`): Subscription management interface with monthly/yearly tabs and subscription cards
 - **Subscription V2** (`/account/subscription-v2`): Enhanced subscription management interface (version 2)
 - **Subscription V3** (`/account/subscription-v3`): Latest subscription management interface (version 3)

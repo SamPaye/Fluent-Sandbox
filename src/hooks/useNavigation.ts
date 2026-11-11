@@ -6,6 +6,7 @@ import { type OnNavItemSelectData } from '@fluentui/react-nav'
 // Map nav values to routes
 export const NAV_TO_ROUTE_MAP: Record<string, string> = {
   'account': ROUTES.ACCOUNT,
+  'devices': ROUTES.DEVICES,
   'subscriptions': ROUTES.SUBSCRIPTION,
   'subscriptions-v2': ROUTES.SUBSCRIPTION_V2,
   'subscriptions-v3': ROUTES.SUBSCRIPTION_V3,

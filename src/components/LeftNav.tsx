@@ -122,7 +122,7 @@ export const LeftNav: React.FC<LeftNavProps> = ({
         <RoutedNavItem icon={<SubscriptionsIcon />} value="subscriptions" to={NAV_TO_ROUTE_MAP.subscriptions}>Subscriptions</RoutedNavItem>
         <RoutedNavItem icon={<SubscriptionsIcon />} value="subscriptions-v2" to={NAV_TO_ROUTE_MAP['subscriptions-v2']}>Subscriptions v2</RoutedNavItem>
         <RoutedNavItem icon={<SubscriptionsIcon />} value="subscriptions-v3" to={NAV_TO_ROUTE_MAP['subscriptions-v3']}>Subscriptions v3</RoutedNavItem>
-        <NavItem icon={<DesktopIcon />} value="devices">Devices</NavItem>
+        <RoutedNavItem icon={<DesktopIcon />} value="devices" to={NAV_TO_ROUTE_MAP.devices}>Devices</RoutedNavItem>
         <NavItem icon={<SecurityIcon />} value="security">Security</NavItem>
         <NavItem icon={<PrivacyIcon />} value="privacy">Privacy</NavItem>
         <NavItem icon={<PaymentIcon />} value="payment">Payment options</NavItem>
