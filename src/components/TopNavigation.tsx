@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, Menu, MenuTrigger, MenuList, MenuItem, MenuPopover, Button, makeStyles } from '@fluentui/react-components'
-import { Grid24Regular, Person24Regular, Navigation24Regular } from '@fluentui/react-icons'
+import { Text, Menu, MenuTrigger, MenuList, MenuItem, MenuPopover, makeStyles, useRestoreFocusTarget } from '@fluentui/react-components'
+import { Hamburger } from '@fluentui/react-nav'
+import { Grid24Regular, Person24Regular } from '@fluentui/react-icons'
 import { useLayoutStyles } from '../hooks/useSharedStyles'
 import { HeaderToggleButton } from './HeaderToggleButton'
 import { useLayout } from '../contexts/LayoutContext'
@@ -44,20 +45,30 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({ headerCollapsed })
   const styles = useLayoutStyles()
   const headerStyles = useHeaderStyles()
   const [isHovered, setIsHovered] = React.useState(false)
-  const { toggleDrawer, drawerOpen } = useLayout()
+  const { toggleDrawer, drawerOpen, restoreNavFocusOnMount } = useLayout()
+  const restoreFocusTargetAttributes = useRestoreFocusTarget()
+  const hamburgerRef = React.useRef<HTMLButtonElement>(null)
+
+  React.useEffect(() => {
+    if (restoreNavFocusOnMount.current) {
+      hamburgerRef.current?.focus()
+      restoreNavFocusOnMount.current = false
+    }
+  }, [restoreNavFocusOnMount])
 
   return (
     <div className={styles.header}>
       <div className={styles.headerLeft}>
         {/* Hamburger menu button for mobile */}
-        <Button
+        <Hamburger
+          ref={hamburgerRef}
           className={headerStyles.hamburgerButton}
           onClick={toggleDrawer}
           aria-label={drawerOpen ? 'Collapse navigation' : 'Expand navigation'}
+          aria-expanded={drawerOpen}
           title={drawerOpen ? 'Collapse navigation' : 'Expand navigation'}
-        >
-          <Navigation24Regular />
-        </Button>
+          {...restoreFocusTargetAttributes}
+        />
         <Menu>
           <MenuTrigger disableButtonEnhancement>
             <div className={styles.headerButton}>
@@ -108,4 +119,3 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({ headerCollapsed })
     </div>
   )
 }
-

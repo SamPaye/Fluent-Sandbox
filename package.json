@@ -16,7 +16,7 @@
     "@fluentui/react-components": "^9.72.4",
     "@fluentui/react-drawer": "^9.10.6",
     "@fluentui/react-icons": "^2.0.258",
-    "@fluentui/react-nav": "^9.3.11",
+    "@fluentui/react-nav": "^9.4.10",
     "@fluentui/react-toast": "^9.7.6",
     "@fluentui/react-tree": "^9.15.3",
     "react": "^18.3.1",

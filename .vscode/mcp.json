@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "agentsview": {
+      "type": "stdio",
+      "command": "C:\\Users\\Bomb Studio\\.agentsview\\bin\\agentsview.exe",
+      "args": ["mcp", "--profile", "memory"]
+    }
+  }
+}

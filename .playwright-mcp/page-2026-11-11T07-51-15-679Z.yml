@@ -1,0 +1,147 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - button "AgentsView" [ref=e5] [cursor=pointer]
+      - 'button "Filter projects...: All Projects" [ref=e15] [cursor=pointer]':
+        - generic [ref=e16]: All Projects
+    - navigation "Primary navigation" [ref=e19]:
+      - 'combobox "Primary navigation: Sessions" [ref=e21] [cursor=pointer]':
+        - generic [ref=e22]: Sessions
+    - button "Search sessions... Ctrl K" [ref=e26] [cursor=pointer]:
+      - generic [ref=e28]: Search sessions...
+      - generic "Ctrl K" [ref=e29]:
+        - generic [aria-hidden] [ref=e30]: CtrlK
+    - generic [ref=e32]:
+      - button "Sync sessions" [ref=e33] [cursor=pointer]
+      - button "Import conversations" [ref=e35] [cursor=pointer]
+      - button "Toggle theme" [ref=e38] [cursor=pointer]
+      - button "Settings" [ref=e40] [cursor=pointer]
+      - button "Keyboard shortcuts" [ref=e42] [cursor=pointer]: "?"
+  - generic [ref=e43]:
+    - complementary [ref=e44]:
+      - generic [ref=e45]:
+        - generic [ref=e46]: 0 sessions
+        - generic [ref=e47]:
+          - generic [ref=e48]: loading
+          - button "Multi-select" [ref=e49] [cursor=pointer]
+          - button "Filters" [ref=e51] [cursor=pointer]
+          - button "Close sidebar" [expanded] [ref=e53] [cursor=pointer]
+    - separator "Resize sidebar" [ref=e56]
+    - main [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - button "Last year" [ref=e61] [cursor=pointer]
+          - generic [ref=e67]:
+            - button "Refresh analytics" [ref=e68] [cursor=pointer]
+            - generic [ref=e70]: Not updated
+          - 'button "Model: All" [ref=e74] [cursor=pointer]'
+          - button "Export CSV" [ref=e77] [cursor=pointer]
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e81]:
+              - generic [ref=e82]: "-"
+              - generic [ref=e83]: Sessions
+            - generic [ref=e85]:
+              - generic [ref=e86]: "-"
+              - generic [ref=e87]: Messages
+            - generic [ref=e89]:
+              - generic [ref=e90]: "-"
+              - generic [ref=e91]: Projects
+            - generic [ref=e93]:
+              - generic [ref=e94]: "-"
+              - generic [ref=e95]: Active Days
+            - generic [ref=e97]:
+              - generic [ref=e98]: "-"
+              - generic [ref=e99]: Messages/Session
+            - generic [ref=e101]:
+              - generic [ref=e102]: "-"
+              - generic [ref=e103]: Concentration
+          - generic [ref=e104]:
+            - generic [ref=e107]:
+              - generic [ref=e108]:
+                - heading "Activity" [level=3] [ref=e109]
+                - generic [ref=e110]:
+                  - button "Messages" [ref=e111] [cursor=pointer]
+                  - button "Sessions" [ref=e112] [cursor=pointer]
+                  - button "Output Tokens" [ref=e113] [cursor=pointer]
+              - status [ref=e114]: Loading...
+            - generic [ref=e116]:
+              - heading "Activity by Day and Hour New York" [level=3] [ref=e118]
+              - generic [ref=e119]:
+                - generic [ref=e121]:
+                  - generic [ref=e122]:
+                    - button "Messages" [ref=e123] [cursor=pointer]
+                    - button "Sessions" [ref=e124] [cursor=pointer]
+                  - generic [ref=e125]:
+                    - button "Day" [disabled] [ref=e126]
+                    - button "Week" [ref=e127] [cursor=pointer]
+                    - button "Month" [ref=e128] [cursor=pointer]
+                  - generic [ref=e129]:
+                    - button "Absolute" [ref=e130] [cursor=pointer]
+                    - button "Percent" [ref=e131] [cursor=pointer]
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: User
+                    - generic [ref=e135]: Assistant
+                    - generic [ref=e137]: Other
+                - status [ref=e139]: Loading...
+              - status [ref=e142]: Loading...
+            - generic [ref=e145]:
+              - generic [ref=e146]:
+                - heading "Top Sessions" [level=3] [ref=e147]
+                - generic [ref=e149]:
+                  - button "By Messages" [ref=e150] [cursor=pointer]
+                  - button "By Duration" [ref=e151] [cursor=pointer]
+                  - button "By Output Tokens" [ref=e152] [cursor=pointer]
+              - status [ref=e153]: Loading...
+            - generic [ref=e156]:
+              - heading "Projects" [level=3] [ref=e158]
+              - status [ref=e159]: Loading...
+            - generic [ref=e162]:
+              - generic [ref=e163]:
+                - heading "Session Shape" [level=3] [ref=e164]
+                - generic [ref=e165]:
+                  - button "Messages" [ref=e166] [cursor=pointer]
+                  - button "Duration" [ref=e167] [cursor=pointer]
+                  - button "Autonomy" [ref=e168] [cursor=pointer]
+              - status [ref=e169]: Loading...
+            - generic [ref=e172]:
+              - heading "Tool Usage" [level=3] [ref=e174]
+              - status [ref=e175]: Loading tool usage...
+            - generic [ref=e178]:
+              - heading "Top Skills" [level=3] [ref=e180]
+              - status [ref=e181]: Loading...
+            - generic [ref=e184]:
+              - generic [ref=e185]:
+                - heading "Skill Usage Over Time" [level=3] [ref=e186]
+                - radiogroup "Granularity" [ref=e187]:
+                  - radio "Day" [ref=e188] [cursor=pointer]
+                  - radio "Week" [checked] [ref=e189] [cursor=pointer]
+                  - radio "Month" [ref=e190] [cursor=pointer]
+              - status [ref=e191]: Loading skill usage...
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - heading "Velocity" [level=3] [ref=e196]
+                - generic [ref=e197]:
+                  - button "Overview" [ref=e198] [cursor=pointer]
+                  - button "By Agent" [ref=e199] [cursor=pointer]
+                  - button "By Size" [ref=e200] [cursor=pointer]
+              - status [ref=e201]: Loading...
+            - generic [ref=e204]:
+              - heading "Agent Comparison" [level=3] [ref=e205]
+              - status [ref=e206]: Loading...
+            - generic [ref=e209]:
+              - heading "Outcomes" [level=3] [ref=e211]
+              - generic [ref=e212]: Configure GitHub in Settings to load pull-request totals.
+              - generic [ref=e213]: Reading git history...
+  - contentinfo [ref=e214]:
+    - generic [ref=e216]:
+      - generic [ref=e217]: 0 sessions
+      - generic [ref=e218]: ·
+      - generic [ref=e219]: 0 messages
+      - generic [ref=e220]: ·
+      - generic [ref=e221]: 0 projects
+    - generic [ref=e222]:
+      - button "Open performance debug" [ref=e223] [cursor=pointer]:
+        - generic [ref=e225]: Perf
+      - generic [ref=e226]: ·
+      - button "v0.47.0" [ref=e227] [cursor=pointer]

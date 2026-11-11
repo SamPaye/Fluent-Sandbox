@@ -2,6 +2,8 @@
 
 A sandbox web app demonstrating Fluent UI React v9 components with multiple demo pages showcasing real-world implementations.
 
+For the account sidebar implementation, setup, and verification steps, see the [Fluent React Nav guide](./docs/Fluent_React_Nav_Guidelines.md).
+
 ## Features
 
 This sandbox includes seven demo pages:

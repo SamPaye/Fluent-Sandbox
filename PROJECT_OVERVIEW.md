@@ -103,16 +103,21 @@ This page showcases **47+ Fluent UI v9 components** organized in a clean, center
 
 #### Sidebar Navigation
 
+- Fluent NavDrawer is inline on desktop and a dismissible overlay at 640px and below.
+- Existing account and subscription routes use links; the other items retain their placeholder behavior.
+
 - **User Profile Section**
 
   - Avatar with colorful background
   - User name and email
   - "View my benefits" link
-- **Navigation Menu Items** (9 sections):
+- **Navigation Menu Items** (11 items):
 
   - Account (active state highlighted)
   - Your info
   - Subscriptions
+  - Subscriptions v2
+  - Subscriptions v3
   - Devices
   - Security
   - Privacy
@@ -283,7 +288,7 @@ The project uses **Fluent UI's makeStyles** API for styling:
 - `@fluentui/react-icons` (v2.0.258) - Icon library
 - `@fluentui/react` (v8.115.0) - Fluent UI v8 components
 - `@fluentui/react-drawer` (v9.10.6) - Drawer component
-- `@fluentui/react-nav` (v9.3.11) - Navigation components
+- `@fluentui/react-nav` (v9.4.10) - Navigation components
 - `@fluentui/react-tree` (v9.15.3) - Tree view component
 - `@fluentui/react-toast` (v9.7.6) - Toast notification component
 - `react` (v18.3.1) - UI framework

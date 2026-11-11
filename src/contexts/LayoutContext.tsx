@@ -7,6 +7,7 @@ interface LayoutContextValue {
   drawerOpen: boolean
   setDrawerOpen: (open: boolean) => void
   toggleDrawer: () => void
+  restoreNavFocusOnMount: React.MutableRefObject<boolean>
 }
 
 const LayoutContext = createContext<LayoutContextValue | undefined>(undefined)
@@ -14,6 +15,7 @@ const LayoutContext = createContext<LayoutContextValue | undefined>(undefined)
 export function LayoutProvider({ children }: { children: ReactNode }) {
   const [headerCollapsed, setHeaderCollapsedState] = useState(true)
   const [drawerOpen, setDrawerOpenState] = useState(false)
+  const restoreNavFocusOnMount = React.useRef(false)
 
   const setHeaderCollapsed = useCallback((collapsed: boolean) => {
     setHeaderCollapsedState(collapsed)
@@ -38,7 +40,8 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
       toggleHeaderCollapsed,
       drawerOpen,
       setDrawerOpen,
-      toggleDrawer
+      toggleDrawer,
+      restoreNavFocusOnMount
     }}>
       {children}
     </LayoutContext.Provider>
@@ -52,4 +55,3 @@ export function useLayout() {
   }
   return context
 }
-

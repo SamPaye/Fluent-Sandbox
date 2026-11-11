@@ -74,47 +74,6 @@ export const useLayoutStyles = makeStyles({
       height: '40px',
     },
   },
-  sidebar: {
-    width: '260px',
-    backgroundColor: 'transparent',
-    display: 'flex',
-    flexDirection: 'column',
-    flexShrink: 0,
-    '@media (max-width: 640px)': {
-      position: 'fixed',
-      left: '-260px',
-      top: 0,
-      bottom: 0,
-      zIndex: 1000,
-      backgroundColor: tokens.colorNeutralBackground1,
-      boxShadow: tokens.shadow16,
-      transition: 'left 0.3s ease',
-      width: '260px',
-      '&.open': {
-        left: '0',
-      },
-    },
-  },
-  drawerOverlay: {
-    display: 'none',
-    '@media (max-width: 640px)': {
-      display: 'block',
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-      zIndex: 999,
-      opacity: 0,
-      pointerEvents: 'none',
-      transition: 'opacity 0.3s ease',
-      '&.open': {
-        opacity: 1,
-        pointerEvents: 'auto',
-      },
-    },
-  },
   userSection: {
     padding: '32px 16px 24px',
   },
@@ -492,4 +451,3 @@ export const useSubscriptionCardStyles = makeStyles({
     marginBottom: '16px',
   },
 })
-

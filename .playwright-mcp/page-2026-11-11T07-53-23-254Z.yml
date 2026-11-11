@@ -1,0 +1,83 @@
+- generic [ref=f3e2]:
+  - banner [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - button "AgentsView" [ref=f3e5] [cursor=pointer]
+      - 'button "Filter projects...: All Projects" [ref=f3e15] [cursor=pointer]':
+        - generic [ref=f3e16]: All Projects
+    - navigation "Primary navigation" [ref=f3e19]:
+      - 'combobox "Primary navigation: Sessions" [ref=f3e21] [cursor=pointer]':
+        - generic [ref=f3e22]: Sessions
+    - button "Search sessions... Ctrl K" [ref=f3e26] [cursor=pointer]:
+      - generic [ref=f3e28]: Search sessions...
+      - generic "Ctrl K" [ref=f3e29]:
+        - generic [aria-hidden] [ref=f3e30]: CtrlK
+    - generic [ref=f3e32]:
+      - generic [ref=f3e33]:
+        - button "Normal transcript mode" [ref=f3e34] [cursor=pointer]:
+          - generic [ref=f3e35]: Normal
+        - button "Focused transcript mode" [ref=f3e36] [cursor=pointer]:
+          - generic [ref=f3e37]: Focused
+        - button "Filter block types" [ref=f3e40] [cursor=pointer]
+      - button "Follow latest messages" [ref=f3e42] [cursor=pointer]
+      - button "Toggle sort order (o)" [ref=f3e44] [cursor=pointer]
+      - button "Cycle message layout" [ref=f3e46] [cursor=pointer]
+      - button "Export session" [ref=f3e49] [cursor=pointer]
+      - button "Publish to Gist" [ref=f3e52] [cursor=pointer]
+      - button "Sync sessions" [ref=f3e54] [cursor=pointer]
+      - button "Import conversations" [ref=f3e56] [cursor=pointer]
+      - button "Toggle theme" [ref=f3e59] [cursor=pointer]
+      - button "Settings" [ref=f3e61] [cursor=pointer]
+      - button "Keyboard shortcuts" [ref=f3e63] [cursor=pointer]: "?"
+  - generic [ref=f3e64]:
+    - complementary [ref=f3e65]:
+      - generic [ref=f3e66]:
+        - generic [ref=f3e67]: 0 sessions
+        - generic [ref=f3e68]:
+          - generic [ref=f3e69]: loading
+          - button "Multi-select" [ref=f3e70] [cursor=pointer]
+          - button "Filters" [ref=f3e72] [cursor=pointer]
+          - button "Close sidebar" [expanded] [ref=f3e74] [cursor=pointer]
+      - button "Recently active, currently idle Modify agentsview for intuitive diff Fluent%20Sandbox 6m ago •6 Star session VS Code Copilot Cumulo" [ref=f3e79] [cursor=pointer]:
+        - generic "Recently active, currently idle" [ref=f3e80]
+        - link "Modify agentsview for intuitive diff Fluent%20Sandbox 6m ago •6" [ref=f3e82]:
+          - /url: /sessions/vscode-copilot/dc489987-1aea-40a9-88ca-f8d079b01ec8
+          - generic "Modify agentsview for intuitive diff" [ref=f3e83]
+          - generic [ref=f3e84]:
+            - generic "Fluent%20Sandbox" [ref=f3e85]
+            - generic [ref=f3e86]: 6m ago
+            - generic [ref=f3e87]: •6
+        - button "Star session" [ref=f3e88]
+        - generic [ref=f3e90]:
+          - generic "VS Code Copilot" [ref=f3e91]
+          - generic "Cumulo (faab8fe274de230f76c79ccb7e34b72e)" [ref=f3e92]: Cumulo
+    - separator "Resize sidebar" [ref=f3e93]
+    - main [ref=f3e94]:
+      - generic [ref=f3e95]:
+        - button "Sessions" [ref=f3e96] [cursor=pointer]
+        - generic [ref=f3e97]: /
+        - generic [ref=f3e98]: Modify agentsview for intuitive diff
+        - generic [ref=f3e99]:
+          - generic [ref=f3e100]: VS Code Copilot
+          - generic [ref=f3e101]: Nov 11 01:53 AM
+          - button "A" [ref=f3e102] [cursor=pointer]
+          - button "Copy session ID" [ref=f3e103] [cursor=pointer]: dc489987
+          - generic [ref=f3e104]: 113.1k ctx / 832 out
+          - generic [ref=f3e105]:
+            - button "Copy link to session" [ref=f3e106] [cursor=pointer]
+            - button "Show session analysis" [ref=f3e108] [cursor=pointer]
+            - button "Agent Analysis" [ref=f3e110] [cursor=pointer]
+            - button "Find in session" [ref=f3e112] [cursor=pointer]
+            - button "Session actions" [ref=f3e114] [cursor=pointer]
+      - paragraph [ref=f3e117]: Loading messages...
+  - contentinfo [ref=f3e118]:
+    - generic [ref=f3e120]:
+      - generic [ref=f3e121]: 2,983 sessions
+      - generic [ref=f3e122]: ·
+      - generic [ref=f3e123]: 189,440 messages
+      - generic [ref=f3e124]: ·
+      - generic [ref=f3e125]: 22 projects
+    - generic [ref=f3e126]:
+      - button "Open performance debug" [ref=f3e127] [cursor=pointer]:
+        - generic [ref=f3e129]: Perf
+      - generic [ref=f3e130]: ·
+      - button "v0.47.0" [ref=f3e131] [cursor=pointer]
